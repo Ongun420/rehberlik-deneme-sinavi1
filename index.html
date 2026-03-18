@@ -8,9 +8,10 @@
     <style>
         :root {
             --bg-dark: #020617;
-            --lila: #E9D5FF;
-            --gold: #EAB308;
-            --orange: #F97316;
+            --lila: #E9D5FF; /* Mugunghwa Lila */
+            --gold: #EAB308; /* Antik Altın */
+            --korea-red: #CD313A;
+            --korea-blue: #0047A0;
         }
 
         body, html {
@@ -22,23 +23,22 @@
             scroll-behavior: smooth;
         }
 
-        /* Arka Plan Katmanları */
+        /* Arka Plan Katmanları ve Crossfade Efekti */
         .bg-layer {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100vh;
             z-index: -1;
             opacity: 0;
-            transition: opacity 1.5s ease-in-out;
+            transition: opacity 1.2s ease-in-out;
             background-size: cover;
             background-position: center;
         }
 
-        /* Görseller (Temsili Renk Geçişleri - Sen Görselleri Ekleyince Bunlar Silüet Olacak) */
         #bg-home { opacity: 1; background: radial-gradient(circle at center, #1e1b4b 0%, #020617 100%); }
-        #bg-kore { background: linear-gradient(rgba(2,6,23,0.8), rgba(2,6,23,0.8)), url('https://images.unsplash.com/photo-1538669715515-5c39893d7904?auto=format&fit=crop&w=1920&q=80'); }
-        #bg-exam { background: linear-gradient(rgba(2,6,23,0.8), rgba(2,6,23,0.8)), url('https://images.unsplash.com/photo-1599110906885-b024c90c2773?auto=format&fit=crop&w=1920&q=80'); }
+        /* Buradaki URL'leri ileride kendi çektiğin yüksek kaliteli fotoğraflarla değiştirebilirsin */
+        #bg-kore { background: linear-gradient(rgba(2,6,23,0.8), rgba(2,6,23,0.8)), url('https://images.unsplash.com/photo-1538669715515-5c39893d7904?q=80&w=1920'); }
+        #bg-exam { background: linear-gradient(rgba(2,6,23,0.8), rgba(2,6,23,0.8)), url('https://images.unsplash.com/photo-1599110906885-b024c90c2773?q=80&w=1920'); }
 
-        /* İçerik Panelleri */
         section {
             height: 100vh;
             display: flex;
@@ -47,46 +47,115 @@
             padding: 0 10%;
         }
 
+        /* Glassmorphism Paneli */
         .glass-panel {
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            padding: 50px;
-            max-width: 600px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-radius: 40px;
+            padding: 60px;
+            max-width: 700px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            animation: panelFade 1s ease-out;
         }
 
-        .logo-foo {
-            font-size: 5rem;
+        /* --- LOGO TASARIMI (FOO) --- */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .letter-f {
+            font-size: 6rem;
             font-weight: 700;
-            letter-spacing: -5px;
-            margin-bottom: 10px;
-            background: linear-gradient(to right, var(--lila), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--lila);
+            line-height: 1;
         }
 
-        h2 { font-size: 2.5rem; margin-bottom: 20px; }
-        p { line-height: 1.6; font-weight: 300; opacity: 0.8; }
+        /* Kore O'su (Taegeuk) */
+        .logo-o-korea {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(180deg, var(--korea-red) 50%, var(--korea-blue) 50%);
+            position: relative;
+            transform: rotate(-30deg); /* Bayraktaki açıya yakın */
+        }
+        .logo-o-korea::before {
+            content: ''; position: absolute;
+            width: 40px; height: 40px;
+            background: var(--korea-red);
+            border-radius: 50%;
+            top: 20px; left: 0;
+        }
+        .logo-o-korea::after {
+            content: ''; position: absolute;
+            width: 40px; height: 40px;
+            background: var(--korea-blue);
+            border-radius: 50%;
+            top: 20px; right: 0;
+        }
 
-        /* Pusula Navigasyon */
-        .compass-nav {
-            position: fixed; right: 40px; top: 50%;
+        /* Pusula O'su */
+        .logo-o-compass {
+            width: 76px; height: 76px;
+            border: 3px solid white;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .compass-needle {
+            width: 2px; height: 80%;
+            background: linear-gradient(to bottom, var(--gold) 50%, white 50%);
+            position: absolute;
+            animation: rotateNeedle 4s ease-in-out infinite;
+        }
+        .compass-needle::after {
+            content: ''; position: absolute;
+            top: 50%; left: 50%;
+            width: 6px; height: 6px;
+            background: white;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        h2 { font-size: 2.8rem; margin-top: 0; }
+        p { font-size: 1.1rem; line-height: 1.8; font-weight: 300; opacity: 0.9; }
+
+        /* Navigasyon Noktaları */
+        .nav-menu {
+            position: fixed; right: 30px; top: 50%;
             transform: translateY(-50%);
-            display: flex; flex-direction: column; gap: 20px;
             z-index: 100;
         }
-
         .nav-dot {
-            width: 12px; height: 12px;
+            width: 10px; height: 10px;
+            background: rgba(255,255,255,0.3);
+            margin: 20px 0;
             border-radius: 50%;
-            background: rgba(255,255,255,0.2);
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.4s;
+        }
+        .nav-dot:hover, .nav-dot.active {
+            background: var(--lila);
+            transform: scale(1.8);
+            box-shadow: 0 0 15px var(--lila);
         }
 
-        .nav-dot:hover { background: var(--lila); transform: scale(1.5); }
+        @keyframes rotateNeedle {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(15deg); }
+        }
+
+        @keyframes panelFade {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -95,51 +164,65 @@
     <div id="bg-kore" class="bg-layer"></div>
     <div id="bg-exam" class="bg-layer"></div>
 
-    <section id="home">
-        <div class="glass-panel" style="text-align: center;">
-            <div class="logo-foo">FOO</div>
-            <p>YENİ NESİL REHBERLİK & KÜLTÜR PORTALI</p>
-        </div>
-    </section>
-
-    <section id="kore">
-        <div class="glass-panel">
-            <h2 style="color: var(--lila);">Kore Arşivi</h2>
-            <p>Gyeongbokgung'un gece sessizliğinde, Mugunghwa çiçeklerinin gölgesinde bir keşif yolculuğu. Modern Kore'nin köklerine iniyoruz.</p>
-        </div>
-    </section>
-
-    <section id="exam">
-        <div class="glass-panel">
-            <h2 style="color: var(--gold);">Sınav Merkezi</h2>
-            <p>Efes'in kütüphanesinden süzülen bilgiyle, TUREB sınavının en zorlu sorularını beraber analiz ediyoruz. Bilginin gücüyle fark yaratın.</p>
-        </div>
-    </section>
-
-    <div class="compass-nav">
-        <div class="nav-dot" onclick="scrollToSec('home')"></div>
-        <div class="nav-dot" onclick="scrollToSec('kore')"></div>
-        <div class="nav-dot" onclick="scrollToSec('exam')"></div>
+    <div class="nav-menu">
+        <div class="nav-dot active" onclick="go(0)"></div>
+        <div class="nav-dot" onclick="go(1)"></div>
+        <div class="nav-dot" onclick="go(2)"></div>
     </div>
 
+    <section id="sec-0">
+        <div class="glass-panel" style="text-align: center;">
+            <div class="logo-container">
+                <div class="letter-f">F</div>
+                <div class="logo-o-korea"></div>
+                <div class="logo-o-compass">
+                    <div class="compass-needle"></div>
+                </div>
+            </div>
+            <p style="letter-spacing: 3px; font-weight: 700; color: var(--lila);">YENİ NESİL REHBERLİK PORTALI</p>
+            <p>Kültürlerin kesişme noktasında modern bir dijital deneyim.</p>
+        </div>
+    </section>
+
+    <section id="sec-1">
+        <div class="glass-panel">
+            <h2 style="color: var(--lila);">Kore Arşivi</h2>
+            <p>Gyeongbokgung Sarayı'nın gece ışıkları altında, unutulmaya yüz tutmuş Korece gramer yapılarını ve kültürel derinlikleri yeniden keşfediyoruz. Geleneksel olanı modern bir dille anlatıyoruz.</p>
+        </div>
+    </section>
+
+    <section id="sec-2">
+        <div class="glass-panel">
+            <h2 style="color: var(--gold);">Sınav Merkezi</h2>
+            <p>Efes'in kütüphanelerinden süzülen antik bilgi birikimiyle, TUREB sınavının "kazık" sorularını birer birer çözüyoruz. Profesyonel rehberlik yolculuğunda senin dijital pusulan.</p>
+        </div>
+    </section>
+
     <script>
-        function scrollToSec(id) {
-            document.getElementById(id).scrollIntoView();
+        // Sayfalar arası geçiş fonksiyonu
+        function go(index) {
+            window.scrollTo({
+                top: window.innerHeight * index,
+                behavior: 'smooth'
+            });
         }
 
-        // Crossfade Mantığı
+        // Kaydırma ve Arka Plan Geçiş Mantığı
         window.addEventListener('scroll', () => {
-            const sections = ['home', 'kore', 'exam'];
-            sections.forEach(sec => {
-                const el = document.getElementById(sec);
-                const rect = el.getBoundingClientRect();
-                const bg = document.getElementById('bg-' + sec);
-                
-                if (rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2) {
-                    bg.style.opacity = '1';
-                } else {
-                    bg.style.opacity = '0';
-                }
+            const scrollPos = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const dots = document.querySelectorAll('.nav-dot');
+            const layers = document.querySelectorAll('.bg-layer');
+            
+            const currentIndex = Math.round(scrollPos / windowHeight);
+
+            layers.forEach((layer, i) => {
+                layer.style.opacity = (i === currentIndex) ? '1' : '0';
+            });
+
+            dots.forEach((dot, i) => {
+                if(i === currentIndex) dot.classList.add('active');
+                else dot.classList.remove('active');
             });
         });
     </script>
