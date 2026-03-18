@@ -36,17 +36,19 @@
 
     .hangul-column {
         position: absolute;
-        top: -300px;
+        top: -500px;
         color: var(--lila);
-        font-family: 'Courier New', sans-serif;
-        font-size: 1.4rem;
-        font-weight: bold;
+        font-family: 'Courier New', monospace; /* Monospace şart! */
+        font-size: 1.1rem; /* Harfleri biraz küçülttük */
+        font-weight: 900;
         text-align: center;
-        white-space: nowrap;
-        writing-mode: vertical-rl;
+        /* writing-mode silindi, daha kontrollü gideceğiz */
         animation: fall linear infinite;
-        text-shadow: 0 0 10px rgba(233, 213, 255, 0.5);
-        opacity: 0.3; /* Daha net görünmesi için artırıldı */
+        text-shadow: 0 0 5px var(--lila);
+        opacity: 0.2;
+        line-height: 0.9; /* Harfleri birbirine yaklaştırdık */
+        width: 20px; /* Sütun genişliğini sabitledik */
+        word-break: break-all; /* Yan yana gelmeyi yasakladık! */
     }
 
     @keyframes fall {
@@ -159,10 +161,8 @@
 
     function createHangulRain() {
         const container = document.getElementById('hangul-container');
-        if(!container) return;
-        
-        const characters = '가나다라마바사아자차카타파하안녕오래된포털'; 
-        const colWidth = 45; 
+        const characters = '가나다라마바사아자차카타파하ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ'; 
+        const colWidth = 30; // Daha sık sütunlar
         const colCount = Math.floor(window.innerWidth / colWidth);
 
         container.innerHTML = '';
@@ -171,15 +171,16 @@
             const column = document.createElement('div');
             column.className = 'hangul-column';
             
+            // Rastgele karakterleri <br> ile ayırarak TEK SIRA yapıyoruz
             let content = '';
-            const len = Math.floor(Math.random() * 12) + 12;
+            const len = Math.floor(Math.random() * 20) + 15;
             for (let j = 0; j < len; j++) {
                 content += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>';
             }
             
             column.innerHTML = content;
             column.style.left = (i * colWidth) + 'px';
-            column.style.animationDuration = (Math.random() * 10 + 12) + 's';
+            column.style.animationDuration = (Math.random() * 7 + 8) + 's'; // Biraz daha hızlandırdık
             column.style.animationDelay = (Math.random() * -20) + 's';
             
             container.appendChild(column);
