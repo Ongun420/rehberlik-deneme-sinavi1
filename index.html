@@ -50,7 +50,7 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
         }
 
-        /* --- OKUNABİLİR FOO LOGO TASARIMI --- */
+        /* --- ÇAPRAZ RENKLİ MÜHÜRLÜ LOGO --- */
         .logo-wrapper {
             display: flex;
             flex-direction: column;
@@ -58,36 +58,55 @@
             margin-bottom: 30px;
         }
 
-        .logo-main {
+        .logo-seal-frame {
+            position: relative;
+            padding: 25px 45px;
             display: flex;
             align-items: center;
-            gap: 5px; /* Harfler birbirine daha yakın */
+            gap: 12px;
+            border-radius: 60px;
+            transition: all 0.5s ease;
+            background: rgba(255, 255, 255, 0.01);
+            z-index: 1;
         }
 
-        .letter {
+        /* Çapraz Renkli Çerçeve Katmanı */
+        .logo-seal-frame::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 60px;
+            padding: 2px; /* Çerçeve kalınlığı */
+            background: linear-gradient(135deg, var(--gold) 0%, transparent 50%, var(--lila) 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            box-shadow: 0 0 20px rgba(234, 179, 8, 0.2);
+        }
+
+        .logo-seal-frame:hover::before {
+            background: linear-gradient(135deg, var(--gold) 0%, #fff 50%, var(--lila) 100%);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .letter-f {
             font-size: 6.5rem;
             font-weight: 700;
             line-height: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            color: var(--gold); /* Rehberlik tarafı */
+            text-shadow: 0 0 15px rgba(234, 179, 8, 0.3);
         }
 
-        .letter-f { color: var(--lila); margin-right: 5px; }
-
-        /* Sembollerin etrafına ince harf kontürü (O harfi vurgusu) */
         .symbol-o {
             width: 85px; height: 85px;
             border-radius: 50%;
-            border: 2px solid rgba(255,255,255,0.15); /* Hafif O belirteci */
+            border: 1px solid rgba(255,255,255,0.1);
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
-        .symbol-o:hover { border-color: white; transform: scale(1.1); }
 
         /* Kore Taegeuk */
         .inner-korea {
@@ -96,94 +115,30 @@
             background: linear-gradient(180deg, var(--korea-red) 50%, var(--korea-blue) 50%);
             transform: rotate(-30deg);
             position: relative;
+            box-shadow: 0 0 15px rgba(233, 213, 255, 0.2);
         }
         .inner-korea::before { content: ''; position: absolute; width: 35px; height: 35px; background: var(--korea-red); border-radius: 50%; top: 17.5px; left: 0; }
         .inner-korea::after { content: ''; position: absolute; width: 35px; height: 35px; background: var(--korea-blue); border-radius: 50%; top: 17.5px; right: 0; }
 
         /* Pusula İğnesi */
         .compass-needle {
-            width: 2px; height: 60px;
+            width: 3px; height: 60px;
             background: linear-gradient(to bottom, var(--gold) 50%, white 50%);
             position: absolute;
             animation: drift 5s ease-in-out infinite;
         }
 
         .sub-logo-text {
-            font-size: 0.7rem;
-            letter-spacing: 12px;
+            font-size: 0.75rem;
+            letter-spacing: 14px;
             text-transform: uppercase;
-            opacity: 0.6;
-            margin-top: -10px;
-            color: var(--lila);
+            opacity: 0.7;
+            margin-top: 20px;
+            background: linear-gradient(to right, var(--gold), var(--lila));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
         }
 
         h2 { font-size: 2.8rem; margin-top: 0; font-weight: 700; }
-        p { font-size: 1.1rem; line-height: 1.8; font-weight: 300; opacity: 0.85; }
-
-        .nav-menu { position: fixed; right: 30px; top: 50%; transform: translateY(-50%); z-index: 100; }
-        .nav-dot { width: 8px; height: 8px; background: rgba(255,255,255,0.2); margin: 25px 0; border-radius: 50%; cursor: pointer; transition: 0.4s; }
-        .nav-dot.active { background: var(--lila); transform: scale(2); box-shadow: 0 0 15px var(--lila); }
-
-        @keyframes drift { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(20deg); } }
-    </style>
-</head>
-<body>
-
-    <div id="bg-home" class="bg-layer"></div>
-    <div id="bg-kore" class="bg-layer"></div>
-    <div id="bg-exam" class="bg-layer"></div>
-
-    <div class="nav-menu">
-        <div class="nav-dot active" onclick="go(0)"></div>
-        <div class="nav-dot" onclick="go(1)"></div>
-        <div class="nav-dot" onclick="go(2)"></div>
-    </div>
-
-    <section id="sec-0">
-        <div class="glass-panel" style="text-align: center;">
-            <div class="logo-wrapper">
-                <div class="logo-main">
-                    <div class="letter letter-f">F</div>
-                    <div class="symbol-o"><div class="inner-korea"></div></div>
-                    <div class="symbol-o"><div class="compass-needle"></div></div>
-                </div>
-                <div class="sub-logo-text">Ongun Orak</div>
-            </div>
-            <p style="letter-spacing: 2px; font-weight: 400; color: var(--lila); margin-bottom: 5px;">DIGITAL CULTURE PORTAL</p>
-            <p>Yeni nesil rehberlik deneyimi ve kültürel arşiv.</p>
-        </div>
-    </section>
-
-    <section id="sec-1">
-        <div class="glass-panel">
-            <h2 style="color: var(--lila);">Kore Arşivi</h2>
-            <p>Seul'un modern ışıklarından Gyeongbokgung'un antik sessizliğine... Dil kartları, kültürel nüanslar ve TOPIK hazırlık notlarıyla dolu derin bir arşiv.</p>
-        </div>
-    </section>
-
-    <section id="sec-2">
-        <div class="glass-panel">
-            <h2 style="color: var(--gold);">Sınav Merkezi</h2>
-            <p>Profesyonel turist rehberliği sınavına hazırlık sürecinde, Efes'ten Kapadokya'ya kadar uzanan geniş müfredatın en kritik ve "kazık" noktaları burada.</p>
-        </div>
-    </section>
-
-    <script>
-        function go(index) { window.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' }); }
-
-        window.addEventListener('scroll', () => {
-            const scrollPos = window.scrollY;
-            const windowHeight = window.innerHeight;
-            const dots = document.querySelectorAll('.nav-dot');
-            const layers = document.querySelectorAll('.bg-layer');
-            const currentIndex = Math.round(scrollPos / windowHeight);
-
-            layers.forEach((layer, i) => { layer.style.opacity = (i === currentIndex) ? '1' : '0'; });
-            dots.forEach((dot, i) => {
-                if(i === currentIndex) dot.classList.add('active');
-                else dot.classList.remove('active');
-            });
-        });
-    </script>
-</body>
-</html>
+        p { font-size
