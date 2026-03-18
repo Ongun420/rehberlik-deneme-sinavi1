@@ -102,10 +102,27 @@
         cursor: pointer;
     }
 
-    .glass-card:hover {
+    /* 1. GİRİŞ KARTI (ALTIN PARLAMA) */
+    #sec-0 .glass-card:hover {
         transform: translateY(-10px) scale(1.02);
-        border: 1px solid var(--gold);
-        box-shadow: 0 0 30px rgba(234, 179, 8, 0.2);
+        border: 1px solid var(--gold) !important;
+        box-shadow: 0 0 30px rgba(234, 179, 8, 0.3); /* Altın rengi ışık */
+        animation: card-glitch 0.3s ease-in-out infinite alternate;
+    }
+
+    /* 2. KORE ARŞİVİ KARTI (LİLA PARLAMA) */
+    #sec-1 .glass-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        border: 1px solid var(--lila) !important;
+        box-shadow: 0 0 30px rgba(233, 213, 255, 0.3); /* Lila rengi ışık */
+        animation: card-glitch 0.3s ease-in-out infinite alternate;
+    }
+
+    /* 3. SINAV MERKEZİ KARTI (ALTIN/SARIL PARLAMA) */
+    #sec-2 .glass-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        border: 1px solid var(--gold) !important;
+        box-shadow: 0 0 30px rgba(234, 179, 8, 0.3); /* Altın rengi ışık */
         animation: card-glitch 0.3s ease-in-out infinite alternate;
     }
 
