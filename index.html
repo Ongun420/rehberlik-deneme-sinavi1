@@ -23,12 +23,14 @@
         overflow-x: hidden;
     }
 
-    /* --- ÜST MENÜ (ZARİF VE İNCE) --- */
+    /* --- ÜST MENÜ (TAMAMEN DARALTILDI VE MERKEZLENDİ) --- */
     header {
         position: fixed; top: 0; width: 100%;
         height: 60px; /* Jilet gibi ince yükseklik */
-        padding: 0 30px;
-        display: flex; justify-content: space-between; align-items: center;
+        padding: 0 40px; /* Sağa-sola boşluk */
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; /* Dikeyde kusursuz merkezleme */
         z-index: 1000;
         background: rgba(2, 6, 23, 0.9);
         backdrop-filter: blur(15px);
@@ -37,39 +39,89 @@
     }
 
     .header-brand {
-        display: flex; align-items: center;
-        text-decoration: none; color: white;
-        gap: 10px;
+        display: flex; 
+        align-items: center; /* Logoyu ve metni dikeyde merkezle */
+        text-decoration: none; 
+        color: white;
+        gap: 15px; /* Logo ve PORTAL metni arası mesafe */
     }
 
-    /* --- SOL ÜST MİNYATÜR LOGO --- */
+    /* --- SOL ÜST MİNYATÜR LOGO (Fit ve Tam Orantılı) --- */
     .mini-seal {
-        position: relative; display: flex; align-items: center; gap: 5px;
-        padding: 4px 12px; border-radius: 20px;
+        position: relative; 
+        display: flex; 
+        align-items: center; /* İçerikleri tam merkezler */
+        justify-content: center;
+        gap: 6px; /* F, O, İğne arası mesafe */
+        padding: 6px 15px; /* Çerçeve ve içerik arası boşluk */
+        border-radius: 30px;
         background: rgba(255, 255, 255, 0.01);
+        box-sizing: border-box;
+        line-height: 0; /* Ekstra dikey boşlukları öldürür */
     }
+    
+    /* Çapraz Çerçeve (Gold & Lila) */
     .mini-seal::before {
-        content: ""; position: absolute; inset: 0; border-radius: 20px; padding: 1.5px;
+        content: ""; position: absolute; inset: 0; border-radius: 30px; padding: 1.5px;
         background: linear-gradient(135deg, var(--gold) 0%, transparent 50%, var(--lila) 100%);
         -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
         mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
         -webkit-mask-composite: xor; mask-composite: exclude;
     }
-    .mini-f { font-size: 1.4rem; font-weight: 700; color: var(--gold); line-height: 1; }
-    .mini-o { width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; position: relative; }
-    .mini-taegeuk {
-        width: 16px; height: 16px; border-radius: 50%;
-        background: linear-gradient(180deg, var(--korea-red) 50%, var(--korea-blue) 50%);
-        transform: rotate(-30deg); position: relative;
-    }
-    .mini-taegeuk::before { content: ''; position: absolute; width: 8px; height: 8px; background: var(--korea-red); border-radius: 50%; top: 4px; left: 0; }
-    .mini-taegeuk::after { content: ''; position: absolute; width: 8px; height: 8px; background: var(--korea-blue); border-radius: 50%; top: 4px; right: 0; }
-    .mini-needle { width: 1px; height: 14px; background: linear-gradient(var(--gold) 50%, #fff 50%); position: absolute; animation: drift 5s infinite; }
 
-    .nav-links a { text-decoration: none; color: white; margin-left: 20px; font-size: 0.75rem; opacity: 0.6; transition: 0.3s; letter-spacing: 1px; }
+    .mini-f { 
+        font-size: 1.6rem; /* Harf boyutu fit */
+        font-weight: 700; 
+        color: var(--gold); 
+        margin: 0; 
+        display: flex; align-items: center; /* F harfinin kendi dikey merkezlemesi */
+    }
+
+    .mini-o { 
+        width: 28px; 
+        height: 28px; 
+        border-radius: 50%; 
+        border: 1px solid rgba(255,255,255,0.2); 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        position: relative; 
+        margin: 0;
+    }
+
+    .mini-taegeuk {
+        width: 22px; 
+        height: 22px; 
+        border-radius: 50%;
+        background: linear-gradient(180deg, var(--korea-red) 50%, var(--korea-blue) 50%);
+        transform: rotate(-30deg);
+        position: relative;
+    }
+    .mini-taegeuk::before { content: ''; position: absolute; width: 11px; height: 11px; background: var(--korea-red); border-radius: 50%; top: 5.5px; left: 0; }
+    .mini-taegeuk::after { content: ''; position: absolute; width: 11px; height: 11px; background: var(--korea-blue); border-radius: 50%; top: 5.5px; right: 0; }
+    
+    .mini-needle { 
+        width: 1.5px; 
+        height: 20px; 
+        background: linear-gradient(var(--gold) 50%, #fff 50%); 
+        position: absolute; 
+        animation: drift 5s infinite ease-in-out; 
+    }
+
+    /* "PORTAL" Metni hizalaması */
+    .header-brand span {
+        font-weight: 700; 
+        letter-spacing: 3px; 
+        font-size: 0.95rem; 
+        color: #fff;
+        display: flex; align-items: center; /* Metni dikeyde merkezle */
+        height: 100%;
+    }
+
+    .nav-links a { text-decoration: none; color: white; margin-left: 20px; font-size: 0.85rem; opacity: 0.6; transition: 0.3s; letter-spacing: 1px; font-weight: 400; }
     .nav-links a:hover { opacity: 1; color: var(--lila); }
 
-    /* --- ANA SAYFA LOGO SİSTEMİ (TAM MERKEZDE) --- */
+    /* --- ANA SAYFA LOGO SİSTEMİ (MERKEZLENMİŞ) --- */
     .seal-master {
         position: relative; display: inline-flex; align-items: center; justify-content: center;
         gap: 15px; padding: 25px 45px; border-radius: 60px;
@@ -96,7 +148,7 @@
     .swirl-korea::after { content: ''; position: absolute; width: 32.5px; height: 32.5px; background: var(--korea-blue); border-radius: 50%; top: 16.25px; right: 0; }
     .needle-gold { width: 3px; height: 55px; background: linear-gradient(var(--gold) 50%, #fff 50%); position: absolute; animation: drift 5s infinite ease-in-out; }
 
-    @keyframes drift { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(20deg); } }
+    @keyframes drift { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(25deg); } }
 
     /* ARKA PLANLAR */
     .bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0; transition: opacity 1s; background-size: cover; background-position: center; }
