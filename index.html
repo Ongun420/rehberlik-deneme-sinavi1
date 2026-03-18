@@ -51,6 +51,30 @@
         word-break: break-all; /* Yan yana gelmeyi yasakladık! */
     }
 
+    /* --- DİNAMİK YAĞMUR RENKLERİ --- */
+    #hangul-container { transition: filter 1s ease; } /* Renk geçişi yumuşak olsun */
+
+    /* Giriş Sayfası: Siber Buz Mavisi */
+    .rain-default .hangul-column { 
+        color: #00f2ff; 
+        text-shadow: 0 0 12px #00f2ff; 
+        opacity: 0.25; 
+    }
+
+    /* Kore Arşivi: Mugunghwa Lilası */
+    .rain-korea .hangul-column { 
+        color: #E9D5FF; 
+        text-shadow: 0 0 15px #d8b4fe; 
+        opacity: 0.35; 
+    }
+
+    /* Sınav Merkezi: Altın Sarısı */
+    .rain-gold .hangul-column { 
+        color: var(--gold); 
+        text-shadow: 0 0 12px #f59e0b; 
+        opacity: 0.3; 
+    }
+
     @keyframes fall {
         0% { transform: translateY(-10%); }
         100% { transform: translateY(115vh); }
@@ -157,6 +181,20 @@
 <script>
     function go(index) { 
         window.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' }); 
+        
+        const container = document.getElementById('hangul-container');
+        
+        // Önce tüm renk sınıflarını temizle
+        container.classList.remove('rain-default', 'rain-korea', 'rain-gold');
+        
+        // Sayfa numarasına göre doğru rengi ata
+        if(index === 0) {
+            container.classList.add('rain-default'); // Giriş (Buz Mavisi)
+        } else if(index === 1) {
+            container.classList.add('rain-korea');   // Kore Arşivi (Lila)
+        } else if(index === 2) {
+            container.classList.add('rain-gold');    // Sınav Merkezi (Altın)
+        }
     }
 
     function createHangulRain() {
@@ -184,6 +222,14 @@
             column.style.animationDelay = (Math.random() * -20) + 's';
             
             container.appendChild(column);
+
+            document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('hangul-container');
+        if(container) container.classList.add('rain-default'); // Başlangıç rengi
+        createHangulRain();
+    });
+
+    window.addEventListener('resize', createHangulRain);
         }
     }
 
