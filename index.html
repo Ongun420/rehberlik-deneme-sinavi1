@@ -9,9 +9,6 @@
     :root {
         --bg-dark: #020617;
         --lila: #E9D5FF;
-        --gold: #EAB308;
-        --korea-red: #CD313A;
-        --korea-blue: #0047A0;
     }
 
     body, html {
@@ -23,139 +20,55 @@
         overflow-x: hidden;
     }
 
-    /* --- ÜST MENÜ --- */
+    /* --- ÜST MENÜ (50PX JİLET GİBİ İNCE) --- */
     header {
         position: fixed; top: 0; width: 100%;
-        height: 70px; /* Sabit ve zarif yükseklik */
-        padding: 0 40px;
+        height: 50px; 
+        padding: 0 30px;
         display: flex; justify-content: space-between; align-items: center;
         z-index: 1000;
-        background: rgba(2, 6, 23, 0.85);
+        background: rgba(2, 6, 23, 0.9);
         backdrop-filter: blur(15px);
         border-bottom: 1px solid rgba(255,255,255,0.08);
         box-sizing: border-box;
     }
 
     .header-brand {
-        display: flex; align-items: center; gap: 10px;
-        text-decoration: none; color: white;
+        display: flex; align-items: center;
+        text-decoration: none;
     }
 
-    /* --- SOL ÜST MİNYATÜR LOGO (Birebir ama KESİN OLARAK KÜÇÜK) --- */
-    .mini-seal {
-        position: relative; display: flex; align-items: center; gap: 5px; /* Boşluklar küçüldü */
-        padding: 4px 12px; border-radius: 20px; /* Çerçeve küçüldü */
-        background: rgba(255, 255, 255, 0.01);
-    }
-    .mini-seal::before {
-        content: ""; position: absolute; inset: 0; border-radius: 20px; padding: 1.5px;
-        background: linear-gradient(135deg, var(--gold) 0%, transparent 50%, var(--lila) 100%);
-        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor; mask-composite: exclude;
+    /* LOGO RESMİNİ BURADAN KONTROL EDİYORUZ */
+    .header-brand img {
+        height: 32px; /* Çubuğun içine tam sığacak boyut */
+        width: auto;
+        display: block;
     }
 
-    /* İÇ BİLEŞENLERİN MİLİMETRİK KÜÇÜLTÜLMESİ */
-    .mini-f { 
-        font-size: 1.2rem; /* Harf boyutu fit */
-        font-weight: 700; 
-        color: var(--gold); 
-        line-height: 1; 
-        margin: 0; 
+    .nav-links a { 
+        text-decoration: none; color: white; margin-left: 20px; 
+        font-size: 0.75rem; opacity: 0.6; transition: 0.3s; 
+        letter-spacing: 1px; 
     }
-    .mini-o { 
-        width: 22px; /* Daire boyutu fit */
-        height: 22px; 
-        border-radius: 50%; 
-        border: 1px solid rgba(255,255,255,0.2); 
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-        position: relative; 
-        margin: 0;
-    }
-    .mini-taegeuk {
-        width: 17px; /* Detaylar orantılı küçüldü */
-        height: 17px; 
-        border-radius: 50%;
-        background: linear-gradient(180deg, var(--korea-red) 50%, var(--korea-blue) 50%);
-        transform: rotate(-30deg); position: relative;
-    }
-    .mini-taegeuk::before { content: ''; position: absolute; width: 8.5px; height: 8.5px; background: var(--korea-red); border-radius: 50%; top: 4.25px; left: 0; }
-    .mini-taegeuk::after { content: ''; position: absolute; width: 8.5px; height: 8.5px; background: var(--korea-blue); border-radius: 50%; top: 4.25px; right: 0; }
-    
-    .mini-needle { 
-        width: 1px; /* İğne inceldi */
-        height: 15px; /* İğne kısaldı */
-        background: linear-gradient(var(--gold) 50%, #fff 50%); 
-        position: absolute; 
-        animation: drift 5s infinite ease-in-out; 
-    }
-
-    .nav-links a { text-decoration: none; color: white; margin-left: 20px; font-size: 0.8rem; opacity: 0.6; transition: 0.3s; letter-spacing: 1.5px; font-weight: 400; }
     .nav-links a:hover { opacity: 1; color: var(--lila); }
 
-    /* --- ANA SAYFA LOGO SİSTEMİ (MERKEZLENMİŞ) --- */
-    .seal-master {
-        position: relative; display: inline-flex; align-items: center; justify-content: center;
-        gap: 15px; padding: 25px 45px; border-radius: 60px;
-        background: rgba(255, 255, 255, 0.01);
-    }
-    .seal-master::before {
-        content: ""; position: absolute; inset: 0; border-radius: 60px; padding: 2.5px;
-        background: linear-gradient(135deg, var(--gold) 0%, transparent 50%, var(--lila) 100%);
-        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor; mask-composite: exclude;
-    }
-    .f-part { font-size: 6rem; font-weight: 700; color: var(--gold); line-height: 1; }
-    .o-part { 
-        width: 80px; height: 80px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.15);
-        display: flex; align-items: center; justify-content: center; position: relative;
-    }
-    .swirl-korea {
-        width: 65px; height: 65px; border-radius: 50%;
-        background: linear-gradient(180deg, var(--korea-red) 50%, var(--korea-blue) 50%);
-        transform: rotate(-30deg); position: relative;
-    }
-    .swirl-korea::before { content: ''; position: absolute; width: 32.5px; height: 32.5px; background: var(--korea-red); border-radius: 50%; top: 16.25px; left: 0; }
-    .swirl-korea::after { content: ''; position: absolute; width: 32.5px; height: 32.5px; background: var(--korea-blue); border-radius: 50%; top: 16.25px; right: 0; }
-    .needle-gold { width: 3px; height: 55px; background: linear-gradient(var(--gold) 50%, #fff 50%); position: absolute; animation: drift 5s infinite ease-in-out; }
-
-    @keyframes drift { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(20deg); } }
-
-    /* ARKA PLANLAR */
-    .bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0; transition: opacity 1s; background-size: cover; background-position: center; }
-    #bg-0 { opacity: 1; background: radial-gradient(circle at center, #1e1b4b 0%, #020617 100%); }
-    #bg-1 { background: linear-gradient(rgba(2,6,23,0.8), rgba(2,6,23,0.8)), url('https://images.unsplash.com/photo-1538669715515-5c39893d7904?q=80&w=1920'); }
-    #bg-2 { background: linear-gradient(rgba(2,6,23,0.8), rgba(2,6,23,0.8)), url('https://images.unsplash.com/photo-1599110906885-b024c90c2773?q=80&w=1920'); }
-
-    section { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 10; }
-    .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 40px; padding: 60px; max-width: 800px; text-align: center; }
-    .text-brand { letter-spacing: 12px; text-transform: uppercase; font-weight: 700; background: linear-gradient(to right, var(--gold), var(--lila)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 20px; }
-
-    .dots { position: fixed; right: 30px; top: 50%; transform: translateY(-50%); z-index: 1000; }
-    .dot { width: 10px; height: 10px; background: rgba(255,255,255,0.2); margin: 25px 0; border-radius: 50%; cursor: pointer; transition: 0.3s; }
-    .dot.active { background: var(--lila); transform: scale(1.8); box-shadow: 0 0 15px var(--lila); }
+    /* ANA SAYFA TASARIMI (DEĞİŞMEDİ) */
+    section { height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 40px; padding: 60px; text-align: center; }
 </style>
 </head>
 <body>
 
     <header>
-        <a href="javascript:go(0)" class="header-brand">
-            <div class="seal-master mini-version">
-                <div class="f-part">F</div>
-                <div class="o-part"><div class="swirl-korea"></div></div>
-                <div class="o-part"><div class="needle-gold"></div></div>
-            </div>
-            <span style="font-weight: 700; letter-spacing: 3px; font-size: 0.9rem;">PORTAL</span>
-        </a>
-        <div class="nav-links">
-            <a href="javascript:go(0)">GİRİŞ</a>
-            <a href="javascript:go(1)">KORE ARŞİVİ</a>
-            <a href="javascript:go(2)">SINAV MERKEZİ</a>
-        </div>
-    </header>
+    <a href="javascript:go(0)" class="header-brand">
+        <img src="logo.png" alt="FOO PORTAL">
+    </a>
+    <div class="nav-links">
+        <a href="javascript:go(0)">GİRİŞ</a>
+        <a href="javascript:go(1)">KORE ARŞİVİ</a>
+        <a href="javascript:go(2)">SINAV MERKEZİ</a>
+    </div>
+</header>
 
     <div id="bg-0" class="bg-layer"></div>
     <div id="bg-1" class="bg-layer"></div>
