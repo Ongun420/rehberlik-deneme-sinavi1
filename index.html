@@ -105,6 +105,66 @@
         .header-brand img {
             height: 25px; /* Logoyu mobilde bir tık daha küçülttük */
         }
+
+        /* --- KART PARLAMA VE YÜKSELME EFEKTİ --- */
+    .glass-card {
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        position: relative;
+    }
+
+    .glass-card:hover {
+        transform: translateY(-10px); /* Hafif yukarı kalkış */
+        box-shadow: 0 20px 40px rgba(233, 213, 255, 0.1); /* Lila hafif parlama */
+    }
+
+    /* --- SCROLL (AŞAĞI KAYDIR) ANİMASYONU --- */
+    .scroll-indicator {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        opacity: 0.6;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .scroll-indicator:hover { opacity: 1; }
+
+    .mouse {
+        width: 22px;
+        height: 38px;
+        border: 2px solid var(--lila);
+        border-radius: 20px;
+        position: relative;
+    }
+
+    .wheel {
+        width: 3px;
+        height: 6px;
+        background: var(--gold);
+        border-radius: 2px;
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: scroll-wheel 1.6s infinite;
+    }
+
+    @keyframes scroll-wheel {
+        0% { top: 8px; opacity: 1; }
+        100% { top: 22px; opacity: 0; }
+    }
+
+    .scroll-text {
+        font-size: 0.6rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--lila);
+    }
     }
 </style>
 </head>
@@ -129,7 +189,14 @@
             <div class="o-part"><div class="needle-gold"></div></div>
         </div>
         <div class="text-brand">Ongun Orak</div>
-        <p style="margin-top: 30px; opacity: 0.7; letter-spacing: 2px;">DIGITAL CULTURE PORTAL</p>
+        <p style="margin-top: 30px; opacity: 0.7; letter-spacing: 2px; font-weight: 300;">DIGITAL CULTURE PORTAL</p>
+    </div>
+
+    <div class="scroll-indicator" onclick="go(1)">
+        <span class="scroll-text">Keşfet</span>
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
     </div>
 </section>
     
