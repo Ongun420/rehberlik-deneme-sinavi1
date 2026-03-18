@@ -84,7 +84,7 @@
     }
     .nav-links a:hover { opacity: 1; color: var(--lila); }
 
-    /* --- SECTION VE KARTLAR (CAM EFEKTİ DÜZELTİLDİ) --- */
+    /* --- SECTION VE KARTLAR --- */
     section { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 10; }
     
     .glass-card {
@@ -102,27 +102,10 @@
         cursor: pointer;
     }
 
-    /* 1. GİRİŞ KARTI (ALTIN PARLAMA) */
-    #sec-0 .glass-card:hover {
+    .glass-card:hover {
         transform: translateY(-10px) scale(1.02);
-        border: 1px solid var(--gold) !important;
-        box-shadow: 0 0 30px rgba(234, 179, 8, 0.3); /* Altın rengi ışık */
-        animation: card-glitch 0.3s ease-in-out infinite alternate;
-    }
-
-    /* 2. KORE ARŞİVİ KARTI (LİLA PARLAMA) */
-    #sec-1 .glass-card:hover {
-        transform: translateY(-10px) scale(1.02);
-        border: 1px solid var(--lila) !important;
-        box-shadow: 0 0 30px rgba(233, 213, 255, 0.3); /* Lila rengi ışık */
-        animation: card-glitch 0.3s ease-in-out infinite alternate;
-    }
-
-    /* 3. SINAV MERKEZİ KARTI (ALTIN/SARIL PARLAMA) */
-    #sec-2 .glass-card:hover {
-        transform: translateY(-10px) scale(1.02);
-        border: 1px solid var(--gold) !important;
-        box-shadow: 0 0 30px rgba(234, 179, 8, 0.3); /* Altın rengi ışık */
+        border: 1px solid var(--gold);
+        box-shadow: 0 0 30px rgba(234, 179, 8, 0.2);
         animation: card-glitch 0.3s ease-in-out infinite alternate;
     }
 
@@ -156,35 +139,12 @@
     .wheel { width: 3px; height: 6px; background: var(--gold); border-radius: 2px; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); animation: scroll-wheel 1.6s infinite; }
     @keyframes scroll-wheel { 0% { top: 6px; opacity: 1; } 100% { top: 20px; opacity: 0; } }
 
-    /* --- MOBİL --- */
-  @media (max-width: 768px) {
-        .glass-card { 
-            padding: 40px 15px !important; 
-            width: 90% !important; 
-            margin: 0 auto !important;
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important; /* İçindeki her şeyi MERKEZE zorlar */
-            justify-content: center !important;
-            box-sizing: border-box !important;
-        }
-
-        .glass-card h2 { 
-            font-size: 1.5rem !important; 
-            width: 100% !important;
-            text-align: center !important;
-            margin: 10px 0 !important;
-            padding: 0 !important;
-            display: block !important;
-        }
-
-        .glass-card p {
-            text-align: center !important;
-            width: 100% !important;
-            margin: 5px 0 0 0 !important;
-        }
-
-        .seal-master { gap: 10px !important; transform: scale(0.6); margin-bottom: -10px; }
+    /* --- MOBİL DÜZELTME --- */
+    @media (max-width: 768px) {
+        .glass-card { padding: 35px 20px !important; width: 88% !important; border-radius: 40px !important; }
+        .seal-master { gap: 12px !important; transform: scale(0.65); margin-bottom: 0; }
+        .f-part { font-size: 4.5rem !important; }
+        section h2 { font-size: 1.7rem !important; white-space: nowrap !important; margin: 15px 0 !important; display: block !important; }
     }
 
     /* --- FOOTER --- */
@@ -241,7 +201,7 @@
     <div class="footer-content">
         <div class="footer-section">
             <h4>Hakkımızda</h4>
-            <p>Uluslararası İlişkiler mezunu, İstanbul Üniversitesi Kore Dili öğrencisi ve Turizm Rehberi adayı Ongun Orak'ın dijital portfolyo projesidir.</p>
+            <p>Uluslararası İlişkiler mezunu, İstanbul Üniversitesi Kore Dili öğrencisi ve Turizm Rehberi adayı Ongun Orak'ın portfolyo projesidir.</p>
         </div>
         <div class="footer-section">
             <h4>İletişim</h4>
