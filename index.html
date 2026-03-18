@@ -24,21 +24,23 @@
     }
 
     /* --- ÜST MENÜ (İNCE VE ŞIK) --- */
-    header {
+   header {
         position: fixed; top: 0; width: 100%;
-        height: 50px; 
+        height: 50px; /* Jilet gibi ince bar */
         padding: 0 30px;
         display: flex; justify-content: space-between; align-items: center;
         z-index: 1000;
-        background: rgba(2, 6, 23, 0.9);
-        backdrop-filter: blur(15px);
-        border-bottom: 1px solid rgba(255,255,255,0.08);
+        background: rgba(2, 6, 23, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
         box-sizing: border-box;
     }
 
-    .header-brand { display: flex; align-items: center; text-decoration: none; }
-    .header-brand img { height: 32px; width: auto; display: block; }
-
+    .header-brand img {
+        height: 30px; /* Logoyu barın içine hapsettik */
+        width: auto;
+        display: block;
+    }
     .nav-links a { 
         text-decoration: none; color: white; margin-left: 20px; 
         font-size: 0.75rem; opacity: 0.6; transition: 0.3s; letter-spacing: 1px; 
@@ -85,9 +87,9 @@
 </head>
 <body>
 
-    <header>
+   <header>
     <a href="javascript:go(0)" class="header-brand">
-        <img src="logo.png" alt="FOO PORTAL">
+        <img src="logo.png" alt="FOO">
     </a>
     <div class="nav-links">
         <a href="javascript:go(0)">GİRİŞ</a>
@@ -104,10 +106,10 @@
             <div class="o-part"><div class="needle-gold"></div></div>
         </div>
         <div class="text-brand">Ongun Orak</div>
-        <p style="margin-top: 30px; opacity: 0.7; letter-spacing: 2px; font-weight: 300;">DIGITAL CULTURE PORTAL</p>
+        <p style="margin-top: 30px; opacity: 0.7; letter-spacing: 2px;">DIGITAL CULTURE PORTAL</p>
     </div>
-    
 </section>
+    
     <section id="sec-1">
         <div class="glass-card">
             <h2 style="color: var(--lila); font-size: 2.5rem; margin: 0;">Kore Arşivi</h2>
