@@ -158,7 +158,13 @@
 
     /* --- MOBİL --- */
     @media (max-width: 768px) {
-        .glass-card { padding: 35px 20px !important; width: 88% !important; border-radius: 40px !important; }
+        .glass-card { 
+            padding: 35px 15px !important; /* Sağ-sol padding'i eşitledik */
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important; /* İçindeki her şeyi merkeze zorlar */
+            justify-content: center !important;
+        }
         .seal-master { gap: 12px !important; transform: scale(0.65); margin-bottom: 0; }
         .f-part { font-size: 4.5rem !important; }
         section h2 { 
