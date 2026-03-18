@@ -83,6 +83,29 @@
     /* Arka Planlar */
     .bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0; transition: opacity 1s; background-size: cover; background-position: center; }
     #bg-0 { opacity: 1; background: radial-gradient(circle at center, #1e1b4b 0%, #020617 100%); }
+
+    /* --- MOBİL İYİLEŞTİRMELERİ --- */
+    @media (max-width: 768px) {
+        header {
+            padding: 0 15px; /* Kenar boşluklarını daralttık */
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 10px; /* Kelimeler arası sabit boşluk */
+        }
+
+        .nav-links a {
+            margin-left: 0; /* Eski margin'i sıfırladık */
+            font-size: 0.6rem; /* Yazıyı hafif küçülttük ki sığsın */
+            white-space: nowrap; /* Kelimenin bölünmesini (alta kaymasını) engeller */
+            letter-spacing: 0.5px;
+        }
+
+        .header-brand img {
+            height: 25px; /* Logoyu mobilde bir tık daha küçülttük */
+        }
+    }
 </style>
 </head>
 <body>
