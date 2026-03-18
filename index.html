@@ -174,6 +174,67 @@
 
         .text-brand { font-size: 0.9rem !important; letter-spacing: 5px !important; }
     }
+
+/* --- FOOTER BAR TASARIMI --- */
+    .footer-bar {
+        position: relative;
+        z-index: 100;
+        background: rgba(2, 6, 23, 0.95);
+        backdrop-filter: blur(15px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 40px 20px 20px 20px;
+        margin-top: 50px;
+    }
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 30px;
+    }
+
+    .footer-section {
+        flex: 1;
+        min-width: 250px;
+    }
+
+    .footer-section h4 {
+        color: var(--gold);
+        margin-bottom: 15px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+    }
+
+    .footer-section p {
+        font-size: 0.8rem;
+        line-height: 1.6;
+        opacity: 0.7;
+    }
+
+    .footer-bottom {
+        width: 100%;
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        font-size: 0.7rem;
+        opacity: 0.5;
+    }
+
+    /* Mobilde Footer Düzeni */
+    @media (max-width: 768px) {
+        .footer-content {
+            flex-direction: column;
+            text-align: center;
+        }
+        .footer-bar {
+            padding: 30px 15px 15px 15px;
+        }
+    }
+    
 </style>
 </head>
 <body>
@@ -261,5 +322,22 @@
     window.addEventListener('resize', createHangulRain);
 </script>
 
+<footer class="footer-bar">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Hakkımızda</h4>
+            <p>Dijital Kültür ve Turizm Rehberliği üzerine odaklanmış, Kore dili ve strateji tutkusuyla harmanlanmış bir portfolyo projesidir.</p>
+        </div>
+        <div class="footer-section">
+            <h4>İletişim</h4>
+            <p>Email: ongunorak@gmail.com</p>
+            <p>İstanbul, Türkiye</p>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 FOO | Ongun Orak. Tüm Hakları Saklıdır.</p>
+        </div>
+    </div>
+</footer>
+    
 </body>
 </html>
