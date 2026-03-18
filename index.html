@@ -23,10 +23,10 @@
         overflow-x: hidden;
     }
 
-    /* --- ÜST MENÜ (İNCE VE ŞIK) --- */
-   header {
+    /* --- ÜST MENÜ --- */
+    header {
         position: fixed; top: 0; width: 100%;
-        height: 50px; /* Jilet gibi ince bar */
+        height: 50px;
         padding: 0 30px;
         display: flex; justify-content: space-between; align-items: center;
         z-index: 1000;
@@ -36,18 +36,14 @@
         box-sizing: border-box;
     }
 
-    .header-brand img {
-        height: 30px; /* Logoyu barın içine hapsettik */
-        width: auto;
-        display: block;
-    }
+    .header-brand img { height: 30px; width: auto; display: block; }
     .nav-links a { 
         text-decoration: none; color: white; margin-left: 20px; 
         font-size: 0.75rem; opacity: 0.6; transition: 0.3s; letter-spacing: 1px; 
     }
     .nav-links a:hover { opacity: 1; color: var(--lila); }
 
-    /* --- ANA SAYFA BÜYÜK LOGO (İSKELET) SİSTEMİ --- */
+    /* --- ANA SAYFA LOGO SİSTEMİ --- */
     .seal-master {
         position: relative; display: inline-flex; align-items: center; justify-content: center;
         gap: 15px; padding: 25px 45px; border-radius: 60px;
@@ -76,48 +72,28 @@
 
     @keyframes drift { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(25deg); } }
 
+    /* --- SECTION VE KARTLAR --- */
     section { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 10; }
-    .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 40px; padding: 60px; text-align: center; }
-    .text-brand { letter-spacing: 12px; text-transform: uppercase; font-weight: 700; background: linear-gradient(to right, var(--gold), var(--lila)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 20px; }
-
-    /* Arka Planlar */
-    .bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0; transition: opacity 1s; background-size: cover; background-position: center; }
-    #bg-0 { opacity: 1; background: radial-gradient(circle at center, #1e1b4b 0%, #020617 100%); }
-
-    /* --- MOBİL İYİLEŞTİRMELERİ --- */
-    @media (max-width: 768px) {
-        header {
-            padding: 0 15px; /* Kenar boşluklarını daralttık */
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 10px; /* Kelimeler arası sabit boşluk */
-        }
-
-        .nav-links a {
-            margin-left: 0; /* Eski margin'i sıfırladık */
-            font-size: 0.6rem; /* Yazıyı hafif küçülttük ki sığsın */
-            white-space: nowrap; /* Kelimenin bölünmesini (alta kaymasını) engeller */
-            letter-spacing: 0.5px;
-        }
-
-        .header-brand img {
-            height: 25px; /* Logoyu mobilde bir tık daha küçülttük */
-        }
-
-        /* --- KART PARLAMA VE YÜKSELME EFEKTİ --- */
-    .glass-card {
+    
+    .glass-card { 
+        background: rgba(255, 255, 255, 0.03); 
+        backdrop-filter: blur(25px); 
+        border: 1px solid rgba(255, 255, 255, 0.1); 
+        border-radius: 40px; 
+        padding: 60px; 
+        text-align: center;
         transition: transform 0.4s ease, box-shadow 0.4s ease;
         position: relative;
     }
 
     .glass-card:hover {
-        transform: translateY(-10px); /* Hafif yukarı kalkış */
-        box-shadow: 0 20px 40px rgba(233, 213, 255, 0.1); /* Lila hafif parlama */
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(233, 213, 255, 0.15);
     }
 
-    /* --- SCROLL (AŞAĞI KAYDIR) ANİMASYONU --- */
+    .text-brand { letter-spacing: 12px; text-transform: uppercase; font-weight: 700; background: linear-gradient(to right, var(--gold), var(--lila)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 20px; }
+
+    /* --- SCROLL ANİMASYONU (SAYFA GENELİ) --- */
     .scroll-indicator {
         position: absolute;
         bottom: 30px;
@@ -127,50 +103,35 @@
         flex-direction: column;
         align-items: center;
         gap: 8px;
-        opacity: 0.6;
+        opacity: 0.5;
         transition: 0.3s;
         cursor: pointer;
+        z-index: 20;
     }
-
     .scroll-indicator:hover { opacity: 1; }
+    .mouse { width: 22px; height: 36px; border: 2px solid var(--lila); border-radius: 20px; position: relative; }
+    .wheel { width: 3px; height: 6px; background: var(--gold); border-radius: 2px; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); animation: scroll-wheel 1.6s infinite; }
+    @keyframes scroll-wheel { 0% { top: 6px; opacity: 1; } 100% { top: 20px; opacity: 0; } }
+    .scroll-text { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: var(--lila); }
 
-    .mouse {
-        width: 22px;
-        height: 38px;
-        border: 2px solid var(--lila);
-        border-radius: 20px;
-        position: relative;
-    }
+    /* Arka Plan */
+    .bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0; transition: opacity 1s; background-size: cover; background-position: center; }
+    #bg-0 { opacity: 1; background: radial-gradient(circle at center, #1e1b4b 0%, #020617 100%); }
 
-    .wheel {
-        width: 3px;
-        height: 6px;
-        background: var(--gold);
-        border-radius: 2px;
-        position: absolute;
-        top: 8px;
-        left: 50%;
-        transform: translateX(-50%);
-        animation: scroll-wheel 1.6s infinite;
-    }
-
-    @keyframes scroll-wheel {
-        0% { top: 8px; opacity: 1; }
-        100% { top: 22px; opacity: 0; }
-    }
-
-    .scroll-text {
-        font-size: 0.6rem;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        color: var(--lila);
-    }
+    /* --- MOBİL AYARLAR --- */
+    @media (max-width: 768px) {
+        header { padding: 0 15px; }
+        .nav-links { display: flex; gap: 8px; }
+        .nav-links a { margin-left: 0; font-size: 0.55rem; white-space: nowrap; letter-spacing: 0.5px; }
+        .header-brand img { height: 25px; }
+        .seal-master { transform: scale(0.7); } /* Logoyu mobilde küçülttük */
+        .glass-card { padding: 30px; width: 85%; }
     }
 </style>
 </head>
 <body>
 
-   <header>
+<header>
     <a href="javascript:go(0)" class="header-brand">
         <img src="logo.png" alt="FOO">
     </a>
@@ -194,40 +155,27 @@
 
     <div class="scroll-indicator" onclick="go(1)">
         <span class="scroll-text">Keşfet</span>
-        <div class="mouse">
-            <div class="wheel"></div>
-        </div>
+        <div class="mouse"><div class="wheel"></div></div>
     </div>
 </section>
-    
-    <section id="sec-1">
-        <div class="glass-card">
-            <h2 style="color: var(--lila); font-size: 2.5rem; margin: 0;">Kore Arşivi</h2>
-            <p style="margin-top: 20px; opacity: 0.8;">Kültür ve dil notları burada hayat bulacak.</p>
-        </div>
-    </section>
 
-    <section id="sec-2">
-        <div class="glass-card">
-            <h2 style="color: var(--gold); font-size: 2.5rem; margin: 0;">Sınav Merkezi</h2>
-            <p style="margin-top: 20px; opacity: 0.8;">Rehberlik hazırlık süreci için dijital kütüphane.</p>
-        </div>
-    </section>
+<section id="sec-1">
+    <div class="glass-card">
+        <h2 style="color: var(--lila); font-size: 2.5rem; margin: 0;">Kore Arşivi</h2>
+        <p style="margin-top: 20px; opacity: 0.8;">Kültür ve dil notları burada hayat bulacak.</p>
+    </div>
+</section>
 
-    <script>
-        function go(index) { window.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' }); }
-        window.addEventListener('scroll', () => {
-            const scrollPos = window.scrollY;
-            const windowHeight = window.innerHeight;
-            const currentIndex = Math.round(scrollPos / windowHeight);
-            document.querySelectorAll('.bg-layer').forEach((layer, i) => {
-                layer.style.opacity = (i === currentIndex) ? '1' : '0';
-            });
-            document.querySelectorAll('.dot').forEach((dot, i) => {
-                if(i === currentIndex) dot.classList.add('active');
-                else dot.classList.remove('active');
-            });
-        });
-    </script>
+<section id="sec-2">
+    <div class="glass-card">
+        <h2 style="color: var(--gold); font-size: 2.5rem; margin: 0;">Sınav Merkezi</h2>
+        <p style="margin-top: 20px; opacity: 0.8;">Rehberlik hazırlık süreci için dijital kütüphane.</p>
+    </div>
+</section>
+
+<script>
+    function go(index) { window.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' }); }
+</script>
+
 </body>
 </html>
