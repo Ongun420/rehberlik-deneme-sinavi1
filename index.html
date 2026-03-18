@@ -26,80 +26,66 @@
         /* --- ÜST MENÜ VE SOL ÜST LOGO --- */
         header {
             position: fixed; top: 0; width: 100%;
-            padding: 15px 40px;
+            padding: 12px 40px;
             display: flex; justify-content: space-between; align-items: center;
             z-index: 1000;
-            background: rgba(2, 6, 23, 0.6);
+            background: rgba(2, 6, 23, 0.7);
             backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255,255,255,0.05);
             box-sizing: border-box;
         }
 
-        /* Sol Üstteki Küçük Logo Ekibi */
         .header-logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            text-decoration: none;
+            display: flex; align-items: center; gap: 15px;
+            text-decoration: none; color: white;
+            transition: 0.3s;
         }
         
-        /* Ana logodan kopyaladığımız minyatür versiyonlar */
-        .mini-f { font-weight: 700; color: var(--gold); font-size: 1.5rem; }
-        .mini-o-korea { width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(180deg, var(--korea-red) 50%, var(--korea-blue) 50%); transform: rotate(-30deg); }
-        .mini-o-compass { width: 16px; height: 16px; border: 1.5px solid white; border-radius: 50%; position: relative; }
-
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a {
-            text-decoration: none; color: white;
-            font-size: 0.85rem; font-weight: 400; letter-spacing: 1.5px;
-            transition: 0.3s; opacity: 0.6;
+        /* SOL ÜSTTEKİ MİNYATÜR MÜHÜR (ANA LOGO İLE AYNI TEKNİK) */
+        .mini-seal {
+            display: flex; align-items: center; gap: 5px;
+            padding: 8px 15px; border-radius: 20px;
+            position: relative; scale: 0.5; transform-origin: left;
         }
+        .mini-seal::before {
+            content: ""; position: absolute; inset: 0; border-radius: 20px; padding: 2px;
+            background: linear-gradient(135deg, var(--gold) 0%, transparent 50%, var(--lila) 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+        }
+
+        .mini-f { font-size: 3rem; font-weight: 700; color: var(--gold); line-height: 1; }
+        
+        .mini-o { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; position: relative; }
+        
+        /* Birebir Taegeuk Sarmalı */
+        .mini-korea { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(180deg, var(--korea-red) 50%, var(--korea-blue) 50%); transform: rotate(-30deg); position: relative; }
+        .mini-korea::before { content: ''; position: absolute; width: 17px; height: 17px; background: var(--korea-red); border-radius: 50%; top: 8.5px; left: 0; }
+        .mini-korea::after { content: ''; position: absolute; width: 17px; height: 17px; background: var(--korea-blue); border-radius: 50%; top: 8.5px; right: 0; }
+        
+        /* Birebir Pusula İğnesi */
+        .mini-needle { width: 2px; height: 30px; background: linear-gradient(to bottom, var(--gold) 50%, white 50%); position: absolute; animation: drift 5s infinite; }
+
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a { text-decoration: none; color: white; font-size: 0.8rem; font-weight: 400; letter-spacing: 1.5px; opacity: 0.6; transition: 0.3s; }
         .nav-links a:hover { opacity: 1; color: var(--lila); }
 
-        /* Arka Plan Katmanları */
-        .bg-layer {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100vh;
-            z-index: -1; opacity: 0;
-            transition: opacity 1.5s ease;
-            background-size: cover; background-position: center;
-        }
-
+        /* ARKA PLANLAR */
+        .bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0; transition: opacity 1.5s ease; background-size: cover; background-position: center; }
         #bg-home { opacity: 1; background: radial-gradient(circle at center, #1e1b4b 0%, #020617 100%); }
         #bg-kore { background: linear-gradient(rgba(2,6,23,0.85), rgba(2,6,23,0.85)), url('https://images.unsplash.com/photo-1538669715515-5c39893d7904?q=80&w=1920'); }
         #bg-exam { background: linear-gradient(rgba(2,6,23,0.85), rgba(2,6,23,0.85)), url('https://images.unsplash.com/photo-1599110906885-b024c90c2773?q=80&w=1920'); }
 
         section { height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0 10%; }
 
-        /* Gelişmiş Cam Paneller */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 40px;
-            padding: 60px;
-            max-width: 750px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-            transform: translateY(40px); opacity: 0;
-            transition: all 0.8s ease-out;
-        }
+        /* CAM PANELLER */
+        .glass-panel { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 40px; padding: 60px; max-width: 750px; transform: translateY(40px); opacity: 0; transition: all 0.8s ease-out; }
         .active-panel { transform: translateY(0); opacity: 1; }
 
-        /* ANA LOGO (Mühür Tasarımı) */
-        .logo-seal-frame {
-            position: relative; padding: 25px 45px;
-            display: flex; align-items: center; gap: 12px;
-            border-radius: 60px; background: rgba(255, 255, 255, 0.01);
-            transition: 0.5s;
-        }
-        .logo-seal-frame::before {
-            content: ""; position: absolute; inset: 0; border-radius: 60px; padding: 2px;
-            background: linear-gradient(135deg, var(--gold) 0%, transparent 50%, var(--lila) 100%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude;
-        }
+        /* ANA SAYFA DEV LOGO */
+        .logo-seal-frame { position: relative; padding: 25px 45px; display: flex; align-items: center; gap: 12px; border-radius: 60px; background: rgba(255, 255, 255, 0.01); }
+        .logo-seal-frame::before { content: ""; position: absolute; inset: 0; border-radius: 60px; padding: 2px; background: linear-gradient(135deg, var(--gold) 0%, transparent 50%, var(--lila) 100%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
 
         .letter-f { font-size: 6.5rem; font-weight: 700; color: var(--gold); line-height: 1; }
         .symbol-o { width: 85px; height: 85px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; position: relative; }
@@ -122,10 +108,12 @@
 
     <header>
         <a href="#sec-0" class="header-logo" onclick="go(0); return false;">
-            <div class="mini-f">F</div>
-            <div class="mini-o-korea"></div>
-            <div class="mini-o-compass"></div>
-            <div style="font-weight: 700; letter-spacing: 2px; margin-left: 5px; font-size: 0.9rem;">PORTAL</div>
+            <div class="mini-seal">
+                <div class="mini-f">F</div>
+                <div class="mini-o"><div class="mini-korea"></div></div>
+                <div class="mini-o"><div class="mini-needle"></div></div>
+            </div>
+            <div style="font-weight: 700; letter-spacing: 3px; font-size: 0.8rem; margin-left: -35px;">PORTAL</div>
         </a>
         <div class="nav-links">
             <a href="#sec-0">ANA SAYFA</a>
@@ -172,7 +160,6 @@
 
     <script>
         function go(index) { window.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' }); }
-
         window.addEventListener('scroll', () => {
             const scrollPos = window.scrollY;
             const windowHeight = window.innerHeight;
@@ -180,10 +167,8 @@
             const layers = document.querySelectorAll('.bg-layer');
             const panels = document.querySelectorAll('.glass-panel');
             const currentIndex = Math.round(scrollPos / windowHeight);
-
             layers.forEach((layer, i) => layer.style.opacity = (i === currentIndex) ? '1' : '0');
             dots.forEach((dot, i) => i === currentIndex ? dot.classList.add('active') : dot.classList.remove('active'));
-            
             panels.forEach((panel, i) => {
                 if(i === currentIndex) panel.classList.add('active-panel');
                 else panel.classList.remove('active-panel');
