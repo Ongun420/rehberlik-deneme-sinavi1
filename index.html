@@ -23,68 +23,45 @@
         overflow-x: hidden;
     }
 
-    /* --- HANGUL ARKA PLAN (SİHİRLİ KATMAN) --- */
+    /* --- HANGUL ARKA PLAN --- */
     #hangul-container {
         position: fixed;
         top: 0; left: 0;
         width: 100vw; height: 100vh;
-        z-index: 1; /* En arkada ama görünebilir */
+        z-index: 1; 
         overflow: hidden;
         pointer-events: none;
         background: var(--bg-dark);
+        transition: 1s ease; /* Renk geçiş yumuşaklığı */
     }
 
     .hangul-column {
         position: absolute;
         top: -500px;
-        color: var(--lila);
-        font-family: 'Courier New', monospace; /* Monospace şart! */
-        font-size: 1.1rem; /* Harfleri biraz küçülttük */
+        font-family: 'Courier New', monospace;
+        font-size: 1.1rem;
         font-weight: 900;
         text-align: center;
-        /* writing-mode silindi, daha kontrollü gideceğiz */
         animation: fall linear infinite;
-        text-shadow: 0 0 5px var(--lila);
         opacity: 0.2;
-        line-height: 0.9; /* Harfleri birbirine yaklaştırdık */
-        width: 20px; /* Sütun genişliğini sabitledik */
-        word-break: break-all; /* Yan yana gelmeyi yasakladık! */
+        line-height: 0.9;
+        width: 20px;
+        word-break: break-all;
+        /* Renkleri buradan sildik ki aşağıdakiler çalışsın */
     }
 
-    /* --- DİNAMİK YAĞMUR RENKLERİ --- */
-    #hangul-container { transition: filter 1s ease; } /* Renk geçişi yumuşak olsun */
-
-    /* Giriş Sayfası: Siber Buz Mavisi */
-    .rain-default .hangul-column { 
-        color: #00f2ff; 
-        text-shadow: 0 0 12px #00f2ff; 
-        opacity: 0.25; 
-    }
-
-    /* Kore Arşivi: Mugunghwa Lilası */
-    .rain-korea .hangul-column { 
-        color: #E9D5FF; 
-        text-shadow: 0 0 15px #d8b4fe; 
-        opacity: 0.35; 
-    }
-
-    /* Sınav Merkezi: Altın Sarısı */
-    .rain-gold .hangul-column { 
-        color: var(--gold); 
-        text-shadow: 0 0 12px #f59e0b; 
-        opacity: 0.3; 
-    }
+    /* --- DİNAMİK RENK SINIFLARI --- */
+    .rain-default .hangul-column { color: #00f2ff; text-shadow: 0 0 12px #00f2ff; opacity: 0.25; }
+    .rain-korea .hangul-column { color: #E9D5FF; text-shadow: 0 0 15px #d8b4fe; opacity: 0.35; }
+    .rain-gold .hangul-column { color: var(--gold); text-shadow: 0 0 12px #f59e0b; opacity: 0.3; }
 
     @keyframes fall {
         0% { transform: translateY(-10%); }
         100% { transform: translateY(115vh); }
     }
 
-    /* --- İÇERİK KATMANI (YAĞMURUN ÜSTÜNDE DURMALI) --- */
-    header, section {
-        position: relative;
-        z-index: 10; /* Yağmurun üstünde kalsınlar */
-    }
+    /* --- İÇERİK --- */
+    header, section { position: relative; z-index: 10; }
 
     header {
         position: fixed; top: 0; width: 100%; height: 50px; padding: 0 30px;
@@ -104,10 +81,9 @@
         border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 40px; 
         padding: 60px; text-align: center; transition: 0.4s;
     }
-    .glass-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(233, 213, 255, 0.15); }
 
     /* LOGO SİSTEMİ */
-    .seal-master { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 15px; padding: 25px 45px; border-radius: 60px; background: rgba(255, 255, 255, 0.01); }
+    .seal-master { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 15px; padding: 25px 45px; border-radius: 60px; }
     .seal-master::before { content: ""; position: absolute; inset: 0; border-radius: 60px; padding: 2.5px; background: linear-gradient(135deg, var(--gold) 0%, transparent 50%, var(--lila) 100%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
     .f-part { font-size: 6rem; font-weight: 700; color: var(--gold); line-height: 1; }
     .o-part { width: 80px; height: 80px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; position: relative; }
@@ -119,7 +95,6 @@
     @keyframes drift { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(25deg); } }
     .text-brand { letter-spacing: 12px; text-transform: uppercase; font-weight: 700; background: linear-gradient(to right, var(--gold), var(--lila)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 20px; }
 
-    /* SCROLL INDICATOR */
     .scroll-indicator { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0.5; cursor: pointer; }
     .mouse { width: 22px; height: 36px; border: 2px solid var(--lila); border-radius: 20px; position: relative; }
     .wheel { width: 3px; height: 6px; background: var(--gold); border-radius: 2px; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); animation: scroll-wheel 1.6s infinite; }
@@ -142,9 +117,9 @@
         <img src="logo.png" alt="FOO">
     </a>
     <div class="nav-links">
-        <a href="javascript:go(0)">GİRİŞ</a>
-        <a href="javascript:go(1)">KORE ARŞİVİ</a>
-        <a href="javascript:go(2)">SINAV MERKEZİ</a>
+        <a href="javascript:void(0)" onclick="go(0)">GİRİŞ</a>
+        <a href="javascript:void(0)" onclick="go(1)">KORE ARŞİVİ</a>
+        <a href="javascript:void(0)" onclick="go(2)">SINAV MERKEZİ</a>
     </div>
 </header>
 
@@ -183,24 +158,19 @@
         window.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' }); 
         
         const container = document.getElementById('hangul-container');
-        
-        // Önce tüm renk sınıflarını temizle
+        if(!container) return;
+
         container.classList.remove('rain-default', 'rain-korea', 'rain-gold');
         
-        // Sayfa numarasına göre doğru rengi ata
-        if(index === 0) {
-            container.classList.add('rain-default'); // Giriş (Buz Mavisi)
-        } else if(index === 1) {
-            container.classList.add('rain-korea');   // Kore Arşivi (Lila)
-        } else if(index === 2) {
-            container.classList.add('rain-gold');    // Sınav Merkezi (Altın)
-        }
+        if(index === 0) container.classList.add('rain-default');
+        else if(index === 1) container.classList.add('rain-korea');
+        else if(index === 2) container.classList.add('rain-gold');
     }
 
     function createHangulRain() {
         const container = document.getElementById('hangul-container');
         const characters = '가나다라마바사아자차카타파하ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ'; 
-        const colWidth = 30; // Daha sık sütunlar
+        const colWidth = 30;
         const colCount = Math.floor(window.innerWidth / colWidth);
 
         container.innerHTML = '';
@@ -209,7 +179,6 @@
             const column = document.createElement('div');
             column.className = 'hangul-column';
             
-            // Rastgele karakterleri <br> ile ayırarak TEK SIRA yapıyoruz
             let content = '';
             const len = Math.floor(Math.random() * 20) + 15;
             for (let j = 0; j < len; j++) {
@@ -218,23 +187,20 @@
             
             column.innerHTML = content;
             column.style.left = (i * colWidth) + 'px';
-            column.style.animationDuration = (Math.random() * 7 + 8) + 's'; // Biraz daha hızlandırdık
+            column.style.animationDuration = (Math.random() * 7 + 8) + 's';
             column.style.animationDelay = (Math.random() * -20) + 's';
             
             container.appendChild(column);
-
-            document.addEventListener('DOMContentLoaded', () => {
-        const container = document.getElementById('hangul-container');
-        if(container) container.classList.add('rain-default'); // Başlangıç rengi
-        createHangulRain();
-    });
-
-    window.addEventListener('resize', createHangulRain);
         }
     }
 
-    // DOM hazır olduğunda hemen çalıştır
-    document.addEventListener('DOMContentLoaded', createHangulRain);
+    // Olay Dinleyicileri (Döngü Dışında!)
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('hangul-container');
+        if(container) container.classList.add('rain-default');
+        createHangulRain();
+    });
+
     window.addEventListener('resize', createHangulRain);
 </script>
 
