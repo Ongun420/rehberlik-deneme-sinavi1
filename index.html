@@ -127,6 +127,37 @@
     @keyframes scroll-wheel { 0% { top: 6px; opacity: 1; } 100% { top: 20px; opacity: 0; } }
     .scroll-text { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: var(--lila); }
 
+    /* --- HANGUL ARKA PLAN --- */
+    #hangul-container {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        z-index: -1; 
+        background: var(--bg-dark); 
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .hangul-column {
+        position: absolute;
+        top: -250px;
+        color: var(--lila);
+        font-family: 'Courier New', sans-serif;
+        font-size: 1.3rem;
+        font-weight: bold;
+        text-align: center;
+        white-space: nowrap;
+        writing-mode: vertical-rl;
+        animation: fall linear infinite;
+        text-shadow: 0 0 8px rgba(233, 213, 255, 0.6);
+        opacity: 0.2; 
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(-20%); }
+        100% { transform: translateY(120vh); }
+    }
+
     /* --- MOBİL AYARLAR --- */
     @media (max-width: 768px) {
         header { padding: 0 15px; }
@@ -186,41 +217,44 @@
 </section>
 
 <script>
-    function go(index) { window.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' }); }
-    
-    // HANGUL GENERATOR
-    const container = document.getElementById('hangul-container');
-    const characters = '가나다라마바사아자차카타파하ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ';
-    const columnWidth = 35; // Sütun genişliği
-    const columnCount = Math.floor(window.innerWidth / columnWidth);
+// Sayfa Kaydırma Fonksiyonu
+    function go(index) { 
+        window.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' }); 
+    }
 
-    function createColumn() {
+    // HANGUL YAĞMURU OLUŞTURUCU
+    function createHangulRain() {
+        const container = document.getElementById('hangul-container');
+        const characters = '가나다라마바사아자차카타파하안녕오래된포털문화디지털ㄱㄴㄷㄹㅁ'; 
+        const columnWidth = 40; 
+        const columnCount = Math.floor(window.innerWidth / columnWidth);
+
+        container.innerHTML = ''; // Önce temizle
+
         for (let i = 0; i < columnCount; i++) {
-            setTimeout(() => {
-                const column = document.createElement('div');
-                column.className = 'hangul-column';
-                
-                // Rastgele karakter dizisi (10-25 arası karakter)
-                let content = '';
-                const length = Math.floor(Math.random() * 15) + 10;
-                for (let j = 0; j < length; j++) {
-                    content += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>';
-                }
-                
-                column.innerHTML = content;
-                column.style.left = (i * columnWidth) + 'px';
-                column.style.animationDuration = (Math.random() * 12 + 15) + 's'; // Daha ağırbaşlı hız
-                column.style.opacity = Math.random() * 0.4 + 0.1;
-                
-                container.appendChild(column);
-                
-                column.addEventListener('animationiteration', () => {
-                    column.style.left = Math.random() * window.innerWidth + 'px';
-                });
-            }, i * 150);
+            const column = document.createElement('div');
+            column.className = 'hangul-column';
+            
+            let content = '';
+            const length = Math.floor(Math.random() * 10) + 15;
+            for (let j = 0; j < length; j++) {
+                content += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>';
+            }
+            
+            column.innerHTML = content;
+            column.style.left = (i * columnWidth) + 'px';
+            
+            // Rastgele hız ve başlangıç gecikmesi (Ekranın ortasından başlamaları için eksi değer)
+            column.style.animationDuration = (Math.random() * 8 + 12) + 's';
+            column.style.animationDelay = (Math.random() * -20) + 's';
+            
+            container.appendChild(column);
         }
     }
-    createColumn();
+
+    // Yüklendiğinde ve ekran boyutu değiştiğinde çalıştır
+    window.addEventListener('load', createHangulRain);
+    window.addEventListener('resize', createHangulRain);
 </script>
 
 </body>
