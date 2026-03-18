@@ -9,6 +9,9 @@
     :root {
         --bg-dark: #020617;
         --lila: #E9D5FF;
+        --gold: #EAB308;
+        --korea-red: #CD313A;
+        --korea-blue: #0047A0;
     }
 
     body, html {
@@ -20,7 +23,7 @@
         overflow-x: hidden;
     }
 
-    /* --- ÜST MENÜ (50PX JİLET GİBİ İNCE) --- */
+    /* --- ÜST MENÜ (İNCE VE ŞIK) --- */
     header {
         position: fixed; top: 0; width: 100%;
         height: 50px; 
@@ -33,28 +36,51 @@
         box-sizing: border-box;
     }
 
-    .header-brand {
-        display: flex; align-items: center;
-        text-decoration: none;
-    }
-
-    /* LOGO RESMİNİ BURADAN KONTROL EDİYORUZ */
-    .header-brand img {
-        height: 32px; /* Çubuğun içine tam sığacak boyut */
-        width: auto;
-        display: block;
-    }
+    .header-brand { display: flex; align-items: center; text-decoration: none; }
+    .header-brand img { height: 32px; width: auto; display: block; }
 
     .nav-links a { 
         text-decoration: none; color: white; margin-left: 20px; 
-        font-size: 0.75rem; opacity: 0.6; transition: 0.3s; 
-        letter-spacing: 1px; 
+        font-size: 0.75rem; opacity: 0.6; transition: 0.3s; letter-spacing: 1px; 
     }
     .nav-links a:hover { opacity: 1; color: var(--lila); }
 
-    /* ANA SAYFA TASARIMI (DEĞİŞMEDİ) */
-    section { height: 100vh; display: flex; align-items: center; justify-content: center; }
+    /* --- ANA SAYFA BÜYÜK LOGO (İSKELET) SİSTEMİ --- */
+    .seal-master {
+        position: relative; display: inline-flex; align-items: center; justify-content: center;
+        gap: 15px; padding: 25px 45px; border-radius: 60px;
+        background: rgba(255, 255, 255, 0.01);
+    }
+    .seal-master::before {
+        content: ""; position: absolute; inset: 0; border-radius: 60px; padding: 2.5px;
+        background: linear-gradient(135deg, var(--gold) 0%, transparent 50%, var(--lila) 100%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor; mask-composite: exclude;
+    }
+    .f-part { font-size: 6rem; font-weight: 700; color: var(--gold); line-height: 1; }
+    .o-part { 
+        width: 80px; height: 80px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.15);
+        display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .swirl-korea {
+        width: 65px; height: 65px; border-radius: 50%;
+        background: linear-gradient(180deg, var(--korea-red) 50%, var(--korea-blue) 50%);
+        transform: rotate(-30deg); position: relative;
+    }
+    .swirl-korea::before { content: ''; position: absolute; width: 32.5px; height: 32.5px; background: var(--korea-red); border-radius: 50%; top: 16.25px; left: 0; }
+    .swirl-korea::after { content: ''; position: absolute; width: 32.5px; height: 32.5px; background: var(--korea-blue); border-radius: 50%; top: 16.25px; right: 0; }
+    .needle-gold { width: 3px; height: 55px; background: linear-gradient(var(--gold) 50%, #fff 50%); position: absolute; animation: drift 5s infinite ease-in-out; }
+
+    @keyframes drift { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(25deg); } }
+
+    section { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 10; }
     .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 40px; padding: 60px; text-align: center; }
+    .text-brand { letter-spacing: 12px; text-transform: uppercase; font-weight: 700; background: linear-gradient(to right, var(--gold), var(--lila)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 20px; }
+
+    /* Arka Planlar */
+    .bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0; transition: opacity 1s; background-size: cover; background-position: center; }
+    #bg-0 { opacity: 1; background: radial-gradient(circle at center, #1e1b4b 0%, #020617 100%); }
 </style>
 </head>
 <body>
@@ -70,28 +96,18 @@
     </div>
 </header>
 
-    <div id="bg-0" class="bg-layer"></div>
-    <div id="bg-1" class="bg-layer"></div>
-    <div id="bg-2" class="bg-layer"></div>
-
-    <div class="dots">
-        <div class="dot active" onclick="go(0)"></div>
-        <div class="dot" onclick="go(1)"></div>
-        <div class="dot" onclick="go(2)"></div>
-    </div>
-
-    <section id="sec-0">
-        <div class="glass-card">
-            <div class="seal-master" style="margin-bottom: 20px;">
-                <div class="f-part">F</div>
-                <div class="o-part"><div class="swirl-korea"></div></div>
-                <div class="o-part"><div class="needle-gold"></div></div>
-            </div>
-            <div class="text-brand">Ongun Orak</div>
-            <p style="margin-top: 25px; opacity: 0.7; letter-spacing: 2px; font-weight: 300;">DIGITAL CULTURE PORTAL</p>
+<section id="sec-0">
+    <div class="glass-card">
+        <div class="seal-master">
+            <div class="f-part">F</div>
+            <div class="o-part"><div class="swirl-korea"></div></div>
+            <div class="o-part"><div class="needle-gold"></div></div>
         </div>
-    </section>
-
+        <div class="text-brand">Ongun Orak</div>
+        <p style="margin-top: 30px; opacity: 0.7; letter-spacing: 2px; font-weight: 300;">DIGITAL CULTURE PORTAL</p>
+    </div>
+    
+</section>
     <section id="sec-1">
         <div class="glass-card">
             <h2 style="color: var(--lila); font-size: 2.5rem; margin: 0;">Kore Arşivi</h2>
