@@ -133,34 +133,46 @@
     .wheel { width: 3px; height: 6px; background: var(--gold); border-radius: 2px; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); animation: scroll-wheel 1.6s infinite; }
     @keyframes scroll-wheel { 0% { top: 6px; opacity: 1; } 100% { top: 20px; opacity: 0; } }
 
-    /* --- MOBİL OPTİMİZASYONU --- */
+   /* --- SADECE BU MOBİL DÜZELTME BLOĞUNU EKLE --- */
     @media (max-width: 768px) {
+        /* 1. Navigasyon ve Butonlar */
         header { padding: 0 15px; }
-        .nav-links a { font-size: 0.6rem; margin-left: 8px; letter-spacing: 0.5px; }
-        
-        /* Kartların Mobildeki Durumu */
+        .nav-links a { font-size: 0.65rem; margin-left: 10px; letter-spacing: 0.5px; }
+
+        /* 2. Kartların Köşeleri ve Boyutu (Kareleşmeyi ve Taşmayı Önler) */
         .glass-card { 
-            padding: 30px 20px; 
-            width: 85%; /* Ekranın kenarlarına yapışmasın */
-            max-width: 320px;
-            border-radius: 25px; /* Köşeler mobilde daha zarif olsun */
+            padding: 40px 20px !important; 
+            width: 88% !important; 
+            max-width: 340px !important;
+            border-radius: 40px !important; /* Köşeleri mobilde zorla yuvarlar */
             margin: 0 auto;
-            box-sizing: border-box; /* Padding genişliği bozmasın */
+            box-sizing: border-box !important; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* Yazıların Sığması İçin */
+        /* 3. Sınav Merkezi Yazısını Sığdırma ve Ortalama */
         section h2 { 
-            font-size: 1.8rem !important; /* "Sınav Merkezi" tek satıra sığar */
-            white-space: nowrap; /* Zorla tek satır yap */
+            font-size: 1.7rem !important; 
+            white-space: nowrap !important; /* Alta kaymayı engeller */
+            text-align: center;
+            width: 100%;
         }
 
-        .seal-master { transform: scale(0.6); margin-bottom: 10px; }
-        .f-part { font-size: 4rem; }
-        .o-part { width: 50px; height: 50px; }
-        .swirl-korea { width: 40px; height: 40px; }
-        .needle-gold { height: 40px; }
+        /* 4. LOGO RESTORASYONU (Kore Bayrağı ve İğne Düzeni) */
+        .seal-master { 
+            transform: scale(0.65) !important; /* Logoyu kutuya sığdırır */
+            margin: -15px 0 !important;
+            display: inline-flex !important; /* Bozulmasını engeller */
+        }
         
-        .text-brand { font-size: 0.9rem; letter-spacing: 6px; }
+        .f-part { font-size: 4.5rem !important; }
+        .o-part { width: 55px !important; height: 55px !important; }
+        .swirl-korea { width: 45px !important; height: 45px !important; }
+        .needle-gold { height: 45px !important; }
+        
+        .text-brand { font-size: 0.9rem !important; letter-spacing: 6px !important; }
     }
     
 </style>
