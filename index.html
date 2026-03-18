@@ -23,10 +23,10 @@
             scroll-behavior: smooth;
         }
 
-        /* --- ÜST MENÜ VE SOL ÜST LOGO --- */
+        /* --- ÜST MENÜ --- */
         header {
             position: fixed; top: 0; width: 100%;
-            padding: 12px 40px;
+            padding: 10px 40px;
             display: flex; justify-content: space-between; align-items: center;
             z-index: 1000;
             background: rgba(2, 6, 23, 0.7);
@@ -36,144 +36,67 @@
         }
 
         .header-logo {
-            display: flex; align-items: center; gap: 15px;
+            display: flex; align-items: center; gap: 10px;
             text-decoration: none; color: white;
-            transition: 0.3s;
+            scale: 0.6; transform-origin: left;
         }
-        
-        /* SOL ÜSTTEKİ MİNYATÜR MÜHÜR (ANA LOGO İLE AYNI TEKNİK) */
-        .mini-seal {
-            display: flex; align-items: center; gap: 5px;
-            padding: 8px 15px; border-radius: 20px;
-            position: relative; scale: 0.5; transform-origin: left;
+
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a { text-decoration: none; color: white; font-size: 0.9rem; opacity: 0.6; transition: 0.3s; letter-spacing: 1px; }
+        .nav-links a:hover { opacity: 1; color: var(--lila); }
+
+        /* --- LOGO TASARIMI (MÜHÜR) --- */
+        .logo-seal-frame {
+            position: relative; padding: 25px 45px;
+            display: flex; align-items: center; gap: 15px;
+            border-radius: 60px; background: rgba(255, 255, 255, 0.01);
+            transition: 0.5s;
         }
-        .mini-seal::before {
-            content: ""; position: absolute; inset: 0; border-radius: 20px; padding: 2px;
+
+        /* Çapraz Renkli Çerçeve */
+        .logo-seal-frame::before {
+            content: ""; position: absolute; inset: 0; border-radius: 60px; padding: 2px;
             background: linear-gradient(135deg, var(--gold) 0%, transparent 50%, var(--lila) 100%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor; mask-composite: exclude;
         }
 
-        .mini-f { font-size: 3rem; font-weight: 700; color: var(--gold); line-height: 1; }
+        .letter-f { font-size: 6.5rem; font-weight: 700; color: var(--gold); line-height: 1; }
         
-        .mini-o { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; position: relative; }
-        
+        .symbol-o { 
+            width: 85px; height: 85px; border-radius: 50%; 
+            border: 1px solid rgba(255,255,255,0.15); 
+            display: flex; align-items: center; justify-content: center; position: relative; 
+        }
+
         /* Birebir Taegeuk Sarmalı */
-        .mini-korea { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(180deg, var(--korea-red) 50%, var(--korea-blue) 50%); transform: rotate(-30deg); position: relative; }
-        .mini-korea::before { content: ''; position: absolute; width: 17px; height: 17px; background: var(--korea-red); border-radius: 50%; top: 8.5px; left: 0; }
-        .mini-korea::after { content: ''; position: absolute; width: 17px; height: 17px; background: var(--korea-blue); border-radius: 50%; top: 8.5px; right: 0; }
-        
+        .inner-korea {
+            width: 70px; height: 70px; border-radius: 50%;
+            background: linear-gradient(180deg, var(--korea-red) 50%, var(--korea-blue) 50%);
+            transform: rotate(-30deg); position: relative;
+        }
+        .inner-korea::before { content: ''; position: absolute; width: 35px; height: 35px; background: var(--korea-red); border-radius: 50%; top: 17.5px; left: 0; }
+        .inner-korea::after { content: ''; position: absolute; width: 35px; height: 35px; background: var(--korea-blue); border-radius: 50%; top: 17.5px; right: 0; }
+
         /* Birebir Pusula İğnesi */
-        .mini-needle { width: 2px; height: 30px; background: linear-gradient(to bottom, var(--gold) 50%, white 50%); position: absolute; animation: drift 5s infinite; }
+        .compass-needle {
+            width: 3px; height: 60px;
+            background: linear-gradient(to bottom, var(--gold) 50%, white 50%);
+            position: absolute; animation: drift 5s infinite ease-in-out;
+        }
 
-        .nav-links { display: flex; gap: 25px; }
-        .nav-links a { text-decoration: none; color: white; font-size: 0.8rem; font-weight: 400; letter-spacing: 1.5px; opacity: 0.6; transition: 0.3s; }
-        .nav-links a:hover { opacity: 1; color: var(--lila); }
+        .sub-logo-text { font-size: 0.8rem; letter-spacing: 15px; text-transform: uppercase; margin-top: 20px; font-weight: 700; background: linear-gradient(to right, var(--gold), var(--lila)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* ARKA PLANLAR */
+        /* --- ARKA PLAN VE PANELLER --- */
         .bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0; transition: opacity 1.5s ease; background-size: cover; background-position: center; }
         #bg-home { opacity: 1; background: radial-gradient(circle at center, #1e1b4b 0%, #020617 100%); }
         #bg-kore { background: linear-gradient(rgba(2,6,23,0.85), rgba(2,6,23,0.85)), url('https://images.unsplash.com/photo-1538669715515-5c39893d7904?q=80&w=1920'); }
         #bg-exam { background: linear-gradient(rgba(2,6,23,0.85), rgba(2,6,23,0.85)), url('https://images.unsplash.com/photo-1599110906885-b024c90c2773?q=80&w=1920'); }
 
         section { height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0 10%; }
-
-        /* CAM PANELLER */
-        .glass-panel { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 40px; padding: 60px; max-width: 750px; transform: translateY(40px); opacity: 0; transition: all 0.8s ease-out; }
+        .glass-panel { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 40px; padding: 60px; max-width: 750px; transform: translateY(40px); opacity: 0; transition: 0.8s ease-out; }
         .active-panel { transform: translateY(0); opacity: 1; }
 
-        /* ANA SAYFA DEV LOGO */
-        .logo-seal-frame { position: relative; padding: 25px 45px; display: flex; align-items: center; gap: 12px; border-radius: 60px; background: rgba(255, 255, 255, 0.01); }
-        .logo-seal-frame::before { content: ""; position: absolute; inset: 0; border-radius: 60px; padding: 2px; background: linear-gradient(135deg, var(--gold) 0%, transparent 50%, var(--lila) 100%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
-
-        .letter-f { font-size: 6.5rem; font-weight: 700; color: var(--gold); line-height: 1; }
-        .symbol-o { width: 85px; height: 85px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; position: relative; }
-        .inner-korea { width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(180deg, var(--korea-red) 50%, var(--korea-blue) 50%); transform: rotate(-30deg); position: relative; }
-        .inner-korea::before { content: ''; position: absolute; width: 35px; height: 35px; background: var(--korea-red); border-radius: 50%; top: 17.5px; left: 0; }
-        .inner-korea::after { content: ''; position: absolute; width: 35px; height: 35px; background: var(--korea-blue); border-radius: 50%; top: 17.5px; right: 0; }
-        .compass-needle { width: 3px; height: 60px; background: linear-gradient(to bottom, var(--gold) 50%, white 50%); position: absolute; animation: drift 5s infinite; }
-
-        .sub-logo-text { font-size: 0.75rem; letter-spacing: 14px; text-transform: uppercase; margin-top: 20px; font-weight: 700; background: linear-gradient(to right, var(--gold), var(--lila)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        @keyframes drift { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(20deg); } }
-
         .nav-dots { position: fixed; right: 30px; top: 50%; transform: translateY(-50%); z-index: 100; }
-        .dot { width: 8px; height: 8px; background: rgba(255,255,255,0.2); margin: 25px 0; border-radius: 50%; cursor: pointer; transition: 0.4s; }
-        .dot.active { background: var(--lila); transform: scale(2); box-shadow: 0 0 15px var(--lila); }
-
-    </style>
-</head>
-<body>
-
-    <header>
-        <a href="#sec-0" class="header-logo" onclick="go(0); return false;">
-            <div class="mini-seal">
-                <div class="mini-f">F</div>
-                <div class="mini-o"><div class="mini-korea"></div></div>
-                <div class="mini-o"><div class="mini-needle"></div></div>
-            </div>
-            <div style="font-weight: 700; letter-spacing: 3px; font-size: 0.8rem; margin-left: -35px;">PORTAL</div>
-        </a>
-        <div class="nav-links">
-            <a href="#sec-0">ANA SAYFA</a>
-            <a href="#sec-1">KORE ARŞİVİ</a>
-            <a href="#sec-2">SINAV MERKEZİ</a>
-        </div>
-    </header>
-
-    <div id="bg-home" class="bg-layer"></div>
-    <div id="bg-kore" class="bg-layer"></div>
-    <div id="bg-exam" class="bg-layer"></div>
-
-    <div class="nav-dots">
-        <div class="dot active" onclick="go(0)"></div>
-        <div class="dot" onclick="go(1)"></div>
-        <div class="dot" onclick="go(2)"></div>
-    </div>
-
-    <section id="sec-0">
-        <div class="glass-panel active-panel" style="text-align: center;">
-            <div class="logo-seal-frame">
-                <div class="letter-f">F</div>
-                <div class="symbol-o"><div class="inner-korea"></div></div>
-                <div class="symbol-o"><div class="compass-needle"></div></div>
-            </div>
-            <div class="sub-logo-text">Ongun Orak</div>
-            <p style="margin-top: 30px; letter-spacing: 2px; font-weight: 400; color: var(--lila);">DIGITAL CULTURE PORTAL</p>
-        </div>
-    </section>
-
-    <section id="sec-1">
-        <div class="glass-panel">
-            <h2 style="color: var(--lila); font-size: 2.8rem;">Kore Arşivi</h2>
-            <p>Seul'un modern ışıklarından Gyeongbokgung'un antik sessizliğine uzanan bir köprü. Dil, kültür ve tarihin dijital izdüşümü.</p>
-        </div>
-    </section>
-
-    <section id="sec-2">
-        <div class="glass-panel">
-            <h2 style="color: var(--gold); font-size: 2.8rem;">Sınav Merkezi</h2>
-            <p>Turizm profesyonelleri için bir hazırlık üssü. Bilginin rehberliğinde, sınavın en zorlu virajlarını birlikte dönüyoruz.</p>
-        </div>
-    </section>
-
-    <script>
-        function go(index) { window.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' }); }
-        window.addEventListener('scroll', () => {
-            const scrollPos = window.scrollY;
-            const windowHeight = window.innerHeight;
-            const dots = document.querySelectorAll('.dot');
-            const layers = document.querySelectorAll('.bg-layer');
-            const panels = document.querySelectorAll('.glass-panel');
-            const currentIndex = Math.round(scrollPos / windowHeight);
-            layers.forEach((layer, i) => layer.style.opacity = (i === currentIndex) ? '1' : '0');
-            dots.forEach((dot, i) => i === currentIndex ? dot.classList.add('active') : dot.classList.remove('active'));
-            panels.forEach((panel, i) => {
-                if(i === currentIndex) panel.classList.add('active-panel');
-                else panel.classList.remove('active-panel');
-            });
-        });
-    </script>
-</body>
-</html>
+        .dot { width: 8px; height: 8px; background: rgba(255,255,255,0.2); margin: 25px 0;
