@@ -141,4 +141,70 @@
         }
 
         h2 { font-size: 2.8rem; margin-top: 0; font-weight: 700; }
-        p { font-size
+        p { font-size: 1.1rem; line-height: 1.8; font-weight: 300; opacity: 0.85; }
+
+        .nav-menu { position: fixed; right: 30px; top: 50%; transform: translateY(-50%); z-index: 100; }
+        .nav-dot { width: 8px; height: 8px; background: rgba(255,255,255,0.2); margin: 25px 0; border-radius: 50%; cursor: pointer; transition: 0.4s; }
+        .nav-dot.active { background: var(--lila); transform: scale(2); box-shadow: 0 0 15px var(--lila); }
+
+        @keyframes drift { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(20deg); } }
+    </style>
+</head>
+<body>
+
+    <div id="bg-home" class="bg-layer"></div>
+    <div id="bg-kore" class="bg-layer"></div>
+    <div id="bg-exam" class="bg-layer"></div>
+
+    <div class="nav-menu">
+        <div class="nav-dot active" onclick="go(0)"></div>
+        <div class="nav-dot" onclick="go(1)"></div>
+        <div class="nav-dot" onclick="go(2)"></div>
+    </div>
+
+    <section id="sec-0">
+        <div class="glass-panel" style="text-align: center;">
+            <div class="logo-wrapper">
+                <div class="logo-seal-frame">
+                    <div class="letter letter-f">F</div>
+                    <div class="symbol-o"><div class="inner-korea"></div></div>
+                    <div class="symbol-o"><div class="compass-needle"></div></div>
+                </div>
+                <div class="sub-logo-text">Ongun Orak</div>
+            </div>
+            <p style="letter-spacing: 2px; font-weight: 400; color: var(--lila); margin-bottom: 5px;">DIGITAL CULTURE PORTAL</p>
+            <p>Kültürlerin kesişme noktasında yeni nesil rehberlik deneyimi.</p>
+        </div>
+    </section>
+
+    <section id="sec-1">
+        <div class="glass-panel">
+            <h2 style="color: var(--lila);">Kore Arşivi</h2>
+            <p>Seul'un modern ışıklarından Gyeongbokgung'un antik sessizliğine... Dil kartları, kültürel nüanslar ve TOPIK hazırlık notlarıyla dolu derin bir arşiv.</p>
+        </div>
+    </section>
+
+    <section id="sec-2">
+        <div class="glass-panel">
+            <h2 style="color: var(--gold);">Sınav Merkezi</h2>
+            <p>Profesyonel turist rehberliği sınavına hazırlık sürecinde, Efes'ten Kapadokya'ya kadar uzanan geniş müfredatın en kritik ve "kazık" noktaları burada.</p>
+        </div>
+    </section>
+
+    <script>
+        function go(index) { window.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' }); }
+        window.addEventListener('scroll', () => {
+            const scrollPos = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const dots = document.querySelectorAll('.nav-dot');
+            const layers = document.querySelectorAll('.bg-layer');
+            const currentIndex = Math.round(scrollPos / windowHeight);
+            layers.forEach((layer, i) => { layer.style.opacity = (i === currentIndex) ? '1' : '0'; });
+            dots.forEach((dot, i) => {
+                if(i === currentIndex) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
