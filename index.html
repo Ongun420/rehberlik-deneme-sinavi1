@@ -23,10 +23,10 @@
             overflow-x: hidden;
         }
 
-        /* --- ÜST MENÜ VE SOL ÜST LOGO --- */
+        /* --- ÜST MENÜ --- */
         header {
             position: fixed; top: 0; width: 100%;
-            padding: 10px 30px;
+            padding: 8px 30px;
             display: flex; justify-content: space-between; align-items: center;
             z-index: 1000;
             background: rgba(2, 6, 23, 0.9);
@@ -35,46 +35,58 @@
             box-sizing: border-box;
         }
 
-        /* Sol Üstteki Logo Alanı */
         .header-brand {
-            display: flex; align-items: center; gap: 15px;
+            display: flex; align-items: center;
             text-decoration: none; color: white;
         }
 
-        /* LOGO TASARIMI (MÜHÜR) - HEM ANA SAYFA HEM HEADER İÇİN ORTAK YAPI */
-        .seal-wrapper {
-            position: relative; display: flex; align-items: center; gap: 10px;
-            padding: 12px 25px; border-radius: 40px;
+        /* --- LOGO SİSTEMİ (MÜHÜR) --- */
+        /* Bu yapı hem küçük hem büyük logoda ortak kullanılacak */
+        .seal-master {
+            position: relative;
+            display: inline-flex; /* İçeriğe göre daralır */
+            align-items: center;
+            justify-content: center; /* Tam merkezleme */
+            gap: 12px;
+            padding: 20px 40px;
+            border-radius: 60px;
             background: rgba(255, 255, 255, 0.01);
-            transform: scale(0.6); transform-origin: left; /* Header için küçültme */
         }
 
-        /* Çapraz Çerçeve (Gold & Lila) */
-        .seal-wrapper::before {
-            content: ""; position: absolute; inset: 0; border-radius: 40px; padding: 2px;
+        /* Çapraz Çerçeve */
+        .seal-master::before {
+            content: ""; position: absolute; inset: 0; border-radius: 60px; padding: 2px;
             background: linear-gradient(135deg, var(--gold) 0%, transparent 50%, var(--lila) 100%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor; mask-composite: exclude;
         }
 
-        .f-letter { font-size: 4rem; font-weight: 700; color: var(--gold); line-height: 1; }
-        .o-circle { 
-            width: 55px; height: 55px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2);
+        .f-part { font-size: 5.5rem; font-weight: 700; color: var(--gold); line-height: 1; margin-right: 5px; }
+        
+        .o-part { 
+            width: 75px; height: 75px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.15);
             display: flex; align-items: center; justify-content: center; position: relative;
         }
         
-        .taegeuk-swirl {
-            width: 45px; height: 45px; border-radius: 50%;
+        .swirl-korea {
+            width: 60px; height: 60px; border-radius: 50%;
             background: linear-gradient(180deg, var(--korea-red) 50%, var(--korea-blue) 50%);
             transform: rotate(-30deg); position: relative;
         }
-        .taegeuk-swirl::before { content: ''; position: absolute; width: 22.5px; height: 22.5px; background: var(--korea-red); border-radius: 50%; top: 11.25px; left: 0; }
-        .taegeuk-swirl::after { content: ''; position: absolute; width: 22.5px; height: 22.5px; background: var(--korea-blue); border-radius: 50%; top: 11.25px; right: 0; }
+        .swirl-korea::before { content: ''; position: absolute; width: 30px; height: 30px; background: var(--korea-red); border-radius: 50%; top: 15px; left: 0; }
+        .swirl-korea::after { content: ''; position: absolute; width: 30px; height: 30px; background: var(--korea-blue); border-radius: 50%; top: 15px; right: 0; }
         
-        .needle { width: 2px; height: 40px; background: linear-gradient(var(--gold) 50%, #fff 50%); position: absolute; animation: drift 5s infinite; }
+        .needle-gold { width: 3px; height: 50px; background: linear-gradient(var(--gold) 50%, #fff 50%); position: absolute; animation: drift 5s infinite ease-in-out; }
 
         @keyframes drift { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(25deg); } }
+
+        /* HEADER İÇİN ÖZEL KÜÇÜLTME (Logoyu bozmadan) */
+        .mini-version {
+            transform: scale(0.45); /* Detayları bozmadan %45 küçültür */
+            transform-origin: left center;
+            margin-right: -100px; /* Scale'den kaynaklanan boşluğu kapatır */
+        }
 
         .nav-links a { text-decoration: none; color: white; margin-left: 20px; font-size: 0.85rem; opacity: 0.6; transition: 0.3s; letter-spacing: 1px; }
         .nav-links a:hover { opacity: 1; color: var(--lila); }
@@ -88,16 +100,14 @@
         section { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 10; }
 
         /* --- PANELLER --- */
-        .glass-panel {
+        .glass-card {
             background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 40px;
-            padding: 60px; max-width: 750px; text-align: center;
+            padding: 60px; max-width: 800px; text-align: center;
+            display: flex; flex-direction: column; align-items: center; /* İçerikleri dikeyde merkezler */
         }
 
-        /* Ana Sayfadaki Büyük Logo Ayarı */
-        .hero-seal { transform: scale(1.2); margin-bottom: 40px; }
-
-        .brand-text { letter-spacing: 12px; text-transform: uppercase; font-weight: 700; background: linear-gradient(to right, var(--gold), var(--lila)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .text-brand { letter-spacing: 12px; text-transform: uppercase; font-weight: 700; background: linear-gradient(to right, var(--gold), var(--lila)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 15px; }
 
         .dots { position: fixed; right: 30px; top: 50%; transform: translateY(-50%); z-index: 1000; }
         .dot { width: 10px; height: 10px; background: rgba(255,255,255,0.2); margin: 25px 0; border-radius: 50%; cursor: pointer; transition: 0.3s; }
@@ -108,12 +118,12 @@
 
     <header>
         <a href="javascript:go(0)" class="header-brand">
-            <div class="seal-wrapper">
-                <div class="f-letter">F</div>
-                <div class="o-circle"><div class="taegeuk-swirl"></div></div>
-                <div class="o-circle"><div class="needle"></div></div>
+            <div class="seal-master mini-version">
+                <div class="f-part">F</div>
+                <div class="o-part"><div class="swirl-korea"></div></div>
+                <div class="o-part"><div class="needle-gold"></div></div>
             </div>
-            <span style="font-weight: 700; letter-spacing: 3px; margin-left: -20px;">PORTAL</span>
+            <span style="font-weight: 700; letter-spacing: 3px; font-size: 0.9rem;">PORTAL</span>
         </a>
         <div class="nav-links">
             <a href="javascript:go(0)">GİRİŞ</a>
@@ -133,28 +143,28 @@
     </div>
 
     <section id="sec-0">
-        <div class="glass-panel">
-            <div class="seal-wrapper hero-seal">
-                <div class="f-letter">F</div>
-                <div class="o-circle"><div class="taegeuk-swirl"></div></div>
-                <div class="o-circle"><div class="needle"></div></div>
+        <div class="glass-card">
+            <div class="seal-master" style="margin-bottom: 20px;">
+                <div class="f-part">F</div>
+                <div class="o-part"><div class="swirl-korea"></div></div>
+                <div class="o-part"><div class="needle-gold"></div></div>
             </div>
-            <div class="brand-text">Ongun Orak</div>
-            <p style="margin-top: 30px; opacity: 0.8; letter-spacing: 2px;">DIGITAL CULTURE PORTAL</p>
+            <div class="text-brand">Ongun Orak</div>
+            <p style="margin-top: 25px; opacity: 0.7; letter-spacing: 2px; font-weight: 300;">DIGITAL CULTURE PORTAL</p>
         </div>
     </section>
 
     <section id="sec-1">
-        <div class="glass-panel">
-            <h2 style="color: var(--lila); font-size: 2.5rem;">Kore Arşivi</h2>
-            <p>Dil ve kültür notları burada toplanacak.</p>
+        <div class="glass-card">
+            <h2 style="color: var(--lila); font-size: 2.5rem; margin: 0;">Kore Arşivi</h2>
+            <p style="margin-top: 20px; opacity: 0.8;">Hangi konuyu merak ediyorsan o başlık burada belirecek.</p>
         </div>
     </section>
 
     <section id="sec-2">
-        <div class="glass-panel">
-            <h2 style="color: var(--gold); font-size: 2.5rem;">Sınav Merkezi</h2>
-            <p>Profesyonel rehberlik dokümanları buraya eklenecek.</p>
+        <div class="glass-card">
+            <h2 style="color: var(--gold); font-size: 2.5rem; margin: 0;">Sınav Merkezi</h2>
+            <p style="margin-top: 20px; opacity: 0.8;">Rehberlik dökümanları iskeletin en sağlam parçası olacak.</p>
         </div>
     </section>
 
