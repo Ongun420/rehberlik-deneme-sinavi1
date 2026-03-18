@@ -10,8 +10,6 @@
         --bg-dark: #020617;
         --lila: #E9D5FF;
         --gold: #EAB308;
-        --korea-red: #CD313A;
-        --korea-blue: #0047A0;
     }
 
     body, html {
@@ -23,16 +21,16 @@
         overflow-x: hidden;
     }
 
-    /* --- HANGUL ARKA PLAN --- */
+    /* --- HANGUL ARKA PLAN (Z-INDEX: -1 YAPILDI) --- */
     #hangul-container {
         position: fixed;
         top: 0; left: 0;
         width: 100vw; height: 100vh;
-        z-index: 1; 
+        z-index: -1; /* Tıklamaları engellememesi için en arkaya alındı */
         overflow: hidden;
         pointer-events: none;
         background: var(--bg-dark);
-        transition: 1s ease; /* Renk geçiş yumuşaklığı */
+        transition: 1s ease;
     }
 
     .hangul-column {
@@ -47,31 +45,37 @@
         line-height: 0.9;
         width: 20px;
         word-break: break-all;
-        /* Renkleri buradan sildik ki aşağıdakiler çalışsın */
     }
 
-    /* --- DİNAMİK RENK SINIFLARI --- */
-    .rain-default .hangul-column { color: #00f2ff; text-shadow: 0 0 12px #00f2ff; opacity: 0.25; }
-    .rain-korea .hangul-column { color: #E9D5FF; text-shadow: 0 0 15px #d8b4fe; opacity: 0.35; }
-    .rain-gold .hangul-column { color: var(--gold); text-shadow: 0 0 12px #f59e0b; opacity: 0.3; }
+    /* RENK SINIFLARI */
+    .rain-default .hangul-column { color: #00f2ff; text-shadow: 0 0 12px #00f2ff; }
+    .rain-korea .hangul-column { color: #E9D5FF; text-shadow: 0 0 15px #d8b4fe; }
+    .rain-gold .hangul-column { color: var(--gold); text-shadow: 0 0 12px #f59e0b; }
 
     @keyframes fall {
         0% { transform: translateY(-10%); }
         100% { transform: translateY(115vh); }
     }
 
-    /* --- İÇERİK --- */
+    /* --- İÇERİK (Z-INDEX ARTIRILDI) --- */
     header, section { position: relative; z-index: 10; }
 
     header {
         position: fixed; top: 0; width: 100%; height: 50px; padding: 0 30px;
         display: flex; justify-content: space-between; align-items: center;
-        background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(10px);
+        background: rgba(2, 6, 23, 0.9); backdrop-filter: blur(10px);
         border-bottom: 1px solid rgba(255,255,255,0.1); box-sizing: border-box;
+        z-index: 100; /* Menü her zaman en üstte */
     }
 
-    .header-brand img { height: 30px; width: auto; display: block; }
-    .nav-links a { text-decoration: none; color: white; margin-left: 20px; font-size: 0.75rem; opacity: 0.6; transition: 0.3s; letter-spacing: 1px; }
+    .header-brand { cursor: pointer; display: flex; align-items: center; }
+    .header-brand img { height: 30px; pointer-events: auto; }
+    
+    .nav-links a { 
+        text-decoration: none; color: white; margin-left: 20px; 
+        font-size: 0.75rem; opacity: 0.6; transition: 0.3s; 
+        letter-spacing: 1px; cursor: pointer;
+    }
     .nav-links a:hover { opacity: 1; color: var(--lila); }
 
     section { height: 100vh; display: flex; align-items: center; justify-content: center; }
@@ -79,47 +83,37 @@
     .glass-card { 
         background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); 
         border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 40px; 
-        padding: 60px; text-align: center; transition: 0.4s;
+        padding: 60px; text-align: center;
     }
 
-    /* LOGO SİSTEMİ */
+    /* LOGO & BRAND */
     .seal-master { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 15px; padding: 25px 45px; border-radius: 60px; }
-    .seal-master::before { content: ""; position: absolute; inset: 0; border-radius: 60px; padding: 2.5px; background: linear-gradient(135deg, var(--gold) 0%, transparent 50%, var(--lila) 100%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
     .f-part { font-size: 6rem; font-weight: 700; color: var(--gold); line-height: 1; }
     .o-part { width: 80px; height: 80px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; position: relative; }
-    .swirl-korea { width: 65px; height: 65px; border-radius: 50%; background: linear-gradient(180deg, var(--korea-red) 50%, var(--korea-blue) 50%); transform: rotate(-30deg); position: relative; }
-    .swirl-korea::before, .swirl-korea::after { content: ''; position: absolute; width: 32.5px; height: 32.5px; border-radius: 50%; top: 16.25px; }
-    .swirl-korea::before { background: var(--korea-red); left: 0; }
-    .swirl-korea::after { background: var(--korea-blue); right: 0; }
-    .needle-gold { width: 3px; height: 55px; background: linear-gradient(var(--gold) 50%, #fff 50%); position: absolute; animation: drift 5s infinite ease-in-out; }
+    .swirl-korea { width: 65px; height: 65px; border-radius: 50%; background: linear-gradient(180deg, #CD313A 50%, #0047A0 50%); transform: rotate(-30deg); }
+    .needle-gold { width: 3px; height: 55px; background: var(--gold); position: absolute; animation: drift 5s infinite ease-in-out; }
     @keyframes drift { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(25deg); } }
     .text-brand { letter-spacing: 12px; text-transform: uppercase; font-weight: 700; background: linear-gradient(to right, var(--gold), var(--lila)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 20px; }
 
-    .scroll-indicator { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0.5; cursor: pointer; }
+    /* MOUSE INDICATOR */
+    .scroll-indicator { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; z-index: 20; }
     .mouse { width: 22px; height: 36px; border: 2px solid var(--lila); border-radius: 20px; position: relative; }
     .wheel { width: 3px; height: 6px; background: var(--gold); border-radius: 2px; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); animation: scroll-wheel 1.6s infinite; }
     @keyframes scroll-wheel { 0% { top: 6px; opacity: 1; } 100% { top: 20px; opacity: 0; } }
-    .scroll-text { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: var(--lila); }
-
-    @media (max-width: 768px) {
-        .nav-links a { font-size: 0.55rem; margin-left: 10px; }
-        .seal-master { transform: scale(0.65); }
-        .glass-card { padding: 30px; width: 90%; }
-    }
 </style>
 </head>
 <body>
 
-<div id="hangul-container"></div>
+<div id="hangul-container" class="rain-default"></div>
 
 <header>
-    <a href="javascript:go(0)" class="header-brand">
+    <div class="header-brand" onclick="go(0)">
         <img src="logo.png" alt="FOO">
-    </a>
+    </div>
     <div class="nav-links">
-        <a href="javascript:void(0)" onclick="go(0)">GİRİŞ</a>
-        <a href="javascript:void(0)" onclick="go(1)">KORE ARŞİVİ</a>
-        <a href="javascript:void(0)" onclick="go(2)">SINAV MERKEZİ</a>
+        <a onclick="go(0)">GİRİŞ</a>
+        <a onclick="go(1)">KORE ARŞİVİ</a>
+        <a onclick="go(2)">SINAV MERKEZİ</a>
     </div>
 </header>
 
@@ -131,76 +125,72 @@
             <div class="o-part"><div class="needle-gold"></div></div>
         </div>
         <div class="text-brand">Ongun Orak</div>
-        <p style="margin-top: 30px; opacity: 0.7; letter-spacing: 2px; font-weight: 300;">DIGITAL CULTURE PORTAL</p>
+        <p style="margin-top: 30px; opacity: 0.7; letter-spacing: 2px;">DIGITAL CULTURE PORTAL</p>
     </div>
     <div class="scroll-indicator" onclick="go(1)">
-        <span class="scroll-text">Keşfet</span>
         <div class="mouse"><div class="wheel"></div></div>
     </div>
 </section>
 
 <section id="sec-1">
     <div class="glass-card">
-        <h2 style="color: var(--lila); font-size: 2.5rem; margin: 0;">Kore Arşivi</h2>
-        <p style="margin-top: 20px; opacity: 0.8;">Kültür ve dil notları burada hayat bulacak.</p>
+        <h2 style="color: var(--lila); font-size: 2.5rem;">Kore Arşivi</h2>
+        <p>Mugunghwa ruhuyla dijital notlar.</p>
+    </div>
+    <div class="scroll-indicator" onclick="go(2)" style="bottom: 30px;">
+        <div class="mouse"><div class="wheel"></div></div>
     </div>
 </section>
 
 <section id="sec-2">
     <div class="glass-card">
-        <h2 style="color: var(--gold); font-size: 2.5rem; margin: 0;">Sınav Merkezi</h2>
-        <p style="margin-top: 20px; opacity: 0.8;">Rehberlik hazırlık süreci için dijital kütüphane.</p>
+        <h2 style="color: var(--gold); font-size: 2.5rem;">Sınav Merkezi</h2>
+        <p>Rehberlik yolculuğu burada başlar.</p>
     </div>
 </section>
 
 <script>
-    function go(index) { 
-        window.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' }); 
-        
-        const container = document.getElementById('hangul-container');
-        if(!container) return;
-
-        container.classList.remove('rain-default', 'rain-korea', 'rain-gold');
-        
-        if(index === 0) container.classList.add('rain-default');
-        else if(index === 1) container.classList.add('rain-korea');
-        else if(index === 2) container.classList.add('rain-gold');
+    // Sayfa Kaydırma
+    function go(index) {
+        window.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' });
     }
 
+    // Yağmur Oluşturma
     function createHangulRain() {
         const container = document.getElementById('hangul-container');
         const characters = '가나다라마바사아자차카타파하ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ'; 
         const colWidth = 30;
         const colCount = Math.floor(window.innerWidth / colWidth);
-
         container.innerHTML = '';
-
         for (let i = 0; i < colCount; i++) {
             const column = document.createElement('div');
             column.className = 'hangul-column';
-            
             let content = '';
             const len = Math.floor(Math.random() * 20) + 15;
-            for (let j = 0; j < len; j++) {
-                content += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>';
-            }
-            
+            for (let j = 0; j < len; j++) { content += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>'; }
             column.innerHTML = content;
             column.style.left = (i * colWidth) + 'px';
             column.style.animationDuration = (Math.random() * 7 + 8) + 's';
             column.style.animationDelay = (Math.random() * -20) + 's';
-            
             container.appendChild(column);
         }
     }
 
-    // Olay Dinleyicileri (Döngü Dışında!)
-    document.addEventListener('DOMContentLoaded', () => {
+    // OTOMATİK RENK TAKİBİ (Scroll Listener)
+    window.addEventListener('scroll', () => {
         const container = document.getElementById('hangul-container');
-        if(container) container.classList.add('rain-default');
-        createHangulRain();
+        const scrollPos = window.scrollY + (window.innerHeight / 2);
+        const index = Math.floor(scrollPos / window.innerHeight);
+
+        container.classList.remove('rain-default', 'rain-korea', 'rain-gold');
+        if(index === 0) container.classList.add('rain-default');
+        else if(index === 1) container.classList.add('rain-korea');
+        else if(index === 2) container.classList.add('rain-gold');
     });
 
+    document.addEventListener('DOMContentLoaded', () => {
+        createHangulRain();
+    });
     window.addEventListener('resize', createHangulRain);
 </script>
 
