@@ -85,7 +85,7 @@
     .nav-links a:hover { opacity: 1; color: var(--lila); }
 
     /* --- SECTION VE KARTLAR --- */
-    section { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 10; }
+    section { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 10; padding: 40px 0; }
     
     .glass-card {
         background: rgba(255, 255, 255, 0.04); 
@@ -96,19 +96,9 @@
         text-align: center; 
         width: auto; 
         max-width: 90%;
-        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                    box-shadow 0.4s ease, 
-                    border 0.4s ease;
-        cursor: pointer;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
     }
 
-    .glass-card:hover {
-        transform: translateY(-10px) scale(1.02);
-        border: 1px solid var(--gold);
-        box-shadow: 0 0 30px rgba(234, 179, 8, 0.2);
-    }
-
-    /* --- LOGO SİSTEMİ --- */
     .seal-master { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 25px; }
     .f-part { font-size: 6rem; font-weight: 700; color: var(--gold); line-height: 1; margin: 0; }
     .o-part { 
@@ -128,319 +118,79 @@
 
     .text-brand { letter-spacing: 12px; text-transform: uppercase; font-weight: 700; background: linear-gradient(to right, var(--gold), var(--lila)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.2rem; margin-top: 15px; }
 
-    .scroll-indicator { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); cursor: pointer; }
-    .mouse { width: 22px; height: 36px; border: 2px solid var(--lila); border-radius: 20px; position: relative; }
-    .wheel { width: 3px; height: 6px; background: var(--gold); border-radius: 2px; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); animation: scroll-wheel 1.6s infinite; }
-    @keyframes scroll-wheel { 0% { top: 6px; opacity: 1; } 100% { top: 20px; opacity: 0; } }
-
     /* --- MASTER SLOT SİSTEMİ --- */
     .master-slot {
         background: rgba(0, 0, 0, 0.3);
         border: 1px dashed rgba(234, 179, 8, 0.3);
-        border-radius: 20px;
-        width: 100%; /* Kartın içini doldursun */
-        box-sizing: border-box; /* Padding dahil genişlik hesabı */
-        /* Mevcut diğer özelliklerin kalsın... */
-        padding: 25px;
-        text-align: left;
-        margin-top: 20px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        cursor: pointer;
-        overflow: hidden;
+        border-radius: 20px; padding: 25px; text-align: left;
+        margin-top: 20px; transition: all 0.3s ease; position: relative; cursor: pointer; overflow: hidden;
     }
+    .master-slot:hover { transform: translateX(10px); border-color: var(--gold); background: rgba(234, 179, 8, 0.05); }
 
-    .master-slot:hover {
-        transform: translateX(10px); /* Hafifçe sağa kayma (Modern bir liste efekti) */
-        background: rgba(234, 179, 8, 0.08);
-        border-color: var(--gold);
-        box-shadow: -5px 0 15px rgba(234, 179, 8, 0.2);
+    .slot-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; font-family: 'Courier New', monospace; }
+    .status-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; animation: blink 1.5s infinite; }
+    .slot-title { color: var(--gold); font-size: 0.8rem; letter-spacing: 2px; font-weight: 700; }
+
+    /* --- SEÇİM HUB (POPUP) --- */
+    .hub-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(2, 6, 23, 0.95); z-index: 10001;
+        display: none; align-items: center; justify-content: center;
+        opacity: 0; transition: 0.5s; backdrop-filter: blur(15px);
     }
-
-    /* Simülasyon slotu için özel hover rengi (Turkuaz) */
-    .simulation-slot:hover {
-        background: rgba(6, 182, 212, 0.08) !important;
-        border-color: #06b6d4 !important;
-        box-shadow: -5px 0 15px rgba(6, 182, 212, 0.2) !important;
+    .hub-overlay.active { display: flex; opacity: 1; }
+    .hub-container { display: flex; flex-direction: column; gap: 15px; width: 90%; max-width: 400px; }
+    .hub-btn {
+        background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 20px; border-radius: 15px; color: white; font-family: 'Courier New', monospace;
+        cursor: pointer; transition: 0.3s;
     }
-    
-    .slot-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 20px;
-        font-family: 'Courier New', monospace;
-    }
+    .btn-mitoloji:hover { border-color: #eab308; color: #eab308; box-shadow: 0 0 15px rgba(234, 179, 8, 0.3); }
+    .btn-arkeoloji:hover { border-color: #0ea5e9; color: #0ea5e9; box-shadow: 0 0 15px rgba(14, 165, 233, 0.3); }
+    .btn-medeniyet:hover { border-color: #f59e0b; color: #f59e0b; box-shadow: 0 0 15px rgba(245, 158, 11, 0.3); }
 
-    .status-dot {
-        width: 8px; height: 8px;
-        background: #22c55e;
-        border-radius: 50%;
-        box-shadow: 0 0 10px #22c55e;
-        animation: blink 1.5s infinite;
-    }
-
-    .slot-title {
-        color: var(--gold);
-        font-size: 0.8rem;
-        letter-spacing: 3px;
-        font-weight: 700;
-        text-transform: uppercase;
-    }
-
-    .sub-slot-container {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 15px;
-    }
-
-    /* OVERLAY: İçeriği ortalamak için flex ekledik */
-    .detail-overlay {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(2, 6, 23, 0.98);
-        backdrop-filter: blur(15px);
-        z-index: 9999;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-        overflow-y: auto;
-        /* display: flex;  <-- BURAYI SİLDİK, JS AÇACAK */
-        display: none; 
-        flex-direction: column;
-        align-items: center;
-        pointer-events: none; /* Kapalıyken tıklamaları alt kata geçirir */
-    }
-
-    /* Overlay açıkken tıklamaları aktif et */
-    .detail-overlay.active {
-        display: flex;
-        pointer-events: auto;
-    }
-
-    /* İÇERİK: Fontu Ubuntu'ya sabitledik ve hiyerarşiyi düzelttik */
-    .overlay-content {
-        width: 100%;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 60px 20px;
-        position: relative;
-        z-index: 10;
-        font-family: 'Ubuntu', sans-serif; /* Bozulmaması için sabitledik */
-    }
-
-    /* --- SİBER ANTİK SÜTUN SİSTEMİ (GLOW & FLUTING) --- */
-/* --- SİBER ANTİK SÜTUN SİSTEMİ --- */
-    .column-background {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        overflow: hidden;
-        z-index: -1;
-        perspective: 1000px;
-    }
-
-    .css-column {
-        position: absolute;
-        top: 0; /* Üstten başlasın */
-        bottom: 0; /* Altta bitsin */
-        width: 100px;
-        height: 100vh; /* Ekran boyuna sabitledik */
-        background: linear-gradient(90deg, 
-            rgba(234, 179, 8, 0.02) 0%, 
-            rgba(234, 179, 8, 0.08) 50%, 
-            rgba(234, 179, 8, 0.02) 100%);
-        border-left: 1px solid rgba(234, 179, 8, 0.1);
-        border-right: 1px solid rgba(234, 179, 8, 0.1);
-        display: flex;
-        justify-content: space-around;
-        padding: 0 10px;
-        z-index: 1;
-    }
-
-    .fluting-line { width: 1px; height: 100%; background: rgba(234, 179, 8, 0.15); position: relative; }
-
-    .data-pulse {
-        position: absolute;
-        top: -100px;
-        width: 2px;
-        height: 120px;
-        background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-        filter: blur(1px);
-        animation: data-flow 5s infinite linear;
-    }
-
-    @keyframes data-flow {
-        0% { top: -150px; opacity: 0; }
-        10% { opacity: 1; }
-        85% { opacity: 1; }
-        100% { top: 100%; opacity: 0; }
-    }
-
-  /* BAŞLIĞI DAHA ZARİF VE KÜÇÜK YAPTIK */
-    .column-capital {
-        position: absolute;
-        top: 4%; 
-        width: 120%; /* 140'tan 120'ye düşürdük */
-        height: 25px; /* 35'ten 25'e düşürdük - daha ince */
-        left: -10%; 
-        background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.4) 0%, transparent 80%);
-        border-top: 2px solid var(--gold);
-        box-shadow: 0 -5px 20px rgba(234, 179, 8, 0.3);
-        z-index: 2;
-    }
-
-    /* KAİDE: Alttan %5 içeride bitsin ki kesilmesin */
-    .column-base {
-        position: absolute;
-        bottom: 5%; 
-        width: 200%;
-        height: 70px;
-        left: -50%;
-        background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.4) 0%, transparent 80%);
-        border-bottom: 4px solid var(--gold);
-        border-top: 1px solid rgba(234, 179, 8, 0.3); /* Üstüne ince bir hat */
-        box-shadow: 0 10px 50px rgba(234, 179, 8, 0.5);
-    }
-
-    /* Sütunların başlangıç ölçeğini artırdık ki hareket payı kalsın */
-    .col-left { left: 5%; transform: scale(1.15); }
-    .col-right { right: 5%; transform: scale(1.15); }
-    @keyframes flow-down { 0% { top: -150px; } 100% { top: 110%; } }
-
-    .overlay-content {
-        max-width: 900px;
-        margin: 50px auto;
-        padding: 40px;
-        position: relative;
-    }
-
-    .close-btn {
-        background: none; border: 1px solid var(--gold);
-        color: var(--gold); padding: 8px 20px;
-        cursor: pointer; float: right; transition: 0.3s;
-    }
-
-    .close-btn:hover { background: var(--gold); color: black; }
-
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-    /* MOBİL DÜZENLEME */
-    @media (max-width: 768px) {
-        .glass-card { padding: 30px 15px !important; width: 92% !important; }
-        .overlay-content { padding: 40px 15px !important; } /* İçeriğe nefes aldırdık */
-        
-        /* Mobilde sütunları çok daha ince ve kenarda tutuyoruz */
-        .css-column { width: 40px !important; opacity: 0.4; } 
-        .col-left { left: 2% !important; }
-        .col-right { right: 2% !important; }
-        
-        /* Başlıklar mobilde çok dışarı taşmasın */
-        .column-capital { width: 120%; left: -10%; }
-        .column-base { width: 140%; left: -20%; }
-
-        /* Veri kartlarının içindeki metinleri biraz küçültelim */
-        .overlay-content h1 { font-size: 1.4rem !important; }
-        .overlay-content p { font-size: 0.85rem !important; }
-    }
-
-/* Deneme slotuna özel renk ve ışık */
-    .status-dot.standby {
-        background: #06b6d4; /* Turkuaz */
-        box-shadow: 0 0 10px #06b6d4;
-    }
-
-    .simulation-slot:hover {
-        border: 1px solid #06b6d4 !important;
-        box-shadow: inset 0 0 30px rgba(6, 182, 212, 0.1) !important;
-    }
-
-    /* Slotun içine küçük bir tarama efekti (opsiyonel) */
-    .simulation-slot::after {
-        content: "";
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 2px;
-        background: rgba(6, 182, 212, 0.2);
-        animation: scan 3s infinite linear;
-        pointer-events: none;
-    }
-
-    @keyframes scan {
-        0% { top: 0; }
-        100% { top: 100%; }
-    }
-
-/* FOOTER STİLİ - TASARIMA UYGUN HALE GETİRDİK */
-    footer.footer-bar {
-        width: 100%;
-        background: rgba(2, 6, 23, 0.9); /* Arka planla uyumlu ama hafif belirgin */
-        backdrop-filter: blur(10px);
-        border-top: 1px solid rgba(234, 179, 8, 0.1); /* Hafif altın rengi bir hat */
-        padding: 50px 0 20px 0;
-        margin-top: 100px;
-        position: relative;
-        z-index: 50; /* Kartların üzerinde, overlay'in altında */
-    }
-
-    .footer-content {
-        max-width: 1000px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 40px;
-        padding: 0 30px;
-    }
-
-    .footer-section h4 {
-        color: var(--gold);
-        font-family: 'Courier New', monospace;
-        letter-spacing: 2px;
-        margin-bottom: 15px;
-        text-transform: uppercase;
-    }
-
-    .footer-section p {
-        font-size: 0.85rem;
-        opacity: 0.6;
-        line-height: 1.6;
-    }
-
-    .footer-bottom {
-        text-align: center;
-        margin-top: 40px;
-        padding-top: 20px;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        font-size: 0.75rem;
-        opacity: 0.4;
-    }
-
-    /* GÜNCEL TEMA RENKLERİ */
-    /* Mitoloji (Altın): 234, 179, 8 */
+    /* --- DİNAMİK TEMA RENKLERİ --- */
     .theme-mitoloji { --theme-color: #eab308; --theme-rgb: 234, 179, 8; }
-    
-    /* Arkeoloji (Mavi): 14, 165, 233 */
     .theme-arkeoloji { --theme-color: #0ea5e9; --theme-rgb: 14, 165, 233; }
-    
-    /* Medeniyet (Bakır): 245, 158, 11 */
     .theme-medeniyet { --theme-color: #f59e0b; --theme-rgb: 245, 158, 11; }
 
-    /* Sütunlar artık bu sayıları kullanarak şeffaf akacak */
-    .css-column { 
-        background: linear-gradient(90deg, 
-            transparent 0%, 
-            rgba(var(--theme-rgb), 0.1) 50%, 
-            transparent 100%) !important;
+    /* --- OVERLAY & SÜTUNLAR --- */
+    .detail-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(2, 6, 23, 0.98); z-index: 9999; display: none; opacity: 0; transition: 0.5s; overflow-y: auto;
     }
+    .detail-overlay.active { display: flex; opacity: 1; flex-direction: column; }
 
-    .column-capital, .column-base { 
-        border-color: var(--theme-color) !important; 
-        box-shadow: 0 0 15px rgba(var(--theme-rgb), 0.3);
+    .css-column {
+        position: absolute; top: 0; width: 100px; height: 100vh;
+        background: linear-gradient(90deg, transparent, rgba(var(--theme-rgb, 234, 179, 8), 0.1), transparent) !important;
+        border-left: 1px solid rgba(var(--theme-rgb, 234, 179, 8), 0.2);
+        border-right: 1px solid rgba(var(--theme-rgb, 234, 179, 8), 0.2);
+        z-index: 1; transition: 0.5s;
     }
+    .col-left { left: 5%; } .col-right { right: 5%; }
+    .column-capital, .column-base { border-color: var(--theme-color, #eab308) !important; position: absolute; width: 120%; left: -10%; height: 20px; background: rgba(var(--theme-rgb), 0.2); }
+    .column-capital { top: 5%; border-top: 2px solid; } .column-base { bottom: 5%; border-bottom: 4px solid; height: 50px; }
 
-    .data-pulse { 
-        background: linear-gradient(to bottom, transparent, var(--theme-color), transparent) !important; 
+    .data-pulse {
+        position: absolute; width: 2px; height: 100px; 
+        background: linear-gradient(to bottom, transparent, var(--theme-color, #eab308), transparent) !important;
+        animation: data-flow 4s infinite linear;
     }
-    
+    @keyframes data-flow { 0% { top: -100px; } 100% { top: 100%; } }
+
+    .overlay-content { position: relative; z-index: 10; max-width: 800px; margin: 80px auto; padding: 20px; width: 90%; }
+    .close-btn { background: none; border: 1px solid var(--theme-color, #eab308); color: var(--theme-color, #eab308); padding: 10px 20px; cursor: pointer; float: right; }
+
+    /* --- FOOTER --- */
+    footer.footer-bar {
+        background: rgba(2, 6, 23, 0.9); padding: 60px 0; border-top: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 50;
+    }
+    .footer-content { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; padding: 0 20px; }
+    .footer-section h4 { color: var(--gold); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
+    .footer-section p { opacity: 0.6; font-size: 0.85rem; line-height: 1.6; }
+
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 </style>
 </head>
 <body>
@@ -466,7 +216,6 @@
         <div class="text-brand">Ongun Orak</div>
         <p style="margin-top: 20px; opacity: 0.7; letter-spacing: 2px; font-size: 0.8rem;">DIGITAL CULTURE PORTAL</p>
     </div>
-    <div class="scroll-indicator" onclick="go(1)"><div class="mouse"><div class="wheel"></div></div></div>
 </section>
 
 <section id="sec-1">
@@ -474,79 +223,64 @@
         <h2 style="color: var(--lila); font-size: 2.5rem;">Kore Arşivi</h2>
         <p>Dijital Notlar ve Kültür Köprüsü.</p>
     </div>
-    <div class="scroll-indicator" onclick="go(2)"><div class="mouse"><div class="wheel"></div></div></div>
 </section>
 
 <section id="sec-2">
     <div class="glass-card">
         <h2 style="color: var(--gold); font-size: 2.2rem; margin-bottom: 30px;">Sınav Merkezi</h2>
-        
         <div style="display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 450px; margin: 0 auto;">
             
-            <div class="master-slot" onclick="openDetail()">
+            <div class="master-slot" onclick="openHub()">
                 <div class="slot-header">
                     <span class="status-dot"></span>
-                    <span class="slot-title">MİTOLOJİ_DATA_V1</span>
+                    <span class="slot-title">DERS_NOTLARI_ACCESS</span>
                 </div>
-                <div class="sub-slot-container">
-                    <div class="sub-slot-placeholder" style="font-size: 0.7rem; opacity: 0.5;">Dizini açmak için tıklayın...</div>
-                </div>
+                <p style="font-size: 0.7rem; opacity: 0.5; margin: 0;">Veri tabanını seçmek için tıklayın...</p>
             </div>
 
-            <div class="master-slot simulation-slot" onclick="alert('Simülasyon Modu Yakında Aktif Edilecek!')">
+            <div class="master-slot" style="border-color: #06b6d4; opacity: 0.8;">
                 <div class="slot-header">
-                    <span class="status-dot standby"></span>
-                    <span class="slot-title">DENEME_SIMULATOR_V.01</span>
+                    <span class="status-dot" style="background:#06b6d4; box-shadow: 0 0 10px #06b6d4;"></span>
+                    <span class="slot-title" style="color: #06b6d4;">DENEME_SIMULATOR_V.01</span>
                 </div>
-                <div style="font-family: 'Courier New', monospace; margin-top: 10px;">
-                    <p style="font-size: 0.7rem; opacity: 0.7; margin: 2px 0;">> DURUM: HAZIR</p>
-                    <p style="font-size: 0.7rem; opacity: 0.7; margin: 2px 0;">> ANALİZ: %0 TAMAMLANDI</p>
-                    <div style="width: 100%; height: 4px; background: rgba(255,255,255,0.1); margin-top: 10px; border-radius: 2px; overflow: hidden;">
-                        <div style="width: 30%; height: 100%; background: #06b6d4; box-shadow: 0 0 10px #06b6d4;"></div>
-                    </div>
-                </div>
+                <p style="font-size: 0.7rem; opacity: 0.5; margin: 0;">Sistem Hazırlanıyor...</p>
             </div>
-
-        </div> </div>
+        </div>
+    </div>
 </section>
 
+<div id="selection-hub" class="hub-overlay">
+    <div class="hub-container">
+        <h2 style="color: var(--gold); text-align: center; letter-spacing: 3px; font-size: 1rem;">DATABASE_SELECT</h2>
+        <div class="hub-btn btn-mitoloji" onclick="startDatabase('mitoloji')">[01] ANADOLU MİTOLOJİSİ</div>
+        <div class="hub-btn btn-arkeoloji" onclick="startDatabase('arkeoloji')">[02] ARKEOLOJİ TERİMLERİ</div>
+        <div class="hub-btn btn-medeniyet" onclick="startDatabase('medeniyet')">[03] ANADOLU MEDENİYETLERİ</div>
+        <p onclick="closeHub()" style="text-align:center; color:gray; cursor:pointer; font-size:0.7rem;">✕ ABORT_CONNECTION</p>
+    </div>
+</div>
+
 <div id="mitoloji-overlay" class="detail-overlay">
-    <div class="column-background">
-        <div class="css-column col-left">
-            <div class="column-capital"></div> 
-            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0s;"></div></div>
-            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 2.5s;"></div></div>
-            <div class="column-base"></div> 
-        </div>
-        <div class="css-column col-right">
-            <div class="column-capital"></div> 
-            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0.5s;"></div></div>
-            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 1.8s;"></div></div>
-            <div class="column-base"></div> 
-        </div>
+    <div class="css-column col-left">
+        <div class="column-capital"></div>
+        <div class="data-pulse" style="left:20%; animation-delay: 0s;"></div>
+        <div class="data-pulse" style="left:70%; animation-delay: 2s;"></div>
+        <div class="column-base"></div>
+    </div>
+    <div class="css-column col-right">
+        <div class="column-capital"></div>
+        <div class="data-pulse" style="left:30%; animation-delay: 1s;"></div>
+        <div class="data-pulse" style="left:80%; animation-delay: 2.5s;"></div>
+        <div class="column-base"></div>
     </div>
 
     <div class="overlay-content">
-        <div style="width: 100%; overflow: hidden; margin-bottom: 20px;">
-            <button class="close-btn" onclick="closeDetail()">✕ KAPAT</button>
+        <button class="close-btn" onclick="closeDetail()">✕ KAPAT</button>
+        <div style="text-align: center; margin-top: 40px;">
+            <h1 id="db-title" style="color: var(--theme-color); letter-spacing: 5px;">YÜKLENİYOR...</h1>
+            <p id="db-subtitle" style="opacity: 0.5; font-family: 'Courier New', monospace;">SYSTEM_SCAN_ACTIVE</p>
         </div>
-
-        <div style="text-align: center; margin-bottom: 40px;">
-            <h1 style="color: var(--gold); letter-spacing: 4px; font-size: 1.8rem;">ANADOLU MİTOLOJİSİ</h1>
-            <p style="opacity: 0.5; font-size: 0.8rem; font-family: 'Courier New', monospace;">VERİ PAKETİ: HITIT_01</p>
-        </div>
-
-        <div style="display: grid; gap: 20px;">
-            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(234, 179, 8, 0.2); padding: 25px; border-radius: 20px; backdrop-filter: blur(5px);">
-                <h3 style="color: var(--gold); margin-top: 0; font-family: 'Courier New', monospace;">[DATA_01]: GÜNEŞ TANRIÇASI ARİNNA</h3>
-                <p style="font-size: 0.95rem; line-height: 1.6; opacity: 0.8;">Hitit panteonunun en üstündeki dişil enerji. Devletin koruyucusu ve savaşlarda kralın yanındaki güç.</p>
+        <div id="db-content" style="margin-top: 50px; display: grid; gap: 20px;">
             </div>
-
-            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(234, 179, 8, 0.2); padding: 25px; border-radius: 20px; backdrop-filter: blur(5px);">
-                <h3 style="color: var(--gold); margin-top: 0; font-family: 'Courier New', monospace;">[DATA_02]: FIRTINA TANRISI TEŞUP</h3>
-                <p style="font-size: 0.95rem; line-height: 1.6; opacity: 0.8;">Elin de üçlü yıldırım demeti ve boğa sembolüyle tasvir edilir. Arinna'nın eşidir.</p>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -558,98 +292,73 @@
         </div>
         <div class="footer-section">
             <h4>İletişim</h4>
-            <p>Email: ongunorak@gmail.com</p>
-            <p>İstanbul, Türkiye</p>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 FOO | Ongun Orak. Tüm Hakları Saklıdır.</p>
+            <p>Email: ongunorak@gmail.com | İstanbul, Türkiye</p>
         </div>
     </div>
 </footer>
 
 <script>
     function go(index) { window.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' }); }
-    
-    function createHangulRain() {
-        const container = document.getElementById('hangul-container');
-        const characters = '가나다라마바사아자차카타파하ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ'; 
-        const colWidth = 30;
-        const colCount = Math.floor(window.innerWidth / colWidth);
-        container.innerHTML = '';
-        for (let i = 0; i < colCount; i++) {
-            const column = document.createElement('div');
-            column.className = 'hangul-column';
-            let content = '';
-            const len = Math.floor(Math.random() * 20) + 15;
-            for (let j = 0; j < len; j++) { content += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>'; }
-            column.innerHTML = content;
-            column.style.left = (i * colWidth) + 'px';
-            column.style.animationDuration = (Math.random() * 7 + 8) + 's';
-            column.style.animationDelay = (Math.random() * -20) + 's';
-            container.appendChild(column);
-        }
-    }
 
-    function openDetail() {
-        const overlay = document.getElementById('mitoloji-overlay');
-        overlay.classList.add('active'); // CSS'teki flex ayarını tetikler
-        setTimeout(() => { 
-            overlay.style.opacity = '1'; 
-        }, 10);
-    }
-
-    function closeDetail() {
-        const overlay = document.getElementById('mitoloji-overlay');
-        overlay.style.opacity = '0';
-        setTimeout(() => { 
-            overlay.classList.remove('active'); 
-        }, 500);
-    }
-
-    window.addEventListener('scroll', () => {
-        const container = document.getElementById('hangul-container');
-        const index = Math.round(window.scrollY / window.innerHeight);
-        container.classList.remove('rain-default', 'rain-korea', 'rain-gold');
-        if(index === 0) container.classList.add('rain-default');
-        else if(index === 1) container.classList.add('rain-korea');
-        else if(index === 2) container.classList.add('rain-gold');
-    });
-
-    document.addEventListener('mousemove', (e) => {
-        const overlay = document.getElementById('mitoloji-overlay');
-        
-        // Sadece overlay 'active' sınıfına sahipse ve opacity 1 ise çalıştır
-        if (overlay.classList.contains('active')) {
-            const x = (window.innerWidth / 2 - e.clientX) / 200; // Hassasiyeti 200 yaptık
-            const y = (window.innerHeight / 2 - e.clientY) / 200;
-            
-            const leftCol = document.querySelector('.col-left');
-            const rightCol = document.querySelector('.col-right');
-            
-            if (leftCol && rightCol) {
-                // scale(1.1) ile birleştirerek transform uygula
-                leftCol.style.transform = `translate(${x}px, ${y}px) scale(1.1)`;
-                rightCol.style.transform = `translate(${-x}px, ${-y}px) scale(1.1)`;
-            }
-        }
-    });
+    function openHub() { document.getElementById('selection-hub').classList.add('active'); }
+    function closeHub() { document.getElementById('selection-hub').classList.remove('active'); }
 
     function startDatabase(type) {
         closeHub();
         const overlay = document.getElementById('mitoloji-overlay');
-        
-        // Önce eski temaları temizle
         overlay.classList.remove('theme-mitoloji', 'theme-arkeoloji', 'theme-medeniyet');
-        
-        // Yeni temayı ekle
         overlay.classList.add('theme-' + type);
         
-        // Overlay'i aç
-        setTimeout(() => openDetail(), 600);
+        // Başlıkları Güncelle
+        const titles = {
+            'mitoloji': 'ANADOLU MİTOLOJİSİ',
+            'arkeoloji': 'ARKEOLOJİ TERİMLERİ',
+            'medeniyet': 'ANADOLU MEDENİYETLERİ'
+        };
+        document.getElementById('db-title').innerText = titles[type];
+        document.getElementById('db-title').style.color = 'var(--theme-color)';
+        
+        openDetail();
     }
 
-    document.addEventListener('DOMContentLoaded', createHangulRain);
-    window.addEventListener('resize', createHangulRain);
+    function openDetail() {
+        const overlay = document.getElementById('mitoloji-overlay');
+        overlay.style.display = 'flex';
+        setTimeout(() => overlay.classList.add('active'), 10);
+    }
+
+    function closeDetail() {
+        const overlay = document.getElementById('mitoloji-overlay');
+        overlay.classList.remove('active');
+        setTimeout(() => overlay.style.display = 'none', 500);
+    }
+
+    // Mouse Hareketi Sütunlar
+    document.addEventListener('mousemove', (e) => {
+        const overlay = document.getElementById('mitoloji-overlay');
+        if (overlay.classList.contains('active')) {
+            const x = (window.innerWidth / 2 - e.clientX) / 50;
+            const y = (window.innerHeight / 2 - e.clientY) / 50;
+            document.querySelector('.col-left').style.transform = `translate(${x}px, ${y}px)`;
+            document.querySelector('.col-right').style.transform = `translate(${-x}px, ${-y}px)`;
+        }
+    });
+
+    // Hangul Rain
+    function createHangulRain() {
+        const container = document.getElementById('hangul-container');
+        const characters = '가나다라마바사아자차카타파하ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ'; 
+        container.innerHTML = '';
+        for (let i = 0; i < 40; i++) {
+            const column = document.createElement('div');
+            column.className = 'hangul-column';
+            column.innerHTML = characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>' + characters.charAt(Math.floor(Math.random() * characters.length));
+            column.style.left = Math.random() * 100 + 'vw';
+            column.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            container.appendChild(column);
+        }
+    }
+    window.onload = createHangulRain;
 </script>
 
 </body>
