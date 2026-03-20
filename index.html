@@ -369,6 +369,50 @@
         0% { top: 0; }
         100% { top: 100%; }
     }
+
+/* FOOTER STİLİ - TASARIMA UYGUN HALE GETİRDİK */
+    footer.footer-bar {
+        width: 100%;
+        background: rgba(2, 6, 23, 0.9); /* Arka planla uyumlu ama hafif belirgin */
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(234, 179, 8, 0.1); /* Hafif altın rengi bir hat */
+        padding: 50px 0 20px 0;
+        margin-top: 100px;
+        position: relative;
+        z-index: 50; /* Kartların üzerinde, overlay'in altında */
+    }
+
+    .footer-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        padding: 0 30px;
+    }
+
+    .footer-section h4 {
+        color: var(--gold);
+        font-family: 'Courier New', monospace;
+        letter-spacing: 2px;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+    }
+
+    .footer-section p {
+        font-size: 0.85rem;
+        opacity: 0.6;
+        line-height: 1.6;
+    }
+
+    .footer-bottom {
+        text-align: center;
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        font-size: 0.75rem;
+        opacity: 0.4;
+    }
     
 </style>
 </head>
