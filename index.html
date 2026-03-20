@@ -413,6 +413,33 @@
         font-size: 0.75rem;
         opacity: 0.4;
     }
+
+    /* GÜNCEL TEMA RENKLERİ */
+    /* Mitoloji (Altın): 234, 179, 8 */
+    .theme-mitoloji { --theme-color: #eab308; --theme-rgb: 234, 179, 8; }
+    
+    /* Arkeoloji (Mavi): 14, 165, 233 */
+    .theme-arkeoloji { --theme-color: #0ea5e9; --theme-rgb: 14, 165, 233; }
+    
+    /* Medeniyet (Bakır): 245, 158, 11 */
+    .theme-medeniyet { --theme-color: #f59e0b; --theme-rgb: 245, 158, 11; }
+
+    /* Sütunlar artık bu sayıları kullanarak şeffaf akacak */
+    .css-column { 
+        background: linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(var(--theme-rgb), 0.1) 50%, 
+            transparent 100%) !important;
+    }
+
+    .column-capital, .column-base { 
+        border-color: var(--theme-color) !important; 
+        box-shadow: 0 0 15px rgba(var(--theme-rgb), 0.3);
+    }
+
+    .data-pulse { 
+        background: linear-gradient(to bottom, transparent, var(--theme-color), transparent) !important; 
+    }
     
 </style>
 </head>
@@ -606,6 +633,20 @@
             }
         }
     });
+
+    function startDatabase(type) {
+        closeHub();
+        const overlay = document.getElementById('mitoloji-overlay');
+        
+        // Önce eski temaları temizle
+        overlay.classList.remove('theme-mitoloji', 'theme-arkeoloji', 'theme-medeniyet');
+        
+        // Yeni temayı ekle
+        overlay.classList.add('theme-' + type);
+        
+        // Overlay'i aç
+        setTimeout(() => openDetail(), 600);
+    }
 
     document.addEventListener('DOMContentLoaded', createHangulRain);
     window.addEventListener('resize', createHangulRain);
