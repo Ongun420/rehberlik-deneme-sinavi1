@@ -257,6 +257,60 @@
         border-radius: 15px;
         border-left: 4px solid var(--gold);
     }
+
+/* --- CSS SÜTUNLARI VE DERİNLİK --- */
+    .column-background {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        overflow: hidden;
+        z-index: -1;
+        background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+    }
+
+    /* CSS ile Sütun Formu */
+    .css-column {
+        position: absolute;
+        bottom: -10%;
+        width: 120px;
+        height: 120%;
+        background: linear-gradient(90deg, 
+            rgba(255,255,255,0.02) 0%, 
+            rgba(255,255,255,0.05) 50%, 
+            rgba(255,255,255,0.02) 100%);
+        box-shadow: 0 0 40px rgba(0,0,0,0.5);
+        border-left: 1px solid rgba(234, 179, 8, 0.1);
+        border-right: 1px solid rgba(234, 179, 8, 0.1);
+    }
+
+    /* Sütun Başlığı (Capital) */
+    .css-column::before {
+        content: "";
+        position: absolute;
+        top: 10%; left: -20px;
+        width: 160px; height: 30px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(234, 179, 8, 0.2);
+    }
+
+    /* Sütun Yerleşimi */
+    .col-left { left: 5%; transform: translateZ(-100px) scale(1.2); }
+    .col-right { right: 5%; transform: translateZ(-100px) scale(1.2); }
+
+    /* Siber Işık Hattı (Sütun Üzerinde Akan Veri) */
+    .column-light {
+        position: absolute;
+        top: -100px; left: 50%;
+        width: 2px; height: 150px;
+        background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+        animation: flow-down 4s infinite linear;
+        opacity: 0.5;
+    }
+
+    @keyframes flow-down {
+        0% { top: -150px; }
+        100% { top: 110%; }
+    }
     
 </style>
 </head>
@@ -373,10 +427,38 @@ function openDetail() {
         overlay.style.opacity = '0';
         setTimeout(() => { overlay.style.display = 'none'; }, 500);
     }
+
+    document.addEventListener('mousemove', (e) => {
+        const overlay = document.getElementById('mitoloji-overlay');
+        if (overlay.style.display === 'block') {
+            const x = (window.innerWidth - e.pageX * 2) / 100;
+            const y = (window.innerHeight - e.pageY * 2) / 100;
+            
+            document.querySelector('.col-left').style.transform = `translateX(${x}px) translateY(${y}px) scale(1.2)`;
+            document.querySelector('.col-right').style.transform = `translateX(${-x}px) translateY(${-y}px) scale(1.2)`;
+        }
+    });
     
 </script>
 
 <div id="mitoloji-overlay" class="detail-overlay">
+    <div id="mitoloji-overlay" class="detail-overlay">
+    <div class="column-background">
+        <div class="css-column col-left">
+            <div class="column-light" style="animation-delay: 0s;"></div>
+            <div class="column-light" style="animation-delay: 2s; left: 30%;"></div>
+        </div>
+        <div class="css-column col-right">
+            <div class="column-light" style="animation-delay: 1s;"></div>
+            <div class="column-light" style="animation-delay: 3s; left: 70%;"></div>
+        </div>
+    </div>
+
+    <div class="overlay-content">
+        <div class="overlay-frame">
+             </div>
+    </div>
+</div>
     <div class="overlay-content">
         <button class="close-btn" onclick="closeDetail()">✕ KAPAT</button>
         <div class="overlay-header">
