@@ -253,24 +253,14 @@
 
     /* --- SİBER ANTİK SÜTUN SİSTEMİ (GLOW & FLUTING) --- */
 
-/* --- SİBER ANTİK SÜTUN SİSTEMİ --- */
-    .column-background {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        overflow: hidden;
-        z-index: -1;
-        perspective: 1000px;
-    }
-
-   /* Arka planı dikey eksene sabitle */
+/* SİBER ANTİK SÜTUN SİSTEMİ - KESİN ÇÖZÜM */
 .column-background {
-    position: fixed; /* Sayfa kaysa da sütunlar ekranda kalsın */
+    position: fixed; /* Ekrana çiviler */
     top: 0; left: 0;
     width: 100vw; height: 100vh;
     pointer-events: none;
-    z-index: 1; /* İçeriğin arkasında ama overlay'in içinde */
-    display: block; /* Taşmaları önlemek için */
+    z-index: 1;
+    display: block !important; /* Flexbox çakışmalarını önler */
 }
 
 /* Dinamik Tema Renkleri ve Sütunlara Etkisi */
@@ -297,23 +287,25 @@
 .fluting-line {
     width: 1px;
     height: 100%;
-    background: rgba(234, 179, 8, 0.15); /* Çizgiler daha net */
+    background: rgba(var(--theme-rgb, 234,179,8), 0.1);
     position: relative;
 }
 
-    /* Veri akışı (Pulse) parlamasını artır */
+    /* Veri Akışı (Data Pulse) */
 .data-pulse {
-    background: linear-gradient(to bottom, transparent, #fff, var(--gold), transparent) !important;
-    width: 2px !important;
-    filter: blur(2px) drop-shadow(0 0 5px var(--gold)); /* Işıma efekti */
+    position: absolute;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, #fff, var(--theme-color, #eab308), transparent);
+    animation: data-flow 3s infinite linear;
+    filter: blur(1px);
 }
 
     @keyframes data-flow {
-        0% { top: -150px; opacity: 0; }
-        10% { opacity: 1; }
-        85% { opacity: 1; }
-        100% { top: 100%; opacity: 0; }
-    }
+    0% { top: -150px; opacity: 0; }
+    50% { opacity: 1; }
+    100% { top: 100vh; opacity: 0; }
+}
 
   /* Başlık ve Kaideler dikey sütunun genişliğine göre ayarlanmalı */
 .column-capital {
@@ -335,8 +327,8 @@
 }
 
     /* Sol ve Sağ Sütun Konumları */
-.col-left { left: 5%; }
-.col-right { right: 5%; }
+.col-left { left: 5% !important; }
+.col-right { right: 5% !important; }
     
     @keyframes flow-down { 0% { top: -150px; } 100% { top: 110%; } }
 
@@ -460,19 +452,17 @@
 
     /* SÜTUNLAR: Yatay genişliği kısıtlı, yüksekliği tam ekran */
 .css-column {
-    position: absolute;
-    top: 0;
-    width: 80px !important; /* Genişlik sabit ve dar olmalı */
-    height: 100vh !important; /* Yükseklik mutlaka tam ekran olmalı */
-    display: flex;
-    flex-direction: row; /* İçindeki çizgiler yan yana dizilsin */
+    position: absolute !important;
+    top: 0 !important;
+    width: 60px !important; /* Genişliği daralttık, artık dikey */
+    height: 100vh !important; /* Boyu tam ekran */
+    display: flex !important;
+    flex-direction: row !important;
     justify-content: space-around;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(var(--theme-rgb, 234, 179, 8), 0.1) 50%, 
-        transparent 100%) !important;
-    border-left: 1px solid rgba(var(--theme-rgb, 234, 179, 8), 0.2) !important;
-    border-right: 1px solid rgba(var(--theme-rgb, 234, 179, 8), 0.2) !important;
+    /* Dinamik tema rengi için varsayılan */
+    background: linear-gradient(90deg, transparent, rgba(var(--theme-rgb, 234,179,8), 0.1), transparent) !important;
+    border-left: 1px solid rgba(var(--theme-rgb, 234,179,8), 0.2);
+    border-right: 1px solid rgba(var(--theme-rgb, 234,179,8), 0.2);
 }
 
     .column-capital, .column-base { 
@@ -736,26 +726,22 @@
     });
 
 
-    document.addEventListener('mousemove', (e) => {
-        const overlay = document.getElementById('mitoloji-overlay');
-        // Sadece overlay 'active' sınıfına sahipse ve opacity 1 ise çalıştır
-        if (overlay.classList.contains('active')) {
-            const x = (window.innerWidth / 2 - e.clientX) / 200; // Hassasiyeti 200 yaptık
-            const y = (window.innerHeight / 2 - e.clientY) / 200;
+   document.addEventListener('mousemove', (e) => {
+    const overlay = document.getElementById('mitoloji-overlay');
+    if (overlay.classList.contains('active')) {
+        const x = (window.innerWidth / 2 - e.clientX) / 50; 
+        const y = (window.innerHeight / 2 - e.clientY) / 50;
 
-            const leftCol = document.querySelector('.col-left');
-            const rightCol = document.querySelector('.col-right');
+        const leftCol = document.querySelector('.col-left');
+        const rightCol = document.querySelector('.col-right');
 
-
-            if (leftCol && rightCol) {
-                // scale(1.1) ile birleştirerek transform uygula
-                leftCol.style.transform = `translate(${x}px, ${y}px) scale(1.1)`;
-                rightCol.style.transform = `translate(${-x}px, ${-y}px) scale(1.1)`;
-            }
-
+        if (leftCol && rightCol) {
+            // Sadece hafif kayma efekti, dikey yapıyı korur
+            leftCol.style.transform = `translate(${x}px, ${y}px)`;
+            rightCol.style.transform = `translate(${-x}px, ${-y}px)`;
         }
-
-    });
+    }
+});
 
 
     function startDatabase(type) {
