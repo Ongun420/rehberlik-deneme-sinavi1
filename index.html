@@ -240,24 +240,34 @@
         100% { top: 100%; opacity: 0; }
     }
 
+    /* BAŞLIKLARI BÜYÜTTÜK VE PARLATTIK */
     .column-capital {
-        position: absolute; top: 5%; width: 140%; height: 40px; left: -20%;
-        background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.4) 0%, transparent 70%);
-        border-top: 2px solid var(--gold);
-        box-shadow: 0 -15px 30px rgba(234, 179, 8, 0.3);
+        position: absolute;
+        top: 0; /* En tepeye sıfırladık */
+        width: 180%; /* Daha geniş ve görkemli */
+        height: 60px; /* Daha yüksek */
+        left: -40%;
+        background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.5) 0%, transparent 80%);
+        border-top: 3px solid var(--gold); /* Çizgiyi kalınlaştırdık */
+        box-shadow: 0 -10px 40px rgba(234, 179, 8, 0.5); /* Işımayı artırdık */
         z-index: 2;
     }
 
+    /* KAİDEYİ DE DENGELEDİK */
     .column-base {
-        position: absolute; bottom: 5%; width: 160%; height: 60px; left: -30%;
-        background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.3) 0%, transparent 80%);
-        border-bottom: 3px solid var(--gold);
-        box-shadow: 0 20px 40px rgba(234, 179, 8, 0.4);
+        position: absolute;
+        bottom: 0;
+        width: 200%;
+        height: 80px;
+        left: -50%;
+        background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.4) 0%, transparent 80%);
+        border-bottom: 4px solid var(--gold);
+        box-shadow: 0 10px 50px rgba(234, 179, 8, 0.6);
     }
 
-    .col-left { left: 8%; transform: scale(1.1); }
-    .col-right { right: 8%; transform: scale(1.1); }
-
+    /* Sütunların başlangıç ölçeğini artırdık ki hareket payı kalsın */
+    .col-left { left: 5%; transform: scale(1.15); }
+    .col-right { right: 5%; transform: scale(1.15); }
     @keyframes flow-down { 0% { top: -150px; } 100% { top: 110%; } }
 
     .overlay-content {
@@ -433,18 +443,18 @@
 
     document.addEventListener('mousemove', (e) => {
         const overlay = document.getElementById('mitoloji-overlay');
-        // Sadece overlay açıkken ve görünürken çalışır
         if (overlay.style.display === 'block') {
-            // Hareketi 80'e bölerek çok daha yumuşak ve az kımıldayan bir hale getirdik
-            const x = (window.innerWidth / 2 - e.clientX) / 80;
-            const y = (window.innerHeight / 2 - e.clientY) / 80;
+            // 250'ye bölerek hareketi neredeyse hissedilmez ama derinlik katan bir seviyeye çektik
+            const x = (window.innerWidth / 2 - e.clientX) / 250;
+            const y = (window.innerHeight / 2 - e.clientY) / 250;
             
             const leftCol = document.querySelector('.col-left');
             const rightCol = document.querySelector('.col-right');
             
             if(leftCol && rightCol) {
-                leftCol.style.transform = `translateX(${x}px) translateY(${y}px) scale(1.1)`;
-                rightCol.style.transform = `translateX(${-x}px) translateY(${-y}px) scale(1.1)`;
+                // scale(1.15) sabit kalarak sadece mikro kaymalar ekliyoruz
+                leftCol.style.transform = `translate(${x}px, ${y}px) scale(1.15)`;
+                rightCol.style.transform = `translate(${-x}px, ${-y}px) scale(1.15)`;
             }
         }
     });
