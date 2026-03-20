@@ -253,14 +253,17 @@
 
     /* --- SİBER ANTİK SÜTUN SİSTEMİ (GLOW & FLUTING) --- */
 
-/* SİBER ANTİK SÜTUN SİSTEMİ - KESİN ÇÖZÜM */
+/* --- SİBER ANTİK SÜTUN SİSTEMİ: FINAL FIX --- */
 .column-background {
-    position: fixed; /* Ekrana çiviler */
+    position: fixed !important;
     top: 0; left: 0;
     width: 100vw; height: 100vh;
     pointer-events: none;
-    z-index: 1;
-    display: block !important; /* Flexbox çakışmalarını önler */
+    z-index: 1; /* Overlay içeriğinin arkasında kalması için */
+    display: flex !important;
+    justify-content: space-between;
+    padding: 0 5%;
+    box-sizing: border-box;
 }
 
 /* Dinamik Tema Renkleri ve Sütunlara Etkisi */
@@ -283,28 +286,30 @@
     background: linear-gradient(to bottom, transparent, #fff, var(--theme-color), transparent) !important;
     filter: blur(2px) drop-shadow(0 0 8px var(--theme-color));
 }
-    /* Sütun içindeki dikey çizgiler (Fluting) */
+    /* Fluting ve Akan Işıklar (Baloncuklar) */
 .fluting-line {
     width: 1px;
     height: 100%;
     background: rgba(var(--theme-rgb, 234,179,8), 0.1);
     position: relative;
+    overflow: hidden;
 }
 
-    /* Veri Akışı (Data Pulse) */
-.data-pulse {
+   .data-pulse {
     position: absolute;
-    width: 2px;
-    height: 100px;
+    width: 3px; /* Daha belirgin */
+    height: 120px;
     background: linear-gradient(to bottom, transparent, #fff, var(--theme-color, #eab308), transparent);
-    animation: data-flow 3s infinite linear;
-    filter: blur(1px);
+    animation: data-flow 4s infinite linear;
+    filter: blur(2px) drop-shadow(0 0 8px var(--theme-color, #eab308));
+    opacity: 0;
 }
 
-    @keyframes data-flow {
+   @keyframes data-flow {
     0% { top: -150px; opacity: 0; }
-    50% { opacity: 1; }
-    100% { top: 100vh; opacity: 0; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
 }
 
   /* Başlık ve Kaideler dikey sütunun genişliğine göre ayarlanmalı */
@@ -452,23 +457,27 @@
 
     /* SÜTUNLAR: Yatay genişliği kısıtlı, yüksekliği tam ekran */
 .css-column {
-    position: absolute !important;
-    top: 0 !important;
-    width: 60px !important; /* Genişliği daralttık, artık dikey */
-    height: 100vh !important; /* Boyu tam ekran */
+    position: relative !important;
+    width: 70px !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(var(--theme-rgb, 234,179,8), 0.15), transparent) !important;
+    border-left: 1px solid rgba(var(--theme-rgb, 234,179,8), 0.3);
+    border-right: 1px solid rgba(var(--theme-rgb, 234,179,8), 0.3);
     display: flex !important;
-    flex-direction: row !important;
     justify-content: space-around;
-    /* Dinamik tema rengi için varsayılan */
-    background: linear-gradient(90deg, transparent, rgba(var(--theme-rgb, 234,179,8), 0.1), transparent) !important;
-    border-left: 1px solid rgba(var(--theme-rgb, 234,179,8), 0.2);
-    border-right: 1px solid rgba(var(--theme-rgb, 234,179,8), 0.2);
 }
 
-    .column-capital, .column-base { 
-        border-color: var(--theme-color) !important; 
-        box-shadow: 0 0 15px rgba(var(--theme-rgb), 0.3);
-    }
+/* Başlık ve Kaide (Geri Getirilen Efektler) */
+.column-capital, .column-base {
+    position: absolute;
+    left: -15px;
+    width: calc(100% + 30px);
+    background: var(--theme-color, #eab308);
+    box-shadow: 0 0 25px var(--theme-color, #eab308);
+    z-index: 10;
+}
+.column-capital { top: 0; height: 12px; border-radius: 0 0 5px 5px; }
+.column-base { bottom: 0; height: 25px; border-radius: 5px 5px 0 0; }
 
     .data-pulse { 
         background: linear-gradient(to bottom, transparent, var(--theme-color), transparent) !important; 
@@ -602,22 +611,20 @@
 
 <div id="mitoloji-overlay" class="detail-overlay">
     <div class="column-background">
-        <div class="css-column col-left">
-            <div class="column-capital"></div> 
-            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0s;"></div></div>
-            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 2.5s;"></div></div>
-            <div class="column-base"></div> 
-        </div>
-
-        <div class="css-column col-right">
-            <div class="column-capital"></div> 
-            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0.5s;"></div></div>
-            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 1.8s;"></div></div>
-            <div class="column-base"></div> 
-
-        </div>
-
+    <div class="css-column col-left">
+        <div class="column-capital"></div> 
+        <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0s;"></div></div>
+        <div class="fluting-line"><div class="data-pulse" style="animation-delay: 2.5s;"></div></div>
+        <div class="column-base"></div> 
     </div>
+
+    <div class="css-column col-right">
+        <div class="column-capital"></div> 
+        <div class="fluting-line"><div class="data-pulse" style="animation-delay: 1.2s;"></div></div>
+        <div class="fluting-line"><div class="data-pulse" style="animation-delay: 3.8s;"></div></div>
+        <div class="column-base"></div> 
+    </div>
+</div>
 
     <div class="overlay-content">
         <div style="width: 100%; overflow: hidden; margin-bottom: 20px;">
@@ -727,19 +734,16 @@
 
 
    document.addEventListener('mousemove', (e) => {
-    const overlay = document.getElementById('mitoloji-overlay');
-    if (overlay.classList.contains('active')) {
-        const x = (window.innerWidth / 2 - e.clientX) / 50; 
-        const y = (window.innerHeight / 2 - e.clientY) / 50;
-
-        const leftCol = document.querySelector('.col-left');
-        const rightCol = document.querySelector('.col-right');
-
-        if (leftCol && rightCol) {
-            // Sadece hafif kayma efekti, dikey yapıyı korur
-            leftCol.style.transform = `translate(${x}px, ${y}px)`;
-            rightCol.style.transform = `translate(${-x}px, ${-y}px)`;
-        }
+    const overlay = document.querySelector('.detail-overlay.active');
+    if (overlay) {
+        const x = (window.innerWidth / 2 - e.clientX) / 80;
+        const y = (window.innerHeight / 2 - e.clientY) / 80;
+        
+        const cols = overlay.querySelectorAll('.css-column');
+        cols.forEach((col, index) => {
+            const factor = index === 0 ? 1 : -1;
+            col.style.transform = `translate(${x * factor}px, ${y * factor}px)`;
+        });
     }
 });
 
