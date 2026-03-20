@@ -144,17 +144,26 @@
         padding: 25px;
         text-align: left;
         margin-top: 20px;
-        transition: all 0.4s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         cursor: pointer;
+        overflow: hidden;
     }
 
     .master-slot:hover {
-        border: 1px solid var(--gold);
-        background: rgba(0, 0, 0, 0.5);
-        box-shadow: inset 0 0 20px rgba(234, 179, 8, 0.1);
+        transform: translateX(10px); /* Hafifçe sağa kayma (Modern bir liste efekti) */
+        background: rgba(234, 179, 8, 0.08);
+        border-color: var(--gold);
+        box-shadow: -5px 0 15px rgba(234, 179, 8, 0.2);
     }
 
+    /* Simülasyon slotu için özel hover rengi (Turkuaz) */
+    .simulation-slot:hover {
+        background: rgba(6, 182, 212, 0.08) !important;
+        border-color: #06b6d4 !important;
+        box-shadow: -5px 0 15px rgba(6, 182, 212, 0.2) !important;
+    }
+    
     .slot-header {
         display: flex;
         align-items: center;
