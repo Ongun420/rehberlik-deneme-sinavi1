@@ -316,12 +316,23 @@
 
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-    /* MOBİL */
+    /* MOBİL DÜZENLEME */
     @media (max-width: 768px) {
-        .glass-card { padding: 35px 20px !important; width: 88% !important; }
-        .seal-master { transform: scale(0.65); }
-        .sub-slot-container { grid-template-columns: 1fr; }
-        .css-column { width: 60px; }
+        .glass-card { padding: 30px 15px !important; width: 92% !important; }
+        .overlay-content { padding: 40px 15px !important; } /* İçeriğe nefes aldırdık */
+        
+        /* Mobilde sütunları çok daha ince ve kenarda tutuyoruz */
+        .css-column { width: 40px !important; opacity: 0.4; } 
+        .col-left { left: 2% !important; }
+        .col-right { right: 2% !important; }
+        
+        /* Başlıklar mobilde çok dışarı taşmasın */
+        .column-capital { width: 120%; left: -10%; }
+        .column-base { width: 140%; left: -20%; }
+
+        /* Veri kartlarının içindeki metinleri biraz küçültelim */
+        .overlay-content h1 { font-size: 1.4rem !important; }
+        .overlay-content p { font-size: 0.85rem !important; }
     }
 
 /* Deneme slotuna özel renk ve ışık */
@@ -526,18 +537,19 @@
 
     document.addEventListener('mousemove', (e) => {
         const overlay = document.getElementById('mitoloji-overlay');
-        if (overlay.style.display === 'block') {
-            // 250'ye bölerek hareketi neredeyse hissedilmez ama derinlik katan bir seviyeye çektik
-            const x = (window.innerWidth / 2 - e.clientX) / 250;
-            const y = (window.innerHeight / 2 - e.clientY) / 250;
+        
+        // Sadece overlay 'active' sınıfına sahipse ve opacity 1 ise çalıştır
+        if (overlay.classList.contains('active')) {
+            const x = (window.innerWidth / 2 - e.clientX) / 200; // Hassasiyeti 200 yaptık
+            const y = (window.innerHeight / 2 - e.clientY) / 200;
             
             const leftCol = document.querySelector('.col-left');
             const rightCol = document.querySelector('.col-right');
             
-            if(leftCol && rightCol) {
-                // scale(1.15) sabit kalarak sadece mikro kaymalar ekliyoruz
-                leftCol.style.transform = `translate(${x}px, ${y}px) scale(1.15)`;
-                rightCol.style.transform = `translate(${-x}px, ${-y}px) scale(1.15)`;
+            if (leftCol && rightCol) {
+                // scale(1.1) ile birleştirerek transform uygula
+                leftCol.style.transform = `translate(${x}px, ${y}px) scale(1.1)`;
+                rightCol.style.transform = `translate(${-x}px, ${-y}px) scale(1.1)`;
             }
         }
     });
