@@ -189,14 +189,21 @@
         width: 100%; height: 100%;
         background: rgba(2, 6, 23, 0.98);
         backdrop-filter: blur(15px);
-        z-index: 9999; /* En üstte durması için çok yüksek verdik */
-        display: none;
+        z-index: 9999;
         opacity: 0;
-        transition: 0.5s ease;
+        transition: opacity 0.5s ease;
         overflow-y: auto;
-        display: flex; 
+        /* display: flex;  <-- BURAYI SİLDİK, JS AÇACAK */
+        display: none; 
         flex-direction: column;
         align-items: center;
+        pointer-events: none; /* Kapalıyken tıklamaları alt kata geçirir */
+    }
+
+    /* Overlay açıkken tıklamaları aktif et */
+    .detail-overlay.active {
+        display: flex;
+        pointer-events: auto;
     }
 
     /* İÇERİK: Fontu Ubuntu'ya sabitledik ve hiyerarşiyi düzelttik */
@@ -447,14 +454,18 @@
 
     function openDetail() {
         const overlay = document.getElementById('mitoloji-overlay');
-        overlay.style.display = 'flex'; // Block yerine flex yaptık
-        setTimeout(() => { overlay.style.opacity = '1'; }, 10);
+        overlay.classList.add('active'); // CSS'teki flex ayarını tetikler
+        setTimeout(() => { 
+            overlay.style.opacity = '1'; 
+        }, 10);
     }
-    
+
     function closeDetail() {
         const overlay = document.getElementById('mitoloji-overlay');
         overlay.style.opacity = '0';
-        setTimeout(() => { overlay.style.display = 'none'; }, 500);
+        setTimeout(() => { 
+            overlay.classList.remove('active'); 
+        }, 500);
     }
 
     window.addEventListener('scroll', () => {
