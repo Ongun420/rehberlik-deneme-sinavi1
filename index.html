@@ -225,478 +225,287 @@
         opacity: 0;
         transition: opacity 0.5s ease;
         overflow-y: auto;
-
         /* display: flex;  <-- BURAYI SİLDİK, JS AÇACAK */
-
         display: none; 
-
         flex-direction: column;
-
         align-items: center;
-
         pointer-events: none; /* Kapalıyken tıklamaları alt kata geçirir */
-
     }
-
-
 
     /* Overlay açıkken tıklamaları aktif et */
 
     .detail-overlay.active {
-
         display: flex;
-
         pointer-events: auto;
-
     }
-
-
 
     /* İÇERİK: Fontu Ubuntu'ya sabitledik ve hiyerarşiyi düzelttik */
 
     .overlay-content {
-
         width: 100%;
-
         max-width: 800px;
-
         margin: 0 auto;
-
         padding: 60px 20px;
-
         position: relative;
-
         z-index: 10;
-
         font-family: 'Ubuntu', sans-serif; /* Bozulmaması için sabitledik */
-
     }
-
-
 
     /* --- SİBER ANTİK SÜTUN SİSTEMİ (GLOW & FLUTING) --- */
 
 /* --- SİBER ANTİK SÜTUN SİSTEMİ --- */
-
     .column-background {
-
         position: absolute;
-
         top: 0; left: 0;
-
         width: 100%; height: 100%;
-
         overflow: hidden;
-
         z-index: -1;
-
         perspective: 1000px;
-
     }
-
-
 
     .css-column {
-
         position: absolute;
-
         top: 0; /* Üstten başlasın */
-
         bottom: 0; /* Altta bitsin */
-
         width: 100px;
-
         height: 100vh; /* Ekran boyuna sabitledik */
-
         background: linear-gradient(90deg, 
-
             rgba(234, 179, 8, 0.02) 0%, 
-
             rgba(234, 179, 8, 0.08) 50%, 
-
             rgba(234, 179, 8, 0.02) 100%);
-
         border-left: 1px solid rgba(234, 179, 8, 0.1);
-
         border-right: 1px solid rgba(234, 179, 8, 0.1);
-
         display: flex;
-
         justify-content: space-around;
-
         padding: 0 10px;
-
         z-index: 1;
-
     }
-
-
 
     .fluting-line { width: 1px; height: 100%; background: rgba(234, 179, 8, 0.15); position: relative; }
 
-
-
     .data-pulse {
-
         position: absolute;
-
         top: -100px;
-
         width: 2px;
-
         height: 120px;
-
         background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-
         filter: blur(1px);
-
         animation: data-flow 5s infinite linear;
-
     }
-
-
 
     @keyframes data-flow {
-
         0% { top: -150px; opacity: 0; }
-
         10% { opacity: 1; }
-
         85% { opacity: 1; }
-
         100% { top: 100%; opacity: 0; }
-
     }
-
-
 
   /* BAŞLIĞI DAHA ZARİF VE KÜÇÜK YAPTIK */
-
     .column-capital {
-
         position: absolute;
-
         top: 4%; 
-
         width: 120%; /* 140'tan 120'ye düşürdük */
-
         height: 25px; /* 35'ten 25'e düşürdük - daha ince */
-
         left: -10%; 
-
         background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.4) 0%, transparent 80%);
-
         border-top: 2px solid var(--gold);
-
         box-shadow: 0 -5px 20px rgba(234, 179, 8, 0.3);
-
         z-index: 2;
-
     }
-
-
 
     /* KAİDE: Alttan %5 içeride bitsin ki kesilmesin */
-
     .column-base {
-
         position: absolute;
-
         bottom: 5%; 
-
         width: 200%;
-
         height: 70px;
-
         left: -50%;
-
         background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.4) 0%, transparent 80%);
-
         border-bottom: 4px solid var(--gold);
-
         border-top: 1px solid rgba(234, 179, 8, 0.3); /* Üstüne ince bir hat */
-
         box-shadow: 0 10px 50px rgba(234, 179, 8, 0.5);
-
     }
 
-
-
     /* Sütunların başlangıç ölçeğini artırdık ki hareket payı kalsın */
-
     .col-left { left: 5%; transform: scale(1.15); }
-
     .col-right { right: 5%; transform: scale(1.15); }
 
     @keyframes flow-down { 0% { top: -150px; } 100% { top: 110%; } }
 
-
-
     .overlay-content {
-
         max-width: 900px;
-
         margin: 50px auto;
-
         padding: 40px;
-
         position: relative;
-
     }
-
-
 
     .close-btn {
-
         background: none; border: 1px solid var(--gold);
-
         color: var(--gold); padding: 8px 20px;
-
         cursor: pointer; float: right; transition: 0.3s;
-
     }
-
-
 
     .close-btn:hover { background: var(--gold); color: black; }
 
-
-
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-
-
     /* MOBİL DÜZENLEME */
-
     @media (max-width: 768px) {
-
         .glass-card { padding: 30px 15px !important; width: 92% !important; }
-
-        .overlay-content { padding: 40px 15px !important; } /* İçeriğe nefes aldırdık */
-
-        
-
+        .overlay-content { padding: 40px 15px !important; } /* İçeriğe nefes aldırdık */   
         /* Mobilde sütunları çok daha ince ve kenarda tutuyoruz */
-
         .css-column { width: 40px !important; opacity: 0.4; } 
-
         .col-left { left: 2% !important; }
-
-        .col-right { right: 2% !important; }
-
-        
+        .col-right { right: 2% !important; }   
 
         /* Başlıklar mobilde çok dışarı taşmasın */
-
         .column-capital { width: 120%; left: -10%; }
-
         .column-base { width: 140%; left: -20%; }
 
-
-
         /* Veri kartlarının içindeki metinleri biraz küçültelim */
-
         .overlay-content h1 { font-size: 1.4rem !important; }
-
         .overlay-content p { font-size: 0.85rem !important; }
-
     }
 
 
 
 /* Deneme slotuna özel renk ve ışık */
-
     .status-dot.standby {
-
         background: #06b6d4; /* Turkuaz */
-
         box-shadow: 0 0 10px #06b6d4;
-
     }
-
 
 
     .simulation-slot:hover {
-
         border: 1px solid #06b6d4 !important;
-
         box-shadow: inset 0 0 30px rgba(6, 182, 212, 0.1) !important;
-
     }
-
 
 
     /* Slotun içine küçük bir tarama efekti (opsiyonel) */
-
     .simulation-slot::after {
-
         content: "";
-
         position: absolute;
-
         top: 0; left: 0; width: 100%; height: 2px;
-
         background: rgba(6, 182, 212, 0.2);
-
         animation: scan 3s infinite linear;
-
         pointer-events: none;
-
     }
 
-
-
     @keyframes scan {
-
         0% { top: 0; }
-
         100% { top: 100%; }
 
     }
 
-
-
 /* FOOTER STİLİ - TASARIMA UYGUN HALE GETİRDİK */
-
     footer.footer-bar {
-
         width: 100%;
-
         background: rgba(2, 6, 23, 0.9); /* Arka planla uyumlu ama hafif belirgin */
-
         backdrop-filter: blur(10px);
-
         border-top: 1px solid rgba(234, 179, 8, 0.1); /* Hafif altın rengi bir hat */
-
         padding: 50px 0 20px 0;
-
         margin-top: 100px;
-
         position: relative;
-
         z-index: 50; /* Kartların üzerinde, overlay'in altında */
-
     }
-
-
 
     .footer-content {
-
         max-width: 1000px;
-
         margin: 0 auto;
-
         display: grid;
-
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-
         gap: 40px;
-
         padding: 0 30px;
-
     }
-
-
 
     .footer-section h4 {
-
         color: var(--gold);
-
         font-family: 'Courier New', monospace;
-
         letter-spacing: 2px;
-
         margin-bottom: 15px;
-
         text-transform: uppercase;
-
     }
-
-
 
     .footer-section p {
-
         font-size: 0.85rem;
-
         opacity: 0.6;
-
         line-height: 1.6;
-
     }
-
-
 
     .footer-bottom {
-
         text-align: center;
-
         margin-top: 40px;
-
         padding-top: 20px;
-
         border-top: 1px solid rgba(255, 255, 255, 0.05);
-
         font-size: 0.75rem;
-
         opacity: 0.4;
-
     }
-
-
 
     /* GÜNCEL TEMA RENKLERİ */
-
     /* Mitoloji (Altın): 234, 179, 8 */
-
     .theme-mitoloji { --theme-color: #eab308; --theme-rgb: 234, 179, 8; }
-
-    
-
     /* Arkeoloji (Mavi): 14, 165, 233 */
-
-    .theme-arkeoloji { --theme-color: #0ea5e9; --theme-rgb: 14, 165, 233; }
-
-    
-
+    .theme-arkeoloji { --theme-color: #0ea5e9; --theme-rgb: 14, 165, 233; }  
     /* Medeniyet (Bakır): 245, 158, 11 */
-
     .theme-medeniyet { --theme-color: #f59e0b; --theme-rgb: 245, 158, 11; }
 
-
-
     /* Sütunlar artık bu sayıları kullanarak şeffaf akacak */
-
     .css-column { 
-
         background: linear-gradient(90deg, 
-
             transparent 0%, 
-
             rgba(var(--theme-rgb), 0.1) 50%, 
-
             transparent 100%) !important;
-
     }
-
-
 
     .column-capital, .column-base { 
-
         border-color: var(--theme-color) !important; 
-
         box-shadow: 0 0 15px rgba(var(--theme-rgb), 0.3);
-
     }
-
-
 
     .data-pulse { 
-
         background: linear-gradient(to bottom, transparent, var(--theme-color), transparent) !important; 
-
     }
 
-    
+    /* --- SEÇİM PANELİ (HUB) TASARIMI --- */
+.hub-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(2, 6, 23, 0.95);
+    z-index: 10001;
+    display: none; align-items: center; justify-content: center;
+    opacity: 0; transition: 0.5s ease;
+    backdrop-filter: blur(20px);
+}
+.hub-overlay.active { display: flex; opacity: 1; }
+.hub-container { display: flex; flex-direction: column; gap: 15px; width: 90%; max-width: 400px; text-align: center; }
+.hub-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px; border-radius: 15px;
+    color: white; font-family: 'Courier New', monospace;
+    cursor: pointer; transition: 0.3s; text-align: left;
+    letter-spacing: 1px;
+}
+.btn-mitoloji:hover { border-color: #eab308; box-shadow: 0 0 20px rgba(234, 179, 8, 0.2); color: #eab308; }
+.btn-arkeoloji:hover { border-color: #0ea5e9; box-shadow: 0 0 20px rgba(14, 165, 233, 0.2); color: #0ea5e9; }
+.btn-medeniyet:hover { border-color: #f59e0b; box-shadow: 0 0 20px rgba(245, 158, 11, 0.2); color: #f59e0b; }
+
+/* --- DİNAMİK SÜTUN RENKLERİ FİX --- */
+.theme-mitoloji { --theme-color: #eab308; --theme-rgb: 234, 179, 8; }
+.theme-arkeoloji { --theme-color: #0ea5e9; --theme-rgb: 14, 165, 233; }
+.theme-medeniyet { --theme-color: #f59e0b; --theme-rgb: 245, 158, 11; }
+
+/* Sütunların içindeki sabit renkleri değişkenle değiştiriyoruz */
+.detail-overlay[class*="theme-"] .css-column {
+    background: linear-gradient(90deg, transparent 0%, rgba(var(--theme-rgb), 0.1) 50%, transparent 100%) !important;
+    border-color: rgba(var(--theme-rgb), 0.2) !important;
+}
+.detail-overlay[class*="theme-"] .column-capital, 
+.detail-overlay[class*="theme-"] .column-base { 
+    border-color: var(--theme-color) !important;
+    box-shadow: 0 0 20px rgba(var(--theme-rgb), 0.4) !important;
+}
 
 </style>
 
@@ -705,205 +514,120 @@
 <body>
 
 
-
 <div id="hangul-container" class="rain-default"></div>
-
 
 
 <header>
 
     <div class="header-brand" onclick="go(0)"><img src="logo.png" alt="FOO"></div>
-
     <div class="nav-links">
-
         <a onclick="go(0)">GİRİŞ</a>
-
         <a onclick="go(1)">KORE ARŞİVİ</a>
-
         <a onclick="go(2)">SINAV MERKEZİ</a>
-
     </div>
 
 </header>
 
-
-
 <section id="sec-0">
-
     <div class="glass-card">
-
         <div class="seal-master">
-
             <div class="f-part">F</div>
-
             <div class="o-part"><div class="swirl-korea"></div></div>
-
             <div class="o-part"><div class="needle-gold"></div></div>
-
         </div>
 
         <div class="text-brand">Ongun Orak</div>
-
         <p style="margin-top: 20px; opacity: 0.7; letter-spacing: 2px; font-size: 0.8rem;">DIGITAL CULTURE PORTAL</p>
-
     </div>
 
     <div class="scroll-indicator" onclick="go(1)"><div class="mouse"><div class="wheel"></div></div></div>
 
 </section>
 
-
-
 <section id="sec-1">
-
     <div class="glass-card">
-
         <h2 style="color: var(--lila); font-size: 2.5rem;">Kore Arşivi</h2>
-
         <p>Dijital Notlar ve Kültür Köprüsü.</p>
-
     </div>
 
     <div class="scroll-indicator" onclick="go(2)"><div class="mouse"><div class="wheel"></div></div></div>
 
 </section>
 
-
-
 <section id="sec-2">
-
     <div class="glass-card">
-
         <h2 style="color: var(--gold); font-size: 2.2rem; margin-bottom: 30px;">Sınav Merkezi</h2>
-
-        
-
         <div style="display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 450px; margin: 0 auto;">
-
-            
-
             <div class="master-slot" onclick="openDetail()">
-
                 <div class="slot-header">
-
                     <span class="status-dot"></span>
-
                     <span class="slot-title">MİTOLOJİ_DATA_V1</span>
-
                 </div>
 
                 <div class="sub-slot-container">
-
                     <div class="sub-slot-placeholder" style="font-size: 0.7rem; opacity: 0.5;">Dizini açmak için tıklayın...</div>
 
                 </div>
 
             </div>
 
-
-
             <div class="master-slot simulation-slot" onclick="alert('Simülasyon Modu Yakında Aktif Edilecek!')">
-
                 <div class="slot-header">
-
                     <span class="status-dot standby"></span>
-
                     <span class="slot-title">DENEME_SIMULATOR_V.01</span>
-
                 </div>
-
                 <div style="font-family: 'Courier New', monospace; margin-top: 10px;">
-
                     <p style="font-size: 0.7rem; opacity: 0.7; margin: 2px 0;">> DURUM: HAZIR</p>
-
                     <p style="font-size: 0.7rem; opacity: 0.7; margin: 2px 0;">> ANALİZ: %0 TAMAMLANDI</p>
-
                     <div style="width: 100%; height: 4px; background: rgba(255,255,255,0.1); margin-top: 10px; border-radius: 2px; overflow: hidden;">
-
                         <div style="width: 30%; height: 100%; background: #06b6d4; box-shadow: 0 0 10px #06b6d4;"></div>
-
                     </div>
-
                 </div>
-
             </div>
 
 
-
-        </div> </div>
+        </div> 
+    </div>
 
 </section>
 
-
-
 <div id="mitoloji-overlay" class="detail-overlay">
-
     <div class="column-background">
-
         <div class="css-column col-left">
-
             <div class="column-capital"></div> 
-
             <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0s;"></div></div>
-
             <div class="fluting-line"><div class="data-pulse" style="animation-delay: 2.5s;"></div></div>
-
             <div class="column-base"></div> 
-
         </div>
 
         <div class="css-column col-right">
-
             <div class="column-capital"></div> 
-
             <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0.5s;"></div></div>
-
             <div class="fluting-line"><div class="data-pulse" style="animation-delay: 1.8s;"></div></div>
-
             <div class="column-base"></div> 
 
         </div>
 
     </div>
 
-
-
     <div class="overlay-content">
-
         <div style="width: 100%; overflow: hidden; margin-bottom: 20px;">
-
             <button class="close-btn" onclick="closeDetail()">✕ KAPAT</button>
-
         </div>
-
-
 
         <div style="text-align: center; margin-bottom: 40px;">
-
             <h1 style="color: var(--gold); letter-spacing: 4px; font-size: 1.8rem;">ANADOLU MİTOLOJİSİ</h1>
-
             <p style="opacity: 0.5; font-size: 0.8rem; font-family: 'Courier New', monospace;">VERİ PAKETİ: HITIT_01</p>
-
         </div>
 
-
-
         <div style="display: grid; gap: 20px;">
-
             <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(234, 179, 8, 0.2); padding: 25px; border-radius: 20px; backdrop-filter: blur(5px);">
-
                 <h3 style="color: var(--gold); margin-top: 0; font-family: 'Courier New', monospace;">[DATA_01]: GÜNEŞ TANRIÇASI ARİNNA</h3>
-
                 <p style="font-size: 0.95rem; line-height: 1.6; opacity: 0.8;">Hitit panteonunun en üstündeki dişil enerji. Devletin koruyucusu ve savaşlarda kralın yanındaki güç.</p>
-
             </div>
 
-
-
             <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(234, 179, 8, 0.2); padding: 25px; border-radius: 20px; backdrop-filter: blur(5px);">
-
                 <h3 style="color: var(--gold); margin-top: 0; font-family: 'Courier New', monospace;">[DATA_02]: FIRTINA TANRISI TEŞUP</h3>
-
                 <p style="font-size: 0.95rem; line-height: 1.6; opacity: 0.8;">Elin de üçlü yıldırım demeti ve boğa sembolüyle tasvir edilir. Arinna'nın eşidir.</p>
 
             </div>
@@ -915,33 +639,22 @@
 </div>
 
 
-
 <footer class="footer-bar">
-
     <div class="footer-content">
-
         <div class="footer-section">
-
             <h4>Hakkımızda</h4>
-
             <p>Uluslararası İlişkiler mezunu, İstanbul Üniversitesi Kore Dili öğrencisi ve Turizm Rehberi adayı Ongun Orak'ın portfolyo projesidir.</p>
-
         </div>
 
         <div class="footer-section">
-
             <h4>İletişim</h4>
-
             <p>Email: ongunorak@gmail.com</p>
-
             <p>İstanbul, Türkiye</p>
 
         </div>
 
         <div class="footer-bottom">
-
             <p>&copy; 2026 FOO | Ongun Orak. Tüm Hakları Saklıdır.</p>
-
         </div>
 
     </div>
@@ -949,133 +662,76 @@
 </footer>
 
 
-
 <script>
-
-    function go(index) { window.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' }); }
-
-    
+    function go(index) { window.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' }); } 
 
     function createHangulRain() {
-
         const container = document.getElementById('hangul-container');
-
         const characters = '가나다라마바사아자차카타파하ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ'; 
-
         const colWidth = 30;
-
         const colCount = Math.floor(window.innerWidth / colWidth);
-
         container.innerHTML = '';
 
         for (let i = 0; i < colCount; i++) {
-
             const column = document.createElement('div');
-
             column.className = 'hangul-column';
-
             let content = '';
-
             const len = Math.floor(Math.random() * 20) + 15;
-
             for (let j = 0; j < len; j++) { content += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>'; }
-
             column.innerHTML = content;
-
             column.style.left = (i * colWidth) + 'px';
-
             column.style.animationDuration = (Math.random() * 7 + 8) + 's';
-
             column.style.animationDelay = (Math.random() * -20) + 's';
-
             container.appendChild(column);
 
         }
 
     }
 
-
-
     function openDetail() {
-
         const overlay = document.getElementById('mitoloji-overlay');
-
         overlay.classList.add('active'); // CSS'teki flex ayarını tetikler
-
         setTimeout(() => { 
-
             overlay.style.opacity = '1'; 
-
         }, 10);
 
     }
 
 
-
     function closeDetail() {
-
         const overlay = document.getElementById('mitoloji-overlay');
-
         overlay.style.opacity = '0';
-
         setTimeout(() => { 
-
             overlay.classList.remove('active'); 
-
         }, 500);
 
     }
 
-
-
     window.addEventListener('scroll', () => {
-
         const container = document.getElementById('hangul-container');
-
         const index = Math.round(window.scrollY / window.innerHeight);
-
         container.classList.remove('rain-default', 'rain-korea', 'rain-gold');
-
         if(index === 0) container.classList.add('rain-default');
-
         else if(index === 1) container.classList.add('rain-korea');
-
         else if(index === 2) container.classList.add('rain-gold');
-
     });
 
 
-
     document.addEventListener('mousemove', (e) => {
-
         const overlay = document.getElementById('mitoloji-overlay');
-
-        
-
         // Sadece overlay 'active' sınıfına sahipse ve opacity 1 ise çalıştır
-
         if (overlay.classList.contains('active')) {
-
             const x = (window.innerWidth / 2 - e.clientX) / 200; // Hassasiyeti 200 yaptık
-
             const y = (window.innerHeight / 2 - e.clientY) / 200;
 
-            
-
             const leftCol = document.querySelector('.col-left');
-
             const rightCol = document.querySelector('.col-right');
 
-            
 
             if (leftCol && rightCol) {
-
                 // scale(1.1) ile birleştirerek transform uygula
-
                 leftCol.style.transform = `translate(${x}px, ${y}px) scale(1.1)`;
-
                 rightCol.style.transform = `translate(${-x}px, ${-y}px) scale(1.1)`;
-
             }
 
         }
@@ -1083,42 +739,42 @@
     });
 
 
-
     function startDatabase(type) {
-
         closeHub();
-
-        const overlay = document.getElementById('mitoloji-overlay');
-
-        
-
+        const overlay = document.getElementById('mitoloji-overlay');  
         // Önce eski temaları temizle
-
-        overlay.classList.remove('theme-mitoloji', 'theme-arkeoloji', 'theme-medeniyet');
-
-        
-
+        overlay.classList.remove('theme-mitoloji', 'theme-arkeoloji', 'theme-medeniyet');    
         // Yeni temayı ekle
-
         overlay.classList.add('theme-' + type);
-
-        
-
         // Overlay'i aç
-
         setTimeout(() => openDetail(), 600);
 
     }
 
+    function openHub() {
+    const hub = document.getElementById('selection-hub');
+    hub.classList.add('active');
+}
+
+function closeHub() {
+    document.getElementById('selection-hub').classList.remove('active');
+}
 
 
     document.addEventListener('DOMContentLoaded', createHangulRain);
-
     window.addEventListener('resize', createHangulRain);
 
 </script>
 
-
+<div id="selection-hub" class="hub-overlay">
+    <div class="hub-container">
+        <h2 style="color: var(--gold); letter-spacing: 5px; font-size: 1rem; margin-bottom: 20px;">SYSTEM_ACCESS: SELECT_DATABASE</h2>
+        <div class="hub-btn btn-mitoloji" onclick="startDatabase('mitoloji')">[01] ANADOLU MİTOLOJİSİ</div>
+        <div class="hub-btn btn-arkeoloji" onclick="startDatabase('arkeoloji')">[02] ARKEOLOJİ TERİMLERİ</div>
+        <div class="hub-btn btn-medeniyet" onclick="startDatabase('medeniyet')">[03] ANADOLU MEDENİYETLERİ</div>
+        <p onclick="closeHub()" style="color:rgba(255,255,255,0.3); font-size:0.7rem; cursor:pointer; margin-top:10px;">✕ BAĞLANTIYI KES</p>
+    </div>
+</div>
 
 </body>
 
