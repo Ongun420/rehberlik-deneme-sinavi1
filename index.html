@@ -263,23 +263,31 @@
         perspective: 1000px;
     }
 
-    .css-column {
-        position: absolute;
-        top: 0; /* Üstten başlasın */
-        bottom: 0; /* Altta bitsin */
-        width: 100px;
-        height: 100vh; /* Ekran boyuna sabitledik */
-        background: linear-gradient(90deg, 
-            rgba(234, 179, 8, 0.02) 0%, 
-            rgba(234, 179, 8, 0.08) 50%, 
-            rgba(234, 179, 8, 0.02) 100%);
-        border-left: 1px solid rgba(234, 179, 8, 0.1);
-        border-right: 1px solid rgba(234, 179, 8, 0.1);
-        display: flex;
-        justify-content: space-around;
-        padding: 0 10px;
-        z-index: 1;
-    }
+    /* Sütunların varsayılan (Mitoloji) parlaklığı */
+.css-column { 
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(234, 179, 8, 0.15) 50%, 
+        transparent 100%) !important;
+    border-left: 1px solid rgba(234, 179, 8, 0.3) !important;
+    border-right: 1px solid rgba(234, 179, 8, 0.3) !important;
+}
+
+/* Dinamik Tema Renkleri ve Sütunlara Etkisi */
+.theme-mitoloji { --theme-color: #eab308; --theme-rgb: 234, 179, 8; }
+.theme-arkeoloji { --theme-color: #0ea5e9; --theme-rgb: 14, 165, 233; }
+.theme-medeniyet { --theme-color: #f59e0b; --theme-rgb: 245, 158, 11; }
+
+/* Overlay içinde tema seçilince sütunların rengini değiştir */
+.detail-overlay.theme-mitoloji .css-column,
+.detail-overlay.theme-arkeoloji .css-column,
+.detail-overlay.theme-medeniyet .css-column {
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(var(--theme-rgb), 0.2) 50%, 
+        transparent 100%) !important;
+    border-color: rgba(var(--theme-rgb), 0.4) !important;
+}
 
     .fluting-line { width: 1px; height: 100%; background: rgba(234, 179, 8, 0.15); position: relative; }
 
@@ -558,11 +566,13 @@
     <div class="glass-card">
         <h2 style="color: var(--gold); font-size: 2.2rem; margin-bottom: 30px;">Sınav Merkezi</h2>
         <div style="display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 450px; margin: 0 auto;">
-            <div class="master-slot" onclick="openDetail()">
-                <div class="slot-header">
-                    <span class="status-dot"></span>
-                    <span class="slot-title">MİTOLOJİ_DATA_V1</span>
-                </div>
+            <div class="master-slot" onclick="openHub()"> 
+    <div class="slot-header">
+        <span class="status-dot"></span>
+        <span class="slot-title">DERS_NOTLARI_ACCESS</span>
+    </div>
+    <div class="sub-slot-placeholder" style="font-size: 0.7rem; opacity: 0.5;">Veri tabanını seçmek için tıklayın...</div>
+</div>
 
                 <div class="sub-slot-container">
                     <div class="sub-slot-placeholder" style="font-size: 0.7rem; opacity: 0.5;">Dizini açmak için tıklayın...</div>
@@ -740,16 +750,29 @@
 
 
     function startDatabase(type) {
-        closeHub();
-        const overlay = document.getElementById('mitoloji-overlay');  
-        // Önce eski temaları temizle
-        overlay.classList.remove('theme-mitoloji', 'theme-arkeoloji', 'theme-medeniyet');    
-        // Yeni temayı ekle
-        overlay.classList.add('theme-' + type);
-        // Overlay'i aç
-        setTimeout(() => openDetail(), 600);
-
+    const overlay = document.getElementById('mitoloji-overlay');
+    const title = document.querySelector('#mitoloji-overlay h1');
+    const subtitle = document.querySelector('#mitoloji-overlay p[style*="opacity: 0.5"]');
+    
+    // Temayı uygula
+    overlay.classList.remove('theme-mitoloji', 'theme-arkeoloji', 'theme-medeniyet');
+    overlay.classList.add('theme-' + type);
+    
+    // İçeriği değiştir
+    if(type === 'mitoloji') {
+        title.innerText = "ANADOLU MİTOLOJİSİ";
+        subtitle.innerText = "VERİ PAKETİ: HITIT_01";
+    } else if(type === 'arkeoloji') {
+        title.innerText = "ARKEOLOJİ TERİMLERİ";
+        subtitle.innerText = "VERİ PAKETİ: ARCH_GEO_V2";
+    } else if(type === 'medeniyet') {
+        title.innerText = "ANADOLU MEDENİYETLERİ";
+        subtitle.innerText = "VERİ PAKETİ: CIV_HISTORY_V1";
     }
+
+    closeHub();
+    openDetail();
+}
 
     function openHub() {
     const hub = document.getElementById('selection-hub');
