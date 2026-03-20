@@ -196,34 +196,85 @@
         overflow-y: auto;
     }
 
+    /* --- SİBER ANTİK SÜTUN SİSTEMİ (GLOW & FLUTING) --- */
     .column-background {
         position: absolute;
         top: 0; left: 0;
         width: 100%; height: 100%;
         overflow: hidden;
         z-index: -1;
+        perspective: 1000px; /* 3D derinlik hissi için */
     }
 
     .css-column {
         position: absolute;
-        bottom: -10%;
-        width: 120px;
-        height: 120%;
-        background: linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.02) 100%);
+        bottom: -5%;
+        width: 100px;
+        height: 110%;
+        background: linear-gradient(90deg, 
+            rgba(234, 179, 8, 0.02) 0%, 
+            rgba(234, 179, 8, 0.08) 50%, 
+            rgba(234, 179, 8, 0.02) 100%);
         border-left: 1px solid rgba(234, 179, 8, 0.1);
         border-right: 1px solid rgba(234, 179, 8, 0.1);
+        display: flex;
+        justify-content: space-around; /* Yiv hatlarını eşit dağıtmak için */
+        padding: 0 10px;
     }
 
-    .col-left { left: 5%; }
-    .col-right { right: 5%; }
+    /* Sütun İçi Dikey Yiv Çizgileri (3 Adet) */
+    .fluting-line {
+        width: 1px;
+        height: 100%;
+        background: rgba(234, 179, 8, 0.15);
+        position: relative;
+    }
 
-    .column-light {
+    /* Akan Veri Işıkları (Fade-Out Efektli) */
+    .data-pulse {
         position: absolute;
-        width: 2px; height: 150px;
+        top: -100px;
+        width: 2px;
+        height: 120px;
         background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-        animation: flow-down 4s infinite linear;
-        opacity: 0.5;
+        filter: blur(1px);
+        animation: data-flow 5s infinite linear;
     }
+
+    @keyframes data-flow {
+        0% { top: -150px; opacity: 0; }
+        10% { opacity: 1; }
+        85% { opacity: 1; }
+        100% { top: 100%; opacity: 0; } /* Altta yavaşça silinme (fade out) */
+    }
+
+    /* SİBER BAŞLIK (Top Glow) */
+    .column-capital {
+        position: absolute;
+        top: 5%;
+        width: 140%;
+        height: 40px;
+        left: -20%;
+        background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.4) 0%, transparent 70%);
+        border-top: 2px solid var(--gold);
+        box-shadow: 0 -15px 30px rgba(234, 179, 8, 0.3);
+        z-index: 2;
+    }
+
+    /* SİBER KAİDE (Bottom Glow) */
+    .column-base {
+        position: absolute;
+        bottom: 5%;
+        width: 160%;
+        height: 60px;
+        left: -30%;
+        background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.3) 0%, transparent 80%);
+        border-bottom: 3px solid var(--gold);
+        box-shadow: 0 20px 40px rgba(234, 179, 8, 0.4);
+    }
+
+    .col-left { left: 8%; transform: scale(1.1); }
+    .col-right { right: 8%; transform: scale(1.1); }
 
     @keyframes flow-down { 0% { top: -150px; } 100% { top: 110%; } }
 
@@ -304,15 +355,19 @@
 </section>
 
 <div id="mitoloji-overlay" class="detail-overlay">
-    <div class="column-background">
+<div class="column-background">
         <div class="css-column col-left">
-            <div class="column-light" style="animation-delay: 0s; left: 50%;"></div>
-            <div class="column-light" style="animation-delay: 2s; left: 20%;"></div>
-        </div>
+            <div class="column-capital"></div> <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0s;"></div></div>
+            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 2.5s;"></div></div>
+            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 1.2s;"></div></div>
+            <div class="column-base"></div> </div>
+
         <div class="css-column col-right">
-            <div class="column-light" style="animation-delay: 1s; left: 50%;"></div>
-            <div class="column-light" style="animation-delay: 3s; left: 80%;"></div>
-        </div>
+            <div class="column-capital"></div> <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0.5s;"></div></div>
+            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 3s;"></div></div>
+            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 1.8s;"></div></div>
+            <div class="column-base"></div> </div>
+    </div>
     </div>
 
     <div class="overlay-content">
