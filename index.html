@@ -209,16 +209,20 @@
 
     .css-column {
         position: absolute;
-        bottom: -5%;
+        top: 0; /* Üstten başlasın */
+        bottom: 0; /* Altta bitsin */
         width: 100px;
-        height: 110%;
-        background: linear-gradient(90deg, rgba(234, 179, 8, 0.02) 0%, rgba(234, 179, 8, 0.08) 50%, rgba(234, 179, 8, 0.02) 100%);
+        height: 100vh; /* Ekran boyuna sabitledik */
+        background: linear-gradient(90deg, 
+            rgba(234, 179, 8, 0.02) 0%, 
+            rgba(234, 179, 8, 0.08) 50%, 
+            rgba(234, 179, 8, 0.02) 100%);
         border-left: 1px solid rgba(234, 179, 8, 0.1);
         border-right: 1px solid rgba(234, 179, 8, 0.1);
         display: flex;
         justify-content: space-around;
         padding: 0 10px;
-        transition: transform 0.1s ease-out; /* Mouse hareketi için yumuşatıcı */
+        z-index: 1;
     }
 
     .fluting-line { width: 1px; height: 100%; background: rgba(234, 179, 8, 0.15); position: relative; }
@@ -240,29 +244,31 @@
         100% { top: 100%; opacity: 0; }
     }
 
-    /* BAŞLIKLARI BÜYÜTTÜK VE PARLATTIK */
+    /* BAŞLIK: Üstten %5 içeride başlasın ki kesilmesin */
     .column-capital {
         position: absolute;
-        top: 0; /* En tepeye sıfırladık */
-        width: 180%; /* Daha geniş ve görkemli */
-        height: 60px; /* Daha yüksek */
+        top: 5%; 
+        width: 180%;
+        height: 50px;
         left: -40%;
         background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.5) 0%, transparent 80%);
-        border-top: 3px solid var(--gold); /* Çizgiyi kalınlaştırdık */
-        box-shadow: 0 -10px 40px rgba(234, 179, 8, 0.5); /* Işımayı artırdık */
+        border-top: 3px solid var(--gold);
+        border-bottom: 1px solid rgba(234, 179, 8, 0.3); /* Altına ince bir hat */
+        box-shadow: 0 -10px 40px rgba(234, 179, 8, 0.4);
         z-index: 2;
     }
 
-    /* KAİDEYİ DE DENGELEDİK */
+    /* KAİDE: Alttan %5 içeride bitsin ki kesilmesin */
     .column-base {
         position: absolute;
-        bottom: 0;
+        bottom: 5%; 
         width: 200%;
-        height: 80px;
+        height: 70px;
         left: -50%;
         background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.4) 0%, transparent 80%);
         border-bottom: 4px solid var(--gold);
-        box-shadow: 0 10px 50px rgba(234, 179, 8, 0.6);
+        border-top: 1px solid rgba(234, 179, 8, 0.3); /* Üstüne ince bir hat */
+        box-shadow: 0 10px 50px rgba(234, 179, 8, 0.5);
     }
 
     /* Sütunların başlangıç ölçeğini artırdık ki hareket payı kalsın */
