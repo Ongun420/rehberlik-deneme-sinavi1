@@ -263,16 +263,14 @@
         perspective: 1000px;
     }
 
-    /* Sütunların varsayılan (Mitoloji) parlaklığı */
-.css-column {
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(234, 179, 8, 0.1) 50%, /* Parlaklık burada */
-        transparent 100%) !important;
-    border-left: 1px solid rgba(234, 179, 8, 0.2) !important;
-    border-right: 1px solid rgba(234, 179, 8, 0.2) !important;
-    height: 100vh !important;
-    opacity: 1 !important; /* Görünürlüğü full yapalım */
+   /* Arka planı dikey eksene sabitle */
+.column-background {
+    position: fixed; /* Sayfa kaysa da sütunlar ekranda kalsın */
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 1; /* İçeriğin arkasında ama overlay'in içinde */
+    display: block; /* Taşmaları önlemek için */
 }
 
 /* Dinamik Tema Renkleri ve Sütunlara Etkisi */
@@ -317,36 +315,29 @@
         100% { top: 100%; opacity: 0; }
     }
 
-  /* BAŞLIĞI DAHA ZARİF VE KÜÇÜK YAPTIK */
-    .column-capital {
-        position: absolute;
-        top: 4%; 
-        width: 120%; /* 140'tan 120'ye düşürdük */
-        height: 25px; /* 35'ten 25'e düşürdük - daha ince */
-        left: -10%; 
-        background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.4) 0%, transparent 80%);
-        border-top: 2px solid var(--gold);
-        box-shadow: 0 -5px 20px rgba(234, 179, 8, 0.3);
-        z-index: 2;
-    }
+  /* Başlık ve Kaideler dikey sütunun genişliğine göre ayarlanmalı */
+.column-capital {
+    position: absolute;
+    top: 0; left: -10px;
+    width: calc(100% + 20px);
+    height: 15px;
+    background: var(--theme-color, #eab308);
+    box-shadow: 0 0 20px var(--theme-color, #eab308);
+}
 
-    /* KAİDE: Alttan %5 içeride bitsin ki kesilmesin */
     .column-base {
-        position: absolute;
-        bottom: 5%; 
-        width: 200%;
-        height: 70px;
-        left: -50%;
-        background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.4) 0%, transparent 80%);
-        border-bottom: 4px solid var(--gold);
-        border-top: 1px solid rgba(234, 179, 8, 0.3); /* Üstüne ince bir hat */
-        box-shadow: 0 10px 50px rgba(234, 179, 8, 0.5);
-    }
+    position: absolute;
+    bottom: 0; left: -20px;
+    width: calc(100% + 40px);
+    height: 30px;
+    background: var(--theme-color, #eab308);
+    box-shadow: 0 0 30px var(--theme-color, #eab308);
+}
 
-    /* Sütunların başlangıç ölçeğini artırdık ki hareket payı kalsın */
-    .col-left { left: 5%; transform: scale(1.15); }
-    .col-right { right: 5%; transform: scale(1.15); }
-
+    /* Sol ve Sağ Sütun Konumları */
+.col-left { left: 5%; }
+.col-right { right: 5%; }
+    
     @keyframes flow-down { 0% { top: -150px; } 100% { top: 110%; } }
 
     .overlay-content {
@@ -467,13 +458,22 @@
     /* Medeniyet (Bakır): 245, 158, 11 */
     .theme-medeniyet { --theme-color: #f59e0b; --theme-rgb: 245, 158, 11; }
 
-    /* Sütunlar artık bu sayıları kullanarak şeffaf akacak */
-    .css-column { 
-        background: linear-gradient(90deg, 
-            transparent 0%, 
-            rgba(var(--theme-rgb), 0.1) 50%, 
-            transparent 100%) !important;
-    }
+    /* SÜTUNLAR: Yatay genişliği kısıtlı, yüksekliği tam ekran */
+.css-column {
+    position: absolute;
+    top: 0;
+    width: 80px !important; /* Genişlik sabit ve dar olmalı */
+    height: 100vh !important; /* Yükseklik mutlaka tam ekran olmalı */
+    display: flex;
+    flex-direction: row; /* İçindeki çizgiler yan yana dizilsin */
+    justify-content: space-around;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(var(--theme-rgb, 234, 179, 8), 0.1) 50%, 
+        transparent 100%) !important;
+    border-left: 1px solid rgba(var(--theme-rgb, 234, 179, 8), 0.2) !important;
+    border-right: 1px solid rgba(var(--theme-rgb, 234, 179, 8), 0.2) !important;
+}
 
     .column-capital, .column-base { 
         border-color: var(--theme-color) !important; 
