@@ -106,12 +106,6 @@
         transform: translateY(-10px) scale(1.02);
         border: 1px solid var(--gold);
         box-shadow: 0 0 30px rgba(234, 179, 8, 0.2);
-        animation: card-glitch 0.3s ease-in-out infinite alternate;
-    }
-
-    @keyframes card-glitch {
-        0% { filter: brightness(1); }
-        100% { filter: brightness(1.08); }
     }
 
     /* --- LOGO SİSTEMİ --- */
@@ -139,23 +133,7 @@
     .wheel { width: 3px; height: 6px; background: var(--gold); border-radius: 2px; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); animation: scroll-wheel 1.6s infinite; }
     @keyframes scroll-wheel { 0% { top: 6px; opacity: 1; } 100% { top: 20px; opacity: 0; } }
 
-    /* --- MOBİL DÜZELTME --- */
-    @media (max-width: 768px) {
-        .glass-card { padding: 35px 20px !important; width: 88% !important; border-radius: 40px !important; }
-        .seal-master { gap: 12px !important; transform: scale(0.65); margin-bottom: 0; }
-        .f-part { font-size: 4.5rem !important; }
-        section h2 { font-size: 1.7rem !important; white-space: nowrap !important; margin: 15px 0 !important; display: block !important; }
-    }
-
-    /* --- FOOTER --- */
-    .footer-bar { position: relative; z-index: 100; background: rgba(2, 6, 23, 0.95); backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 40px 20px 20px 20px; margin-top: 50px; }
-    .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; }
-    .footer-section { flex: 1; min-width: 250px; }
-    .footer-section h4 { color: var(--gold); margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; }
-    .footer-section p { font-size: 0.8rem; line-height: 1.6; opacity: 0.7; }
-    .footer-bottom { width: 100%; text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.7rem; opacity: 0.5; }
-
-/* --- MASTER SLOT SİSTEMİ --- */
+    /* --- MASTER SLOT SİSTEMİ --- */
     .master-slot {
         background: rgba(0, 0, 0, 0.3);
         border: 1px dashed rgba(234, 179, 8, 0.3);
@@ -164,6 +142,8 @@
         text-align: left;
         margin-top: 20px;
         transition: all 0.4s ease;
+        position: relative;
+        cursor: pointer;
     }
 
     .master-slot:hover {
@@ -181,8 +161,7 @@
     }
 
     .status-dot {
-        width: 8px;
-        height: 8px;
+        width: 8px; height: 8px;
         background: #22c55e;
         border-radius: 50%;
         box-shadow: 0 0 10px #22c55e;
@@ -199,17 +178,11 @@
 
     .sub-slot-container {
         display: grid;
-        grid-template-columns: repeat(3, 1fr); /* 3 eşit parça */
+        grid-template-columns: repeat(3, 1fr);
         gap: 15px;
     }
 
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-    /* Mobil Düzenlemesi */
-    @media (max-width: 768px) {
-        .sub-slot-container { grid-template-columns: 1fr; } /* Mobilde alt alta */
-    }
-
+    /* --- OVERLAY & SÜTUNLAR --- */
     .detail-overlay {
         position: fixed;
         top: 0; left: 0;
@@ -217,101 +190,67 @@
         background: rgba(2, 6, 23, 0.98);
         backdrop-filter: blur(15px);
         z-index: 200;
-        display: none; /* Başlangıçta gizli */
+        display: none;
         opacity: 0;
         transition: 0.5s ease;
+        overflow-y: auto;
     }
 
-    .overlay-content {
-        max-width: 900px;
-        margin: 50px auto;
-        padding: 40px;
-        color: white;
-    }
-
-    .close-btn {
-        background: none;
-        border: 1px solid var(--gold);
-        color: var(--gold);
-        padding: 8px 20px;
-        cursor: pointer;
-        float: right;
-        font-family: 'Ubuntu', sans-serif;
-        transition: 0.3s;
-    }
-
-    .close-btn:hover {
-        background: var(--gold);
-        color: black;
-    }
-
-    .detail-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .detail-info-box {
-        background: rgba(255,255,255,0.05);
-        padding: 20px;
-        border-radius: 15px;
-        border-left: 4px solid var(--gold);
-    }
-
-/* --- CSS SÜTUNLARI VE DERİNLİK --- */
     .column-background {
         position: absolute;
         top: 0; left: 0;
         width: 100%; height: 100%;
         overflow: hidden;
         z-index: -1;
-        background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
     }
 
-    /* CSS ile Sütun Formu */
     .css-column {
         position: absolute;
         bottom: -10%;
         width: 120px;
         height: 120%;
-        background: linear-gradient(90deg, 
-            rgba(255,255,255,0.02) 0%, 
-            rgba(255,255,255,0.05) 50%, 
-            rgba(255,255,255,0.02) 100%);
-        box-shadow: 0 0 40px rgba(0,0,0,0.5);
+        background: linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.02) 100%);
         border-left: 1px solid rgba(234, 179, 8, 0.1);
         border-right: 1px solid rgba(234, 179, 8, 0.1);
     }
 
-    /* Sütun Başlığı (Capital) */
-    .css-column::before {
-        content: "";
-        position: absolute;
-        top: 10%; left: -20px;
-        width: 160px; height: 30px;
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(234, 179, 8, 0.2);
-    }
+    .col-left { left: 5%; }
+    .col-right { right: 5%; }
 
-    /* Sütun Yerleşimi */
-    .col-left { left: 5%; transform: translateZ(-100px) scale(1.2); }
-    .col-right { right: 5%; transform: translateZ(-100px) scale(1.2); }
-
-    /* Siber Işık Hattı (Sütun Üzerinde Akan Veri) */
     .column-light {
         position: absolute;
-        top: -100px; left: 50%;
         width: 2px; height: 150px;
         background: linear-gradient(to bottom, transparent, var(--gold), transparent);
         animation: flow-down 4s infinite linear;
         opacity: 0.5;
     }
 
-    @keyframes flow-down {
-        0% { top: -150px; }
-        100% { top: 110%; }
+    @keyframes flow-down { 0% { top: -150px; } 100% { top: 110%; } }
+
+    .overlay-content {
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 40px;
+        position: relative;
     }
-    
+
+    .close-btn {
+        background: none; border: 1px solid var(--gold);
+        color: var(--gold); padding: 8px 20px;
+        cursor: pointer; float: right; transition: 0.3s;
+    }
+
+    .close-btn:hover { background: var(--gold); color: black; }
+
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    /* MOBİL */
+    @media (max-width: 768px) {
+        .glass-card { padding: 35px 20px !important; width: 88% !important; }
+        .seal-master { transform: scale(0.65); }
+        .sub-slot-container { grid-template-columns: 1fr; }
+        .css-column { width: 60px; }
+    }
 </style>
 </head>
 <body>
@@ -352,20 +291,44 @@
     <div class="glass-card">
         <h2 style="color: var(--gold); font-size: 2.2rem; margin-bottom: 30px;">Sınav Merkezi</h2>
         
-        <div class="master-slot">
+        <div class="master-slot" onclick="openDetail()">
             <div class="slot-header">
                 <span class="status-dot"></span>
                 <span class="slot-title">MİTOLOJİ_DATA_V1</span>
-                <div class="master-slot" onclick="openDetail()" style="cursor: pointer;">
             </div>
-            
             <div class="sub-slot-container">
-                <div class="sub-slot-placeholder">Veri bekleniyor...</div>
+                <div class="sub-slot-placeholder" style="font-size: 0.7rem; opacity: 0.5;">Dizini açmak için tıklayın...</div>
             </div>
         </div>
-        
     </div>
 </section>
+
+<div id="mitoloji-overlay" class="detail-overlay">
+    <div class="column-background">
+        <div class="css-column col-left">
+            <div class="column-light" style="animation-delay: 0s; left: 50%;"></div>
+            <div class="column-light" style="animation-delay: 2s; left: 20%;"></div>
+        </div>
+        <div class="css-column col-right">
+            <div class="column-light" style="animation-delay: 1s; left: 50%;"></div>
+            <div class="column-light" style="animation-delay: 3s; left: 80%;"></div>
+        </div>
+    </div>
+
+    <div class="overlay-content">
+        <button class="close-btn" onclick="closeDetail()">✕ KAPAT</button>
+        <div class="overlay-header">
+            <h1 style="color: var(--gold); letter-spacing: 5px;">ANADOLU MİTOLOJİSİ</h1>
+            <p style="opacity: 0.6; font-family: monospace; font-size: 0.8rem;">Dizin: Sınav_Merkezi / Mitoloji / Arşiv</p>
+        </div>
+        <hr style="border: 0; border-top: 1px solid rgba(234,179,8,0.2); margin: 30px 0;">
+        
+        <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; border-left: 4px solid var(--gold);">
+            <h4 style="color: var(--gold); margin-top: 0;">SİSTEM MESAJI</h4>
+            <p style="font-size: 0.9rem; line-height: 1.6;">Dijital arşiv katmanına hoş geldiniz. Burası rehberlik sınavı için hazırlanan veri paketlerini içerir.</p>
+        </div>
+    </div>
+</div>
 
 <footer class="footer-bar">
     <div class="footer-content">
@@ -386,6 +349,7 @@
 
 <script>
     function go(index) { window.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' }); }
+    
     function createHangulRain() {
         const container = document.getElementById('hangul-container');
         const characters = '가나다라마바사아자차카타파하ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ'; 
@@ -405,18 +369,8 @@
             container.appendChild(column);
         }
     }
-    window.addEventListener('scroll', () => {
-        const container = document.getElementById('hangul-container');
-        const index = Math.round(window.scrollY / window.innerHeight);
-        container.classList.remove('rain-default', 'rain-korea', 'rain-gold');
-        if(index === 0) container.classList.add('rain-default');
-        else if(index === 1) container.classList.add('rain-korea');
-        else if(index === 2) container.classList.add('rain-gold');
-    });
-    document.addEventListener('DOMContentLoaded', createHangulRain);
-    window.addEventListener('resize', createHangulRain);
 
-function openDetail() {
+    function openDetail() {
         const overlay = document.getElementById('mitoloji-overlay');
         overlay.style.display = 'block';
         setTimeout(() => { overlay.style.opacity = '1'; }, 10);
@@ -428,53 +382,28 @@ function openDetail() {
         setTimeout(() => { overlay.style.display = 'none'; }, 500);
     }
 
+    window.addEventListener('scroll', () => {
+        const container = document.getElementById('hangul-container');
+        const index = Math.round(window.scrollY / window.innerHeight);
+        container.classList.remove('rain-default', 'rain-korea', 'rain-gold');
+        if(index === 0) container.classList.add('rain-default');
+        else if(index === 1) container.classList.add('rain-korea');
+        else if(index === 2) container.classList.add('rain-gold');
+    });
+
     document.addEventListener('mousemove', (e) => {
         const overlay = document.getElementById('mitoloji-overlay');
         if (overlay.style.display === 'block') {
             const x = (window.innerWidth - e.pageX * 2) / 100;
             const y = (window.innerHeight - e.pageY * 2) / 100;
-            
-            document.querySelector('.col-left').style.transform = `translateX(${x}px) translateY(${y}px) scale(1.2)`;
-            document.querySelector('.col-right').style.transform = `translateX(${-x}px) translateY(${-y}px) scale(1.2)`;
+            document.querySelector('.col-left').style.transform = `translateX(${x}px) translateY(${y}px)`;
+            document.querySelector('.col-right').style.transform = `translateX(${-x}px) translateY(${-y}px)`;
         }
     });
-    
+
+    document.addEventListener('DOMContentLoaded', createHangulRain);
+    window.addEventListener('resize', createHangulRain);
 </script>
 
-<div id="mitoloji-overlay" class="detail-overlay">
-    <div id="mitoloji-overlay" class="detail-overlay">
-    <div class="column-background">
-        <div class="css-column col-left">
-            <div class="column-light" style="animation-delay: 0s;"></div>
-            <div class="column-light" style="animation-delay: 2s; left: 30%;"></div>
-        </div>
-        <div class="css-column col-right">
-            <div class="column-light" style="animation-delay: 1s;"></div>
-            <div class="column-light" style="animation-delay: 3s; left: 70%;"></div>
-        </div>
-    </div>
-
-    <div class="overlay-content">
-        <div class="overlay-frame">
-             </div>
-    </div>
-</div>
-    <div class="overlay-content">
-        <button class="close-btn" onclick="closeDetail()">✕ KAPAT</button>
-        <div class="overlay-header">
-            <h1 style="color: var(--gold);">ANADOLU MİTOLOJİSİ_V1.0</h1>
-            <p style="opacity: 0.6; font-family: monospace;">Dizin: Sınav_Merkezi / Mitoloji / Arşiv</p>
-        </div>
-        <hr style="border: 0; border-top: 1px solid rgba(234,179,8,0.2); margin: 30px 0;">
-        
-        <div class="detail-grid">
-            <div class="detail-info-box">
-                <h4 style="color: var(--gold);">Hızlı Erişim</h4>
-                <p>Olympos Tanrıları, Hitit Panteonu ve Efsaneler...</p>
-            </div>
-        </div>
-    </div>
-</div>
-    
 </body>
 </html>
