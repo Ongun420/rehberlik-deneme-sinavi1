@@ -523,6 +523,41 @@
     box-shadow: 0 0 20px rgba(var(--theme-rgb), 0.4) !important;
 }
 
+/* --- VERİ KARTI ÇERÇEVE SİSTEMİ --- */
+.detail-content div[id^="DATA_"] {
+    background: rgba(0, 0, 0, 0.4) !important; /* Arka planı hafif karart ki yazı okunsun */
+    border: 1px solid rgba(var(--theme-rgb, 234, 179, 8), 0.3) !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+    margin-bottom: 20px !important;
+    position: relative !important;
+    z-index: 10 !important; /* Sütunların önünde kalması için */
+    transition: all 0.3s ease;
+    box-shadow: inset 0 0 15px rgba(var(--theme-rgb, 234, 179, 8), 0.05);
+}
+
+/* Kartların solundaki o vurgu çizgisi */
+.detail-content div[id^="DATA_"]::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10%;
+    height: 80%;
+    width: 3px;
+    background: var(--theme-color, #eab308);
+    box-shadow: 0 0 10px var(--theme-color, #eab308);
+    border-radius: 0 4px 4px 0;
+}
+
+/* Başlıkları (DATA_01 vb.) belirginleştir */
+.detail-content b {
+    color: var(--theme-color, #eab308) !important;
+    display: block;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+    
 </style>
 
 </head>
@@ -624,6 +659,38 @@
         <div class="fluting-line"><div class="data-pulse" style="animation-delay: 3.8s;"></div></div>
         <div class="column-base"></div> 
     </div>
+      <div id="detail-overlay" class="detail-overlay active">
+    
+    <div class="column-background">
+        <div class="css-column col-left">
+            <div class="column-capital"></div>
+            <div class="fluting-line"><div class="data-pulse"></div></div>
+            <div class="column-base"></div>
+        </div>
+        <div class="css-column col-right">
+            <div class="column-capital"></div>
+            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 1.5s;"></div></div>
+            <div class="column-base"></div>
+        </div>
+    </div>
+
+    <div class="overlay-header">
+        <button onclick="closeDetail()">✕ KAPAT</button>
+        <h2 id="overlay-title">ANADOLU MİTOLOJİSİ</h2>
+        <p id="overlay-subtitle">VERİ PAKETİ: HITIT_01</p>
+    </div>
+
+    <div class="detail-content">
+        <div id="DATA_01">
+            <b>[DATA_01]: GÜNEŞ TANRIÇASI ARİNNA</b>
+            <p>Hitit panteonunun en üstündeki dişil enerji...</p>
+        </div>
+        <div id="DATA_02">
+            <b>[DATA_02]: FIRTINA TANRISI TEŞUP</b>
+            <p>Elin de üçlü yıldırım demeti ve boğa sembolüyle tasvir edilir...</p>
+        </div>
+    </div>
+</div>  
 </div>
 
     <div class="overlay-content">
