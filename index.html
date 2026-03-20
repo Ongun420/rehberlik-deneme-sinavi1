@@ -244,17 +244,17 @@
         100% { top: 100%; opacity: 0; }
     }
 
-    /* BAŞLIK: Üstten %5 içeride başlasın ki kesilmesin */
+  /* BAŞLIĞI DAHA ZARİF VE KÜÇÜK YAPTIK */
     .column-capital {
         position: absolute;
-        top: 5%; 
-        width: 180%;
-        height: 50px;
-        left: -40%;
-        background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.5) 0%, transparent 80%);
-        border-top: 3px solid var(--gold);
-        border-bottom: 1px solid rgba(234, 179, 8, 0.3); /* Altına ince bir hat */
-        box-shadow: 0 -10px 40px rgba(234, 179, 8, 0.4);
+        top: 3%; /* Biraz daha yukarı çektik */
+        width: 140%; /* 180'den 140'a düşürerek daralttık */
+        height: 35px; /* 50'den 35'e düşürerek incelttik */
+        left: -20%; /* Genişlik azaldığı için merkezledik */
+        background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.4) 0%, transparent 80%);
+        border-top: 2px solid var(--gold); /* Çizgiyi de biraz incelttik */
+        border-bottom: 1px solid rgba(234, 179, 8, 0.2);
+        box-shadow: 0 -8px 25px rgba(234, 179, 8, 0.3);
         z-index: 2;
     }
 
@@ -372,18 +372,23 @@
 
     <div class="overlay-content">
         <button class="close-btn" onclick="closeDetail()">✕ KAPAT</button>
-        <div class="overlay-header">
-            <h1 style="color: var(--gold); letter-spacing: 5px; margin-bottom: 5px;">ANADOLU MİTOLOJİSİ</h1>
-            <p style="opacity: 0.6; font-family: monospace; font-size: 0.8rem;">Dizin: Sınav_Merkezi / Mitoloji / Arşiv</p>
-        </div>
-        
-        <hr style="border: 0; border-top: 1px solid rgba(234,179,8,0.2); margin: 30px 0;">
-        
-        <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; border-left: 4px solid var(--gold); backdrop-filter: blur(5px);">
-            <h4 style="color: var(--gold); margin-top: 0;">SİSTEM MESAJI</h4>
-            <p style="font-size: 0.9rem; line-height: 1.6;">Dijital arşiv katmanına hoş geldiniz. Burası rehberlik sınavı için hazırlanan veri paketlerini içerir.</p>
-        </div>
+        <div style="margin-top: 30px; display: grid; grid-template-columns: 1fr; gap: 20px; font-family: 'Courier New', monospace;">
+    
+    <div style="background: rgba(234, 179, 8, 0.05); border: 1px solid rgba(234, 179, 8, 0.2); padding: 20px; border-radius: 15px;">
+        <h3 style="color: var(--gold); margin-top: 0; font-size: 1rem;">[DATA_01]: GÜNEŞ TANRIÇASI ARİNNA</h3>
+        <p style="font-size: 0.85rem; line-height: 1.6; opacity: 0.9;">
+            Hitit panteonunun en üstündeki dişil enerji. Devletin koruyucusu ve savaşlarda kralın yanındaki güç. Arinna şehri onun kutsal merkezidir.
+        </p>
     </div>
+
+    <div style="background: rgba(234, 179, 8, 0.05); border: 1px solid rgba(234, 179, 8, 0.2); padding: 20px; border-radius: 15px;">
+        <h3 style="color: var(--gold); margin-top: 0; font-size: 1rem;">[DATA_02]: FIRTINA TANRISI TEŞUP</h3>
+        <p style="font-size: 0.85rem; line-height: 1.6; opacity: 0.9;">
+            Elin de üçlü yıldırım demeti ve boğa sembolüyle tasvir edilir. Arinna'nın eşi ve Hititlerin "Bin Tanrılı" yapısının yürütücü gücü.
+        </p>
+    </div>
+
+</div>
 </div>
 
 <footer class="footer-bar">
