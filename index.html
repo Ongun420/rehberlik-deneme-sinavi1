@@ -197,13 +197,14 @@
     }
 
     /* --- SİBER ANTİK SÜTUN SİSTEMİ (GLOW & FLUTING) --- */
+/* --- SİBER ANTİK SÜTUN SİSTEMİ --- */
     .column-background {
         position: absolute;
         top: 0; left: 0;
         width: 100%; height: 100%;
         overflow: hidden;
         z-index: -1;
-        perspective: 1000px; /* 3D derinlik hissi için */
+        perspective: 1000px;
     }
 
     .css-column {
@@ -211,26 +212,17 @@
         bottom: -5%;
         width: 100px;
         height: 110%;
-        background: linear-gradient(90deg, 
-            rgba(234, 179, 8, 0.02) 0%, 
-            rgba(234, 179, 8, 0.08) 50%, 
-            rgba(234, 179, 8, 0.02) 100%);
+        background: linear-gradient(90deg, rgba(234, 179, 8, 0.02) 0%, rgba(234, 179, 8, 0.08) 50%, rgba(234, 179, 8, 0.02) 100%);
         border-left: 1px solid rgba(234, 179, 8, 0.1);
         border-right: 1px solid rgba(234, 179, 8, 0.1);
         display: flex;
-        justify-content: space-around; /* Yiv hatlarını eşit dağıtmak için */
+        justify-content: space-around;
         padding: 0 10px;
+        transition: transform 0.1s ease-out; /* Mouse hareketi için yumuşatıcı */
     }
 
-    /* Sütun İçi Dikey Yiv Çizgileri (3 Adet) */
-    .fluting-line {
-        width: 1px;
-        height: 100%;
-        background: rgba(234, 179, 8, 0.15);
-        position: relative;
-    }
+    .fluting-line { width: 1px; height: 100%; background: rgba(234, 179, 8, 0.15); position: relative; }
 
-    /* Akan Veri Işıkları (Fade-Out Efektli) */
     .data-pulse {
         position: absolute;
         top: -100px;
@@ -245,29 +237,19 @@
         0% { top: -150px; opacity: 0; }
         10% { opacity: 1; }
         85% { opacity: 1; }
-        100% { top: 100%; opacity: 0; } /* Altta yavaşça silinme (fade out) */
+        100% { top: 100%; opacity: 0; }
     }
 
-    /* SİBER BAŞLIK (Top Glow) */
     .column-capital {
-        position: absolute;
-        top: 5%;
-        width: 140%;
-        height: 40px;
-        left: -20%;
+        position: absolute; top: 5%; width: 140%; height: 40px; left: -20%;
         background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.4) 0%, transparent 70%);
         border-top: 2px solid var(--gold);
         box-shadow: 0 -15px 30px rgba(234, 179, 8, 0.3);
         z-index: 2;
     }
 
-    /* SİBER KAİDE (Bottom Glow) */
     .column-base {
-        position: absolute;
-        bottom: 5%;
-        width: 160%;
-        height: 60px;
-        left: -30%;
+        position: absolute; bottom: 5%; width: 160%; height: 60px; left: -30%;
         background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.3) 0%, transparent 80%);
         border-bottom: 3px solid var(--gold);
         box-shadow: 0 20px 40px rgba(234, 179, 8, 0.4);
@@ -355,30 +337,33 @@
 </section>
 
 <div id="mitoloji-overlay" class="detail-overlay">
-<div class="column-background">
+    <div class="column-background">
         <div class="css-column col-left">
-            <div class="column-capital"></div> <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0s;"></div></div>
+            <div class="column-capital"></div> 
+            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0s;"></div></div>
             <div class="fluting-line"><div class="data-pulse" style="animation-delay: 2.5s;"></div></div>
             <div class="fluting-line"><div class="data-pulse" style="animation-delay: 1.2s;"></div></div>
-            <div class="column-base"></div> </div>
-
+            <div class="column-base"></div> 
+        </div>
         <div class="css-column col-right">
-            <div class="column-capital"></div> <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0.5s;"></div></div>
+            <div class="column-capital"></div> 
+            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0.5s;"></div></div>
             <div class="fluting-line"><div class="data-pulse" style="animation-delay: 3s;"></div></div>
             <div class="fluting-line"><div class="data-pulse" style="animation-delay: 1.8s;"></div></div>
-            <div class="column-base"></div> </div>
-    </div>
+            <div class="column-base"></div> 
+        </div>
     </div>
 
     <div class="overlay-content">
         <button class="close-btn" onclick="closeDetail()">✕ KAPAT</button>
         <div class="overlay-header">
-            <h1 style="color: var(--gold); letter-spacing: 5px;">ANADOLU MİTOLOJİSİ</h1>
+            <h1 style="color: var(--gold); letter-spacing: 5px; margin-bottom: 5px;">ANADOLU MİTOLOJİSİ</h1>
             <p style="opacity: 0.6; font-family: monospace; font-size: 0.8rem;">Dizin: Sınav_Merkezi / Mitoloji / Arşiv</p>
         </div>
+        
         <hr style="border: 0; border-top: 1px solid rgba(234,179,8,0.2); margin: 30px 0;">
         
-        <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; border-left: 4px solid var(--gold);">
+        <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; border-left: 4px solid var(--gold); backdrop-filter: blur(5px);">
             <h4 style="color: var(--gold); margin-top: 0;">SİSTEM MESAJI</h4>
             <p style="font-size: 0.9rem; line-height: 1.6;">Dijital arşiv katmanına hoş geldiniz. Burası rehberlik sınavı için hazırlanan veri paketlerini içerir.</p>
         </div>
@@ -448,11 +433,19 @@
 
     document.addEventListener('mousemove', (e) => {
         const overlay = document.getElementById('mitoloji-overlay');
+        // Sadece overlay açıkken ve görünürken çalışır
         if (overlay.style.display === 'block') {
-            const x = (window.innerWidth - e.pageX * 2) / 100;
-            const y = (window.innerHeight - e.pageY * 2) / 100;
-            document.querySelector('.col-left').style.transform = `translateX(${x}px) translateY(${y}px)`;
-            document.querySelector('.col-right').style.transform = `translateX(${-x}px) translateY(${-y}px)`;
+            // Hareketi 80'e bölerek çok daha yumuşak ve az kımıldayan bir hale getirdik
+            const x = (window.innerWidth / 2 - e.clientX) / 80;
+            const y = (window.innerHeight / 2 - e.clientY) / 80;
+            
+            const leftCol = document.querySelector('.col-left');
+            const rightCol = document.querySelector('.col-right');
+            
+            if(leftCol && rightCol) {
+                leftCol.style.transform = `translateX(${x}px) translateY(${y}px) scale(1.1)`;
+                rightCol.style.transform = `translateX(${-x}px) translateY(${-y}px) scale(1.1)`;
+            }
         }
     });
 
