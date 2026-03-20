@@ -646,51 +646,41 @@
 
 <div id="mitoloji-overlay" class="detail-overlay">
     <div class="column-background">
-    <div class="css-column col-left">
-        <div class="column-capital"></div> 
-        <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0s;"></div></div>
-        <div class="fluting-line"><div class="data-pulse" style="animation-delay: 2.5s;"></div></div>
-        <div class="column-base"></div> 
-    </div>
-
-    <div class="css-column col-right">
-        <div class="column-capital"></div> 
-        <div class="fluting-line"><div class="data-pulse" style="animation-delay: 1.2s;"></div></div>
-        <div class="fluting-line"><div class="data-pulse" style="animation-delay: 3.8s;"></div></div>
-        <div class="column-base"></div> 
-    </div>
-      <div id="detail-overlay" class="detail-overlay active">
-    
-    <div class="column-background">
         <div class="css-column col-left">
-            <div class="column-capital"></div>
-            <div class="fluting-line"><div class="data-pulse"></div></div>
-            <div class="column-base"></div>
+            <div class="column-capital"></div> 
+            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0s;"></div></div>
+            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 2.5s;"></div></div>
+            <div class="column-base"></div> 
         </div>
         <div class="css-column col-right">
-            <div class="column-capital"></div>
-            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 1.5s;"></div></div>
-            <div class="column-base"></div>
+            <div class="column-capital"></div> 
+            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 1.2s;"></div></div>
+            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 3.8s;"></div></div>
+            <div class="column-base"></div> 
         </div>
     </div>
 
-    <div class="overlay-header">
-        <button onclick="closeDetail()">✕ KAPAT</button>
-        <h2 id="overlay-title">ANADOLU MİTOLOJİSİ</h2>
-        <p id="overlay-subtitle">VERİ PAKETİ: HITIT_01</p>
-    </div>
+    <div class="overlay-content">
+        <div style="width: 100%; overflow: hidden; margin-bottom: 20px;">
+            <button class="close-btn" onclick="closeDetail()">✕ KAPAT</button>
+        </div>
 
-    <div class="detail-content">
-        <div id="DATA_01">
-            <b>[DATA_01]: GÜNEŞ TANRIÇASI ARİNNA</b>
-            <p>Hitit panteonunun en üstündeki dişil enerji...</p>
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h1 id="dynamic-title" style="color: var(--gold); letter-spacing: 4px; font-size: 1.8rem;">ANADOLU MİTOLOJİSİ</h1>
+            <p id="dynamic-subtitle" style="opacity: 0.5; font-size: 0.8rem; font-family: 'Courier New', monospace;">VERİ PAKETİ: HITIT_01</p>
         </div>
-        <div id="DATA_02">
-            <b>[DATA_02]: FIRTINA TANRISI TEŞUP</b>
-            <p>Elin de üçlü yıldırım demeti ve boğa sembolüyle tasvir edilir...</p>
+
+        <div class="detail-content" style="display: grid; gap: 20px;">
+            <div id="DATA_01">
+                <b>[DATA_01]: GÜNEŞ TANRIÇASI ARİNNA</b>
+                <p>Hitit panteonunun en üstündeki dişil enerji...</p>
+            </div>
+            <div id="DATA_02">
+                <b>[DATA_02]: FIRTINA TANRISI TEŞUP</b>
+                <p>Arinna'nın eşidir, elinde üçlü yıldırım tutar...</p>
+            </div>
         </div>
     </div>
-</div>  
 </div>
 
     <div class="overlay-content">
@@ -816,41 +806,32 @@
 
 
     function startDatabase(type) {
-// startDatabase fonksiyonunun içine, overlay'i açmadan hemen önce:
-const contentBox = document.querySelector('.overlay-content div[style*="display: grid"]');
-
-if(type === 'mitoloji') {
-    contentBox.innerHTML = `
-        <div class="data-card"><h3>[DATA_01]: GÜNEŞ TANRIÇASI ARİNNA</h3><p>Hitit panteonunun en üstündeki dişil enerji...</p></div>
-        <div class="data-card"><h3>[DATA_02]: FIRTINA TANRISI TEŞUP</h3><p>Elin de üçlü yıldırım demeti ve boğa sembolüyle tasvir edilir...</p></div>`;
-} else if(type === 'arkeoloji') {
-    contentBox.innerHTML = `
-        <div class="data-card"><h3>[DATA_01]: STEL (STELE)</h3><p>Dikilmiş, üzerinde yazıt veya kabartma bulunan taş levha...</p></div>
-        <div class="data-card"><h3>[DATA_02]: TÜMÜLÜS</h3><p>Bir mezar ya da mezarlık içeren, toprak yığılarak oluşturulmuş yapay tepe...</p></div>`;
-} else if(type === 'medeniyet') {
-    contentBox.innerHTML = `
-        <div class="data-card"><h3>[DATA_01]: LİDYALILAR</h3><p>Parayı icat eden ve Kral Yolu'nu inşa eden medeniyet...</p></div>
-        <div class="data-card"><h3>[DATA_02]: URARTULAR</h3><p>Van Gölü çevresinde kurulan, maden işçiliği ve su mimarisinde uzmanlaşmış krallık...</p></div>`;
-}
-        
+    const contentBox = document.querySelector('.detail-content');
     const overlay = document.getElementById('mitoloji-overlay');
-    const title = document.querySelector('#mitoloji-overlay h1');
-    const subtitle = document.querySelector('#mitoloji-overlay p[style*="opacity: 0.5"]');
+    const title = document.getElementById('dynamic-title');
+    const subtitle = document.getElementById('dynamic-subtitle');
     
-    // Temayı uygula
     overlay.classList.remove('theme-mitoloji', 'theme-arkeoloji', 'theme-medeniyet');
     overlay.classList.add('theme-' + type);
     
-    // İçeriği değiştir
     if(type === 'mitoloji') {
         title.innerText = "ANADOLU MİTOLOJİSİ";
         subtitle.innerText = "VERİ PAKETİ: HITIT_01";
+        contentBox.innerHTML = `
+            <div id="DATA_01"><b>[DATA_01]: GÜNEŞ TANRIÇASI ARİNNA</b><p>Hitit panteonunun en üstündeki dişil enerji...</p></div>
+            <div id="DATA_02"><b>[DATA_02]: FIRTINA TANRISI TEŞUP</b><p>Elin de üçlü yıldırım demeti ve boğa sembolüyle tasvir edilir...</p></div>`;
     } else if(type === 'arkeoloji') {
         title.innerText = "ARKEOLOJİ TERİMLERİ";
         subtitle.innerText = "VERİ PAKETİ: ARCH_GEO_V2";
+        contentBox.innerHTML = `
+            <div id="DATA_01"><b>[DATA_01]: STEL (STELE)</b><p>Dikilmiş, üzerinde yazıt veya kabartma bulunan taş levha...</p></div>
+            <div id="DATA_02"><b>[DATA_02]: TÜMÜLÜS</b><p>Yapay tepe şeklinde oluşturulmuş anıt mezarlar...</p></div>`;
     } else if(type === 'medeniyet') {
         title.innerText = "ANADOLU MEDENİYETLERİ";
         subtitle.innerText = "VERİ PAKETİ: CIV_HISTORY_V1";
+        contentBox.innerHTML = `
+            <div id="DATA_01"><b>[DATA_01]: LİDYALILAR</b><p>Parayı icat eden ve Kral Yolu'nu inşa eden medeniyet...</p></div>
+            <div id="DATA_02"><b>[DATA_02]: URARTULAR</b><p>Van Gölü çevresinde kurulan sulama mimarisi uzmanları...</p></div>`;
     }
 
     closeHub();
