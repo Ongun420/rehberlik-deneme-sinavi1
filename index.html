@@ -182,18 +182,32 @@
         gap: 15px;
     }
 
-    /* --- OVERLAY & SÜTUNLAR --- */
+    /* OVERLAY: İçeriği ortalamak için flex ekledik */
     .detail-overlay {
         position: fixed;
         top: 0; left: 0;
         width: 100%; height: 100%;
         background: rgba(2, 6, 23, 0.98);
         backdrop-filter: blur(15px);
-        z-index: 200;
+        z-index: 9999; /* En üstte durması için çok yüksek verdik */
         display: none;
         opacity: 0;
         transition: 0.5s ease;
         overflow-y: auto;
+        display: flex; 
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* İÇERİK: Fontu Ubuntu'ya sabitledik ve hiyerarşiyi düzelttik */
+    .overlay-content {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 60px 20px;
+        position: relative;
+        z-index: 10;
+        font-family: 'Ubuntu', sans-serif; /* Bozulmaması için sabitledik */
     }
 
     /* --- SİBER ANTİK SÜTUN SİSTEMİ (GLOW & FLUTING) --- */
@@ -247,14 +261,13 @@
   /* BAŞLIĞI DAHA ZARİF VE KÜÇÜK YAPTIK */
     .column-capital {
         position: absolute;
-        top: 3%; /* Biraz daha yukarı çektik */
-        width: 140%; /* 180'den 140'a düşürerek daralttık */
-        height: 35px; /* 50'den 35'e düşürerek incelttik */
-        left: -20%; /* Genişlik azaldığı için merkezledik */
+        top: 4%; 
+        width: 120%; /* 140'tan 120'ye düşürdük */
+        height: 25px; /* 35'ten 25'e düşürdük - daha ince */
+        left: -10%; 
         background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.4) 0%, transparent 80%);
-        border-top: 2px solid var(--gold); /* Çizgiyi de biraz incelttik */
-        border-bottom: 1px solid rgba(234, 179, 8, 0.2);
-        box-shadow: 0 -8px 25px rgba(234, 179, 8, 0.3);
+        border-top: 2px solid var(--gold);
+        box-shadow: 0 -5px 20px rgba(234, 179, 8, 0.3);
         z-index: 2;
     }
 
@@ -358,37 +371,38 @@
             <div class="column-capital"></div> 
             <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0s;"></div></div>
             <div class="fluting-line"><div class="data-pulse" style="animation-delay: 2.5s;"></div></div>
-            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 1.2s;"></div></div>
             <div class="column-base"></div> 
         </div>
         <div class="css-column col-right">
             <div class="column-capital"></div> 
             <div class="fluting-line"><div class="data-pulse" style="animation-delay: 0.5s;"></div></div>
-            <div class="fluting-line"><div class="data-pulse" style="animation-delay: 3s;"></div></div>
             <div class="fluting-line"><div class="data-pulse" style="animation-delay: 1.8s;"></div></div>
             <div class="column-base"></div> 
         </div>
     </div>
 
     <div class="overlay-content">
-        <button class="close-btn" onclick="closeDetail()">✕ KAPAT</button>
-        <div style="margin-top: 30px; display: grid; grid-template-columns: 1fr; gap: 20px; font-family: 'Courier New', monospace;">
-    
-    <div style="background: rgba(234, 179, 8, 0.05); border: 1px solid rgba(234, 179, 8, 0.2); padding: 20px; border-radius: 15px;">
-        <h3 style="color: var(--gold); margin-top: 0; font-size: 1rem;">[DATA_01]: GÜNEŞ TANRIÇASI ARİNNA</h3>
-        <p style="font-size: 0.85rem; line-height: 1.6; opacity: 0.9;">
-            Hitit panteonunun en üstündeki dişil enerji. Devletin koruyucusu ve savaşlarda kralın yanındaki güç. Arinna şehri onun kutsal merkezidir.
-        </p>
-    </div>
+        <div style="width: 100%; overflow: hidden; margin-bottom: 20px;">
+            <button class="close-btn" onclick="closeDetail()">✕ KAPAT</button>
+        </div>
 
-    <div style="background: rgba(234, 179, 8, 0.05); border: 1px solid rgba(234, 179, 8, 0.2); padding: 20px; border-radius: 15px;">
-        <h3 style="color: var(--gold); margin-top: 0; font-size: 1rem;">[DATA_02]: FIRTINA TANRISI TEŞUP</h3>
-        <p style="font-size: 0.85rem; line-height: 1.6; opacity: 0.9;">
-            Elin de üçlü yıldırım demeti ve boğa sembolüyle tasvir edilir. Arinna'nın eşi ve Hititlerin "Bin Tanrılı" yapısının yürütücü gücü.
-        </p>
-    </div>
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h1 style="color: var(--gold); letter-spacing: 4px; font-size: 1.8rem;">ANADOLU MİTOLOJİSİ</h1>
+            <p style="opacity: 0.5; font-size: 0.8rem; font-family: 'Courier New', monospace;">VERİ PAKETİ: HITIT_01</p>
+        </div>
 
-</div>
+        <div style="display: grid; gap: 20px;">
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(234, 179, 8, 0.2); padding: 25px; border-radius: 20px; backdrop-filter: blur(5px);">
+                <h3 style="color: var(--gold); margin-top: 0; font-family: 'Courier New', monospace;">[DATA_01]: GÜNEŞ TANRIÇASI ARİNNA</h3>
+                <p style="font-size: 0.95rem; line-height: 1.6; opacity: 0.8;">Hitit panteonunun en üstündeki dişil enerji. Devletin koruyucusu ve savaşlarda kralın yanındaki güç.</p>
+            </div>
+
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(234, 179, 8, 0.2); padding: 25px; border-radius: 20px; backdrop-filter: blur(5px);">
+                <h3 style="color: var(--gold); margin-top: 0; font-family: 'Courier New', monospace;">[DATA_02]: FIRTINA TANRISI TEŞUP</h3>
+                <p style="font-size: 0.95rem; line-height: 1.6; opacity: 0.8;">Elin de üçlü yıldırım demeti ve boğa sembolüyle tasvir edilir. Arinna'nın eşidir.</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <footer class="footer-bar">
@@ -433,10 +447,10 @@
 
     function openDetail() {
         const overlay = document.getElementById('mitoloji-overlay');
-        overlay.style.display = 'block';
+        overlay.style.display = 'flex'; // Block yerine flex yaptık
         setTimeout(() => { overlay.style.opacity = '1'; }, 10);
     }
-
+    
     function closeDetail() {
         const overlay = document.getElementById('mitoloji-overlay');
         overlay.style.opacity = '0';
