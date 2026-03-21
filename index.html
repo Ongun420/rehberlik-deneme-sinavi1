@@ -763,11 +763,12 @@
 
             </div>
 
-            <div class="master-slot simulation-slot" onclick="alert('Simülasyon Modu Yakında Aktif Edilecek!')">
-                <div class="slot-header">
-                    <span class="status-dot standby"></span>
-                    <span class="slot-title">DENEME_SIMULATOR_V.01</span>
-                </div>
+            <div class="master-slot simulation-slot" onclick="sinavMerkeziniBaslat()">
+    <div class="slot-header">
+        <span class="status-dot standby" style="background: gold; box-shadow: 0 0 10px gold;"></span>
+        <span class="slot-title">ANADOLU_REHBER_TEST_V.01</span>
+    </div>
+    </div>
                 <div style="font-family: 'Courier New', monospace; margin-top: 10px;">
                     <p style="font-size: 0.7rem; opacity: 0.7; margin: 2px 0;">> DURUM: HAZIR</p>
                     <p style="font-size: 0.7rem; opacity: 0.7; margin: 2px 0;">> ANALİZ: %0 TAMAMLANDI</p>
@@ -1105,6 +1106,18 @@ document.addEventListener('keydown', function(e) {
         terminaliKapat();
     }
 });
+
+    window.sinavMerkeziniBaslat = async function() { 
+    // ... az önce verdiğim kodun içeriği tamamen aynı kalacak ...
+    const loadingScreen = document.getElementById('quiz-loading-screen');
+    // ... devam ediyor ...
+}
+
+    // Fonksiyonun en sonundaki setTimeout içinde:
+setTimeout(() => {
+    loadingScreen.style.display = 'none';
+    alert("[SİSTEM]: NİŞ BİLGİ PAKETİ BAŞARIYLA OKUNDU. SORU MODÜLÜ TASARIM AŞAMASINDA...");
+}, 5000);
 
     // Firebase'den 'get' ve 'ref' fonksiyonlarını import ettiğinden emin ol
 import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
