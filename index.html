@@ -557,6 +557,15 @@
     letter-spacing: 1px;
     text-transform: uppercase;
 }
+
+#admin-terminal {
+    position: fixed; /* Sayfa akışını bozmaz, üstte yüzer */
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999; /* Her şeyin en üstünde görünür */
+    display: none; /* Başlangıçta gizli olsun, tasarımı bozmasın */
+}
     
 </style>
 
@@ -927,6 +936,7 @@ window.veriyiBulutaFirlat = function() {
 </script>
 
 <div id="admin-terminal" style="background: #000; border: 2px solid gold; padding: 20px; margin: 50px auto; max-width: 600px; font-family: 'Courier New', Courier, monospace;">
+    <button onclick="veriyiBulutaFirlat()">VERİYİ ARŞİVE İŞLE</button>
     <h3 style="color: gold; text-align: center;">[ ADMIN VERI GIRIS TERMINALI ]</h3>
     
     <label style="color: gold;">KATEGORİ SEÇ:</label><br>
