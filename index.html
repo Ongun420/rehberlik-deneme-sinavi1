@@ -763,7 +763,7 @@
 
             </div>
 
-            <<div class="master-slot simulation-slot" onclick="sinavMerkeziniBaslat()">
+            <div class="master-slot simulation-slot" onclick="sinavMerkeziniBaslat()">
     <div class="slot-header">
         <span class="status-dot standby" style="background: gold; box-shadow: 0 0 10px gold;"></span>
         <span class="slot-title">ANADOLU_REHBER_TEST_V.01</span>
@@ -1002,7 +1002,7 @@ function closeHub() {
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     // ... senin mevcut firebaseConfig ve initializeApp kodların burada duruyor ...
-  import { getDatabase, ref, set, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+  import { getDatabase, ref, set, push, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     // Admin Paneli Fonksiyonu
 window.veriyiBulutaFirlat = function() {
@@ -1124,22 +1124,7 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-    window.sinavMerkeziniBaslat = async function() { 
-    // ... az önce verdiğim kodun içeriği tamamen aynı kalacak ...
-    const loadingScreen = document.getElementById('quiz-loading-screen');
-    // ... devam ediyor ...
-}
-
-    // Fonksiyonun en sonundaki setTimeout içinde:
-setTimeout(() => {
-    loadingScreen.style.display = 'none';
-    alert("[SİSTEM]: NİŞ BİLGİ PAKETİ BAŞARIYLA OKUNDU. SORU MODÜLÜ TASARIM AŞAMASINDA...");
-}, 5000);
-
-    // Firebase'den 'get' ve 'ref' fonksiyonlarını import ettiğinden emin ol
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-async function sinavMerkeziniBaslat() {
+window.sinavMerkeziniBaslat = async function() {
     const loadingScreen = document.getElementById('quiz-loading-screen');
     const factContainer = document.getElementById('loading-fact-container');
     const factText = document.getElementById('loading-fact-text');
@@ -1150,7 +1135,6 @@ async function sinavMerkeziniBaslat() {
     
     try {
         // 2. Firebase'deki 'nis_bilgiler' klasörüne git
-        const db = getDatabase();
         const snapshot = await get(ref(db, 'nis_bilgiler'));
         
         if (snapshot.exists()) {
