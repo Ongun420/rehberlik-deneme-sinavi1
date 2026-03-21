@@ -781,36 +781,40 @@
 
 
     function startDatabase(type) {
-    const contentBox = document.querySelector('.detail-content');
+    // 1. Önce sayfayı aç ve Hub'ı kapat
+    closeHub();
+    openDetail();
+    
+    // 2. Overlay'in temasını ve başlıklarını ayarla
     const overlay = document.getElementById('mitoloji-overlay');
     const title = document.getElementById('dynamic-title');
     const subtitle = document.getElementById('dynamic-subtitle');
-    
+    const contentBox = document.querySelector('.detail-content');
+
     overlay.classList.remove('theme-mitoloji', 'theme-arkeoloji', 'theme-medeniyet');
     overlay.classList.add('theme-' + type);
     
+    // Başlıkları kategoriye göre güncelle
     if(type === 'mitoloji') {
         title.innerText = "ANADOLU MİTOLOJİSİ";
         subtitle.innerText = "VERİ PAKETİ: HITIT_01";
-        contentBox.innerHTML = `
-            <div id="DATA_01"><b>[DATA_01]: GÜNEŞ TANRIÇASI ARİNNA</b><p>Hitit panteonunun en üstündeki dişil enerji...</p></div>
-            <div id="DATA_02"><b>[DATA_02]: FIRTINA TANRISI TEŞUP</b><p>Elin de üçlü yıldırım demeti ve boğa sembolüyle tasvir edilir...</p></div>`;
     } else if(type === 'arkeoloji') {
         title.innerText = "ARKEOLOJİ TERİMLERİ";
         subtitle.innerText = "VERİ PAKETİ: ARCH_GEO_V2";
-        contentBox.innerHTML = `
-            <div id="DATA_01"><b>[DATA_01]: STEL (STELE)</b><p>Dikilmiş, üzerinde yazıt veya kabartma bulunan taş levha...</p></div>
-            <div id="DATA_02"><b>[DATA_02]: TÜMÜLÜS</b><p>Yapay tepe şeklinde oluşturulmuş anıt mezarlar...</p></div>`;
     } else if(type === 'medeniyet') {
         title.innerText = "ANADOLU MEDENİYETLERİ";
         subtitle.innerText = "VERİ PAKETİ: CIV_HISTORY_V1";
-        contentBox.innerHTML = `
-            <div id="DATA_01"><b>[DATA_01]: LİDYALILAR</b><p>Parayı icat eden ve Kral Yolu'nu inşa eden medeniyet...</p></div>
-            <div id="DATA_02"><b>[DATA_02]: URARTULAR</b><p>Van Gölü çevresinde kurulan sulama mimarisi uzmanları...</p></div>`;
     }
 
-    closeHub();
-    openDetail();
+    // 3. KRİTİK NOKTA: İçeriği temizle ve Firebase'den veriyi iste
+    contentBox.innerHTML = '<p style="color:gold; opacity:0.5;">[SİSTEM]: VERİLER YÜKLENİYOR...</p>';
+    
+    // Hatırlarsan HTML'in en altına yazdığımız o Firebase fonksiyonunu çağırıyoruz
+    if (window.fetchCategoryData) {
+        window.fetchCategoryData(type);
+    } else {
+        console.error("Firebase bağlantısı henüz hazır değil!");
+    }
 }
 
     function openHub() {
@@ -838,6 +842,59 @@ function closeHub() {
     </div>
 </div>
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "SENIN_API_KEY",
+    authDomain: "SENIN_PROJECT_ID.firebaseapp.com",
+    databaseURL: "https://foo-rehberlik-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "SENIN_PROJECT_ID",
+    storageBucket: "SENIN_PROJECT_ID.appspot.com",
+    messagingSenderId: "ID_NUMARAN",
+    appId: "APP_ID_NUMARAN"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // Bu fonksiyonu küresel (global) yapıyoruz ki butonlar erişebilsin
+  window.fetchCategoryData = function(category) {
+    const dbRef = ref(db, 'archive/' + category);
+    
+    // Veriyi çekiyoruz
+    onValue(dbRef, (snapshot) => {
+      const data = snapshot.val();
+      renderDataToUI(data, category);
+    });
+  };
+
+  function renderDataToUI(data, category) {
+    const contentBox = document.querySelector('.detail-content');
+    if(!contentBox) return;
+
+    contentBox.innerHTML = ''; // Önce ekranı temizle (o hayalet yazılar gitsin)
+
+    if (!data) {
+      contentBox.innerHTML = '<p style="color:red;">[ERROR]: VERI PAKETI BULUNAMADI.</p>';
+      return;
+    }
+
+    let i = 1;
+    Object.keys(data).forEach(key => {
+      const item = data[key];
+      contentBox.innerHTML += `
+        <div id="DATA_0${i}">
+          <b>[DATA_0${i}]: ${item.title.toUpperCase()}</b>
+          <p>${item.description}</p>
+        </div>
+      `;
+      i++;
+    });
+  }
+</script>
+    
 </body>
 
 </html>
