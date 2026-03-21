@@ -559,12 +559,73 @@
 }
 
 #admin-terminal {
-    position: fixed; /* Sayfa akışını bozmaz, üstte yüzer */
-    bottom: 20px;
+    position: fixed;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    z-index: 9999; /* Her şeyin en üstünde görünür */
-    display: none; /* Başlangıçta gizli olsun, tasarımı bozmasın */
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+    
+    /* 1. Boyutu Büyüttük */
+    width: 80%; /* Ekran genişliğinin %80'i */
+    max-width: 900px; /* Çok devasa olmasın diye sınır */
+    min-height: 500px; /* Yükseklik kazandırdık */
+    
+    /* 2. Matrix Yeşili Teması */
+    background: rgba(0, 5, 0, 0.98); /* Çok koyu, hafif yeşilimsi siyah */
+    border: 3px solid #00ff00; /* Neon Matrix Yeşili Çerçeve */
+    padding: 30px;
+    
+    /* 3. Parlama ve Gölge Efektleri */
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.5); /* Yeşil Glow */
+    border-radius: 10px; /* Hafif yuvarlak köşeler modern gösterir */
+    
+    /* Başlangıçta gizli kalsın ('L' ile açılacak) */
+    display: none; 
+    
+    /* Terminal yazı tipi */
+    font-family: 'Courier New', Courier, monospace;
+    overflow-y: auto; /* İçerik taşarsa kaydırma çubuğu çıksın */
+}
+
+/* Panel içindeki yazıları da yeşil yapalım */
+#admin-terminal h3, 
+#admin-terminal label {
+    color: #00ff00 !important; /* Tüm etiketler yeşil */
+    text-shadow: 0 0 5px #00ff00; /* Yazılara hafif parlama */
+}
+
+/* Input ve Textarea kutularını Matrix'e uyduralım */
+#admin-terminal input,
+#admin-terminal textarea,
+#admin-terminal select {
+    background: #001100; /* Çok koyu yeşil arka plan */
+    color: #00ff00; /* Yeşil yazı */
+    border: 1px solid #00ff00; /* Yeşil çerçeve */
+    padding: 10px;
+    font-size: 16px;
+}
+
+#admin-terminal input::placeholder,
+#admin-terminal textarea::placeholder {
+    color: rgba(0, 255, 0, 0.5); /* Placeholder yazıları sönük yeşil */
+}
+
+/* Butonu Matrix Yeşili yapalım */
+#admin-terminal button {
+    background: #00ff00; /* Yeşil buton */
+    color: #000000; /* Siyah yazı */
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+#admin-terminal button:hover {
+    background: #00cc00; /* Hoverda biraz koyulaşsın */
+    box-shadow: 0 0 20px #00ff00; /* Parlama artsın */
 }
     
 </style>
