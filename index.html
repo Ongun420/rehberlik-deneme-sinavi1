@@ -844,7 +844,38 @@ function closeHub() {
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    // ... senin mevcut firebaseConfig ve initializeApp kodların burada duruyor ...
+  import { getDatabase, ref, set, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    // Admin Paneli Fonksiyonu
+window.veriyiBulutaFirlat = function() {
+    const category = document.getElementById('admin-category').value;
+    const title = document.getElementById('admin-title').value;
+    const desc = document.getElementById('admin-desc').value;
+    const status = document.getElementById('status-msg');
+
+    if (!title || !desc) {
+        alert("Furkan, başlık veya açıklamayı boş bırakamazsın!");
+        return;
+    }
+
+    // Firebase'de 'archive/kategori' altına otomatik yeni bir ID ile ekleme yapar
+    const categoryRef = ref(db, 'archive/' + category);
+    const newEntryRef = push(categoryRef); // Firebase otomatik 'data_02', 'data_03' gibi ID üretir
+
+    set(newEntryRef, {
+        title: title,
+        description: desc
+    }).then(() => {
+        // Başarılı olursa formu temizle ve mesaj ver
+        document.getElementById('admin-title').value = '';
+        document.getElementById('admin-desc').value = '';
+        status.style.display = 'block';
+        setTimeout(() => { status.style.display = 'none'; }, 3000);
+    }).catch((error) => {
+        alert("Hata oluştu: " + error.message);
+    });
+};
 
   const firebaseConfig = {
     apiKey: "SENIN_API_KEY",
@@ -894,6 +925,26 @@ function closeHub() {
     });
   }
 </script>
+
+<div id="admin-terminal" style="background: #000; border: 2px solid gold; padding: 20px; margin: 50px auto; max-width: 600px; font-family: 'Courier New', Courier, monospace;">
+    <h3 style="color: gold; text-align: center;">[ ADMIN VERI GIRIS TERMINALI ]</h3>
+    
+    <label style="color: gold;">KATEGORİ SEÇ:</label><br>
+    <select id="admin-category" style="width: 100%; background: #111; color: white; border: 1px solid #333; padding: 5px; margin-bottom: 10px;">
+        <option value="mitoloji">ANADOLU MİTOLOJİSİ</option>
+        <option value="arkeoloji">ARKEOLOJİ TERİMLERİ</option>
+        <option value="medeniyet">ANADOLU MEDENİYETLERİ</option>
+        </select>
+
+    <label style="color: gold;">BAŞLIK (TITLE):</label><br>
+    <input type="text" id="admin-title" placeholder="Örn: TROYA ATI" style="width: 100%; background: #111; color: white; border: 1px solid #333; padding: 5px; margin-bottom: 10px;">
+
+    <label style="color: gold;">AÇIKLAMA (DESCRIPTION):</label><br>
+    <textarea id="admin-desc" rows="4" placeholder="Veri içeriğini buraya yaz..." style="width: 100%; background: #111; color: white; border: 1px solid #333; padding: 5px; margin-bottom: 10px;"></textarea>
+
+    <button onclick="veriyiBulutaFirlat()" style="width: 100%; background: gold; color: black; font-weight: bold; border: none; padding: 10px; cursor: pointer;">VERİYİ ARŞİVE İŞLE</button>
+    <p id="status-msg" style="color: lime; font-size: 12px; margin-top: 10px; text-align: center; display: none;">[SİSTEM]: VERİ BAŞARIYLA AKTARILDI.</p>
+</div>
     
 </body>
 
