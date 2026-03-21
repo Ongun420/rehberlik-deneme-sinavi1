@@ -1121,9 +1121,8 @@ document.addEventListener('keydown', function(e) {
 
         if (snapshot.exists()) {
             const data = snapshot.val();
-            const keys = Object.keys(data);
-            const randomKey = keys[Math.floor(Math.random() * keys.length)];
-            const randomFact = data[randomKey];
+            const facts = Object.values(data);
+            const randomFact = facts[Math.floor(Math.random() * facts.length)];
 
             // 3. Bilgiyi Ekrana Yaz ve Parlat
             factTitle.innerText = `[ ${randomFact.title.toUpperCase()} ]`;
