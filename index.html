@@ -1117,7 +1117,7 @@ document.addEventListener('keydown', function(e) {
 
     try {
         // 2. Firebase'deki 'nis_bilgiler' klasörüne git
-        const snapshot = await get(ref(db, 'nis_bilgiler'));
+        const snapshot = await get(ref(db, 'archive/nis_bilgiler'));
 
         if (snapshot.exists()) {
             const data = snapshot.val();
