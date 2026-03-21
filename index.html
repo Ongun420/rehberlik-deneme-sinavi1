@@ -974,13 +974,20 @@ window.closeHub = function() {
     }
 }
     
-    function openHub() {
+   function openHub() {
     const hub = document.getElementById('selection-hub');
-    hub.classList.add('active');
+    if(hub) {
+        hub.style.display = 'flex';
+        setTimeout(() => hub.classList.add('active'), 10);
+    }
 }
 
 function closeHub() {
-    document.getElementById('selection-hub').classList.remove('active');
+    const hub = document.getElementById('selection-hub');
+    if(hub) {
+        hub.classList.remove('active');
+        setTimeout(() => hub.style.display = 'none', 500);
+    }
 }
 
 
@@ -1002,7 +1009,7 @@ function closeHub() {
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     // ... senin mevcut firebaseConfig ve initializeApp kodların burada duruyor ...
-  import { getDatabase, ref, set, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+  import { getDatabase, ref, set, push, onValue, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     // Admin Paneli Fonksiyonu
 window.veriyiBulutaFirlat = function() {
@@ -1082,13 +1089,15 @@ window.veriyiBulutaFirlat = function() {
     });
   }
 
-    document.addEventListener('keydown', function(e) {
-    // CTRL + SHIFT + A kombinasyonu (Oldukça nadir bir kombinasyon)
-    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') {
-        e.preventDefault(); // Tarayıcının varsayılan hareketini engelle
-        const loginOverlay = document.getElementById('admin-login-overlay');
-        loginOverlay.style.display = 'flex';
-        document.getElementById('admin-pass-input').focus();
+    document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && e.code === 'KeyA') {
+        e.preventDefault();
+        const admin = document.getElementById('admin-terminal');
+        if (admin) {
+            const isHidden = admin.style.display === 'none' || admin.style.display === '';
+            admin.style.display = isHidden ? 'flex' : 'none';
+            console.log("[SİSTEM]: Admin Modu " + (isHidden ? "Açıldı" : "Kapatıldı"));
+        }
     }
 });
 
