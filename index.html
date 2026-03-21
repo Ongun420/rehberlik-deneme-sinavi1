@@ -564,6 +564,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Her şeyi yatayda ortalar */
+    padding: 40px;
     
     /* 1. Boyutu Büyüttük */
     width: 80%; /* Ekran genişliğinin %80'i */
@@ -579,12 +583,77 @@
     box-shadow: 0 0 30px rgba(0, 255, 0, 0.5); /* Yeşil Glow */
     border-radius: 10px; /* Hafif yuvarlak köşeler modern gösterir */
     
-    /* Başlangıçta gizli kalsın ('L' ile açılacak) */
+    /* Başlangıçta gizli kalsın ('ctrl+shift+a' ile açılacak) */
     display: none; 
     
     /* Terminal yazı tipi */
     font-family: 'Courier New', Courier, monospace;
     overflow-y: auto; /* İçerik taşarsa kaydırma çubuğu çıksın */
+}
+
+    .admin-row {
+    width: 100%;
+    max-width: 800px; /* Kutuların çok yayılmasını engeller */
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#admin-terminal label {
+    margin-bottom: 8px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+#admin-terminal input, 
+#admin-terminal select, 
+#admin-terminal textarea {
+    width: 100%;
+    box-sizing: border-box; /* Padding'in genişliği bozmamasını sağlar */
+    background: rgba(0, 20, 0, 0.9);
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 12px;
+    font-family: 'Courier New', monospace;
+}
+
+/* Açıklama kutusunu özellikle büyük ve okunaklı yapıyoruz */
+#admin-terminal textarea {
+    resize: vertical; /* Sadece aşağı doğru büyütülebilsin, sağa sola kaymasın */
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Gönder Butonu - En Alt Orta */
+#admin-submit-btn {
+    margin-top: 30px; /* Üstteki kutuyla arasına nefes alacak boşluk */
+    width: 300px; /* Butonun genişliği sabit olsun */
+    padding: 15px;
+    background: #00ff00;
+    color: black;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+    transition: 0.3s;
+}
+
+#admin-submit-btn:hover {
+    background: #053305;
+    color: #00ff00;
+    box-shadow: 0 0 25px #00ff00;
+}
+
+#admin-close-btn {
+    /* Sağ üstteki X butonu ayarları */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    cursor: pointer;
+    padding: 5px 10px;
 }
 
 /* Panel içindeki yazıları da yeşil yapalım */
@@ -1046,25 +1115,32 @@ document.addEventListener('keydown', function(e) {
 </div>
     
 <div id="admin-terminal">
-    <button onclick="terminaliKapat()" style="position: absolute; top: 15px; right: 20px; width: auto; background: none; color: #00ff00; border: 1px solid #00ff00; padding: 5px 10px; font-size: 14px; box-shadow: none;">[ X ] KAPAT</button>
+    <button onclick="terminaliKapat()" id="admin-close-btn">[ X ] KAPAT</button>
 
-    <h3 style="color: #00ff00; text-align: center; margin-top: 20px;">[ ADMIN VERI GIRIS TERMINALI ]</h3>
+    <h3>[ ADMIN VERI GIRIS TERMINALI ]</h3>
     
-    <label>KATEGORİ SEÇ:</label><br>
-    <select id="admin-category">
-        <option value="mitoloji">ANADOLU MİTOLOJİSİ</option>
-        <option value="arkeoloji">ARKEOLOJİ TERİMLERİ</option>
-        <option value="medeniyet">ANADOLU MEDENİYETLERİ</option>
-    </select>
+    <div class="admin-row">
+        <label>KATEGORİ SEÇ:</label>
+        <select id="admin-category">
+            <option value="mitoloji">ANADOLU MİTOLOJİSİ</option>
+            <option value="arkeoloji">ARKEOLOJİ TERİMLERİ</option>
+            <option value="medeniyet">ANADOLU MEDENİYETLERİ</option>
+        </select>
+    </div>
 
-    <label>BAŞLIK (TITLE):</label><br>
-    <input type="text" id="admin-title" placeholder="Örn: TROYA ATI">
+    <div class="admin-row">
+        <label>BAŞLIK (TITLE):</label>
+        <input type="text" id="admin-title" placeholder="Örn: TROYA ATI">
+    </div>
 
-    <label>AÇIKLAMA (DESCRIPTION):</label><br>
-    <textarea id="admin-desc" rows="6" placeholder="Veri içeriğini buraya yaz..."></textarea>
+    <div class="admin-row">
+        <label>AÇIKLAMA (DESCRIPTION):</label>
+        <textarea id="admin-desc" rows="12" placeholder="Veri içeriğini, paragrafları buraya uzunca girebilirsin..."></textarea>
+    </div>
 
-    <button onclick="veriyiBulutaFirlat()">VERİYİ ARŞİVE İŞLE</button>
-    <p id="status-msg" style="color: #00ff00; font-size: 12px; margin-top: 10px; text-align: center; display: none;">[SİSTEM]: VERİ ARŞİVE İŞLENDİ.</p>
+    <button id="admin-submit-btn" onclick="veriyiBulutaFirlat()">VERİYİ ARŞİVE İŞLE</button>
+    
+    <p id="status-msg">[SİSTEM]: VERİ ARŞİVE İŞLENDİ.</p>
 </div>
     
 </body>
