@@ -996,12 +996,16 @@ window.veriyiBulutaFirlat = function() {
   }
 
     document.addEventListener('keydown', function(e) {
-    if (e.key.toLowerCase() === 'l') { // Klavyeden L'ye basınca
-        const terminal = document.getElementById('admin-terminal');
-        if (terminal.style.display === 'none' || terminal.style.display === '') {
+    if (e.key.toLowerCase() === 'l') {
+        const password = prompt("[SİSTEM]: OPERATÖR ERİŞİM KODUNU GİRİN:");
+        
+        // Şifreni buraya yaz (Mesela: 'anadolu2026')
+        if (password === 'Maymuncuk31') { 
+            const terminal = document.getElementById('admin-terminal');
             terminal.style.display = 'block';
+            alert("[ERİŞİM ONAYLANDI]: HOŞ GELDİN OPERATÖR.");
         } else {
-            terminal.style.display = 'none';
+            alert("[HATA]: YETKİSİZ ERİŞİM DENEMESİ KAYDEDİLDİ.");
         }
     }
 });
