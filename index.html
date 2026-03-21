@@ -713,6 +713,101 @@
     background: #00cc00; /* Hoverda biraz koyulaşsın */
     box-shadow: 0 0 20px #00ff00; /* Parlama artsın */
 }
+
+    /* ABSTRAKT ATHENA (SAĞ ÜST) */
+.athena-seal {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    width: 80px;
+    height: 100px;
+    opacity: 0.8;
+}
+
+/* Miğferin İbiği (Crest) */
+.helmet-crest {
+    width: 40px;
+    height: 60px;
+    border-top: 3px solid #FFD700;
+    border-right: 2px solid #FFD700;
+    border-radius: 0 100% 0 0;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+/* Miğfer Tabanı */
+.helmet-base {
+    width: 50px;
+    height: 30px;
+    border-left: 3px solid #FFD700;
+    border-bottom: 2px solid #FFD700;
+    transform: skewX(-20deg);
+}
+
+/* Athena'nın "Bilge Gözü" */
+.athena-eye {
+    position: absolute;
+    top: 65px;
+    left: 10px;
+    width: 15px;
+    height: 2px;
+    background: #FFD700;
+    box-shadow: 0 0 10px #FFD700;
+    animation: eye-flicker 3s infinite;
+}
+
+/* SORU KUTUSU (LACİVERT) */
+.question-box {
+    background: rgba(10, 25, 47, 0.9); /* Anasayfa Laciverti */
+    border: 1px solid #FFD700;
+    padding: 40px;
+    border-radius: 15px;
+    width: 80%;
+    margin: 100px auto 20px;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+/* 5 ŞIK VE GLOW EFEKTİ */
+.quiz-option {
+    display: block;
+    width: 100%;
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    padding: 15px;
+    margin: 10px 0;
+    text-align: left;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.quiz-option:hover {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    border-color: #FFD700;
+    transform: translateX(10px);
+}
+
+/* MATRIX ZAMAN BARI */
+.matrix-timer-wrapper {
+    width: 100%;
+    height: 5px;
+    background: #000;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+#matrix-timer-bar {
+    width: 100%;
+    height: 100%;
+    background: #00ff41; /* Matrix Yeşili */
+    box-shadow: 0 0 10px #00ff41;
+    transition: width 1s linear;
+}
+
+@keyframes eye-flicker {
+    0%, 90% { opacity: 1; }
+    92%, 95% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
     
 </style>
 
@@ -928,6 +1023,40 @@
         });
     }
 });
+
+    <div id="quiz-main-container" style="display: none;">
+    
+    <div class="athena-seal">
+        <div class="helmet-crest"></div>
+        <div class="helmet-base"></div>
+        <div class="athena-eye"></div>
+    </div>
+
+    <div class="quiz-header">
+        <span id="question-counter">SORU: 1 / 100</span>
+        <div class="matrix-timer-wrapper">
+            <div id="matrix-timer-bar"></div>
+        </div>
+    </div>
+
+    <div class="question-box">
+        <h2 id="current-question-text">Efes Antik Kenti'nin girişinde bulunan Celsus Kütüphanesi hangi yüzyılda inşa edilmiştir?</h2>
+        
+        <div class="options-container">
+            <button class="quiz-option" onclick="selectOption(0)"><span>A</span> M.S. 1. Yüzyıl</button>
+            <button class="quiz-option" onclick="selectOption(1)"><span>B</span> M.S. 2. Yüzyıl</button>
+            <button class="quiz-option" onclick="selectOption(2)"><span>C</span> M.O. 1. Yüzyıl</button>
+            <button class="quiz-option" onclick="selectOption(3)"><span>D</span> M.S. 3. Yüzyıl</button>
+            <button class="quiz-option" onclick="selectOption(4)"><span>E</span> M.S. 4. Yüzyıl</button>
+        </div>
+    </div>
+
+    <div class="quiz-footer">
+        <button id="prev-btn" onclick="changeQuestion(-1)"> < GERİ </button>
+        <button id="finish-btn" onclick="finishQuiz()"> SINAVI BİTİR </button>
+        <button id="next-btn" onclick="changeQuestion(1)"> İLERİ > </button>
+    </div>
+</div>
 
 
     function startDatabase(type) {
@@ -1171,6 +1300,74 @@ document.addEventListener('keydown', function(e) {
 
 window.closeAdmin = function() {
     document.getElementById('admin-terminal').style.display = 'none';
+}
+
+    // SINAV DEĞİŞKENLERİ
+let currentQuestions = [];
+let currentIndex = 0;
+let userAnswers = [];
+
+// 1. ADIM: SINAV BAŞLATMA FONKSİYONU (Butona basınca bu tetiklenecek)
+async function startProfessionalQuiz() {
+    // Önce Niş Bilgi ekranını (Loading) başlat
+    sinavMerkeziniBaslat(); 
+
+    try {
+        // Firebase'den soruları çek (archive/questions yolundan)
+        const snapshot = await get(ref(db, 'archive/questions'));
+        if (snapshot.exists()) {
+            currentQuestions = Object.values(snapshot.val());
+            currentIndex = 0;
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            
+            // Niş Bilgi ekranı için 4 saniye bekle, sonra sınavı aç
+            setTimeout(() => {
+                document.getElementById('selection-hub').style.display = 'none'; // Menüyü gizle
+                document.getElementById('quiz-loading-screen').style.display = 'none'; // Loading'i gizle
+                document.getElementById('quiz-main-container').style.display = 'flex'; // SINAV EKRANINI AÇ
+                
+                showQuestion(currentIndex); // İlk soruyu bas
+                startMatrixTimer(120); // Örnek: 120 saniyelik Matrix barı başlat
+            }, 4000);
+        } else {
+            alert("Soru paketi henüz hazır değil boss!");
+        }
+    } catch (error) {
+        console.error("Soru çekilirken hata oluştu:", error);
+    }
+}
+
+// 2. ADIM: SORUYU EKRANA BASMA
+function showQuestion(index) {
+    const q = currentQuestions[index];
+    document.getElementById('current-question-text').innerText = q.question;
+    document.getElementById('question-counter').innerText = `SORU: ${index + 1} / ${currentQuestions.length}`;
+
+    const optionsContainer = document.querySelector('.options-container');
+    optionsContainer.innerHTML = ''; // Eski şıkları temizle
+
+    // 5 Şıkkı Oluştur (A-E)
+    q.options.forEach((opt, i) => {
+        const letter = String.fromCharCode(65 + i); // A, B, C, D, E
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option';
+        btn.innerHTML = `<span>${letter}</span> ${opt}`;
+        btn.onclick = () => selectOption(i);
+        
+        // Eğer daha önce işaretlendiyse rengini koru
+        if (userAnswers[index] === i) btn.classList.add('selected');
+        
+        optionsContainer.appendChild(btn);
+    });
+}
+
+// 3. ADIM: NAVİGASYON (İLERİ - GERİ)
+function changeQuestion(step) {
+    const newIndex = currentIndex + step;
+    if (newIndex >= 0 && newIndex < currentQuestions.length) {
+        currentIndex = newIndex;
+        showQuestion(currentIndex);
+    }
 }
     
 </script>
