@@ -32,10 +32,10 @@
         position: fixed;
         top: 0; left: 0;
         width: 100vw; height: 100vh;
-        z-index: -1 !important;
+        z-index: 0;
         overflow: hidden;
         pointer-events: none;
-        background: var(--bg-dark) !important;
+        background: var(--bg-dark);
         transition: 1s ease;
     }
 
@@ -822,6 +822,12 @@
     0%, 95%, 100% { opacity: 1; }
     97% { opacity: 0; }
 }
+
+.quiz-option.selected {
+    background: rgba(234, 179, 8, 0.2);
+    border-color: #EAB308;
+    box-shadow: 0 0 15px rgba(234, 179, 8, 0.3);
+}
     
 </style>
 
@@ -1037,7 +1043,7 @@
 
 </script>
 
-<div id="quiz-main-container" style="display: none; position: relative; z-index: 100; width: 100%; min-height: 100vh; flex-direction: column; align-items: center; background: transparent;">
+<div id="quiz-main-container">
 
     <div class="athena-seal">
         <div class="helmet-crest"></div>
@@ -1266,44 +1272,57 @@ document.addEventListener('keydown', function(e) {
     const factText = document.getElementById('loading-fact-text');
     const factTitle = document.getElementById('loading-fact-title');
 
-    // 1. Ekranı Karart ve Loading'i Aç
+    // 1. Loading ekranını aç, içeriği sıfırla
+    factContainer.style.opacity = '0';
     loadingScreen.style.display = 'flex';
 
+    // 2. Niş bilgi ve soruları paralel çek
     try {
-        // 2. Firebase'deki 'nis_bilgiler' klasörüne git
-        const snapshot = await get(ref(db, 'archive/nis_bilgiler'));
+        const [nisSnapshot, questionsSnapshot] = await Promise.all([
+            get(ref(db, 'archive/nis_bilgiler')),
+            get(ref(db, 'archive/questions'))
+        ]);
 
-        if (snapshot.exists()) {
-            const data = snapshot.val();
-            const facts = Object.values(data);
+        // Niş bilgiyi ekrana yaz
+        if (nisSnapshot.exists()) {
+            const facts = Object.values(nisSnapshot.val());
             const randomFact = facts[Math.floor(Math.random() * facts.length)];
-
-            // 3. Bilgiyi Ekrana Yaz ve Parlat
             factTitle.innerText = `[ ${randomFact.title.toUpperCase()} ]`;
             factText.innerText = `"${randomFact.description}"`;
-
-            // Yavaşça görünür yap (Fade-in)
-            setTimeout(() => { factContainer.style.opacity = '1'; }, 500);
-
-            // 4. 4 Saniye Sonra Sınava Geç
-            setTimeout(() => {
-                factContainer.style.opacity = '0';
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                    alert("Sınav Modülü Hazırlanıyor... (Tasarım Aşamasındayız)");
-                }, 1000);
-            }, 5000);
-
         } else {
-            loadingScreen.style.display = 'none';
-            alert("[SİSTEM]: NİŞ BİLGİ PAKETİ HAZIR DEĞİL.");
+            factTitle.innerText = '[ SİSTEM HAZIR ]';
+            factText.innerText = '"Sınav başlatılıyor..."';
+        }
+
+        // Soruları hazırla
+        if (questionsSnapshot.exists()) {
+            currentQuestions = Object.values(questionsSnapshot.val());
+            currentIndex = 0;
+            userAnswers = new Array(currentQuestions.length).fill(null);
         }
 
     } catch (error) {
         console.error("Veri çekilemedi:", error);
-        loadingScreen.style.display = 'none';
+        factTitle.innerText = '[ SİSTEM HAZIR ]';
+        factText.innerText = '"Sınav başlatılıyor..."';
     }
 
+    // 3. Fade-in ile niş bilgiyi göster
+    setTimeout(() => { factContainer.style.opacity = '1'; }, 300);
+
+    // 4. 4 saniye sonra loading ekranını kapat, quiz-main-container'ı aç
+    setTimeout(() => {
+        factContainer.style.opacity = '0';
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+            const quizContainer = document.getElementById('quiz-main-container');
+            quizContainer.style.display = 'flex';
+            if (currentQuestions.length > 0) {
+                showQuestion(0);
+                startMatrixTimer(120);
+            }
+        }, 500);
+    }, 4000);
 }
 
 window.closeAdmin = function() {
@@ -1315,37 +1334,7 @@ let currentQuestions = [];
 let currentIndex = 0;
 let userAnswers = [];
 
-// 1. ADIM: SINAV BAŞLATMA FONKSİYONU (Butona basınca bu tetiklenecek)
-async function startProfessionalQuiz() {
-    // Önce Niş Bilgi ekranını (Loading) başlat
-    sinavMerkeziniBaslat(); 
-
-    try {
-        // Firebase'den soruları çek (archive/questions yolundan)
-        const snapshot = await get(ref(db, 'archive/questions'));
-        if (snapshot.exists()) {
-            currentQuestions = Object.values(snapshot.val());
-            currentIndex = 0;
-            userAnswers = new Array(currentQuestions.length).fill(null);
-            
-            // Niş Bilgi ekranı için 4 saniye bekle, sonra sınavı aç
-            setTimeout(() => {
-                document.getElementById('selection-hub').style.display = 'none'; // Menüyü gizle
-                document.getElementById('quiz-loading-screen').style.display = 'none'; // Loading'i gizle
-                document.getElementById('quiz-main-container').style.display = 'flex'; // SINAV EKRANINI AÇ
-                
-                showQuestion(currentIndex); // İlk soruyu bas
-                startMatrixTimer(120); // Örnek: 120 saniyelik Matrix barı başlat
-            }, 4000);
-        } else {
-            alert("Soru paketi henüz hazır değil boss!");
-        }
-    } catch (error) {
-        console.error("Soru çekilirken hata oluştu:", error);
-    }
-}
-
-// 2. ADIM: SORUYU EKRANA BASMA
+// SORUYU EKRANA BASMA
 function showQuestion(index) {
     const q = currentQuestions[index];
     document.getElementById('current-question-text').innerText = q.question;
@@ -1369,13 +1358,38 @@ function showQuestion(index) {
     });
 }
 
-// 3. ADIM: NAVİGASYON (İLERİ - GERİ)
-function changeQuestion(step) {
+// NAVİGASYON (İLERİ - GERİ) - window scope'a alındı, HTML onclick erişebilsin
+window.changeQuestion = function(step) {
     const newIndex = currentIndex + step;
     if (newIndex >= 0 && newIndex < currentQuestions.length) {
         currentIndex = newIndex;
         showQuestion(currentIndex);
     }
+}
+
+// SEÇİLEN ŞIKKI KAYDET VE GÖSTER
+function selectOption(optionIndex) {
+    userAnswers[currentIndex] = optionIndex;
+    const buttons = document.querySelectorAll('.quiz-option');
+    buttons.forEach((btn, i) => {
+        btn.classList.toggle('selected', i === optionIndex);
+    });
+}
+
+// MATRIX ZAMANLAYICI
+function startMatrixTimer(seconds) {
+    const bar = document.getElementById('matrix-timer-bar');
+    if (!bar) return;
+    bar.style.transition = 'none';
+    bar.style.width = '100%';
+    // Çift requestAnimationFrame: tarayıcının reflow'u tamamlamasını sağlar
+    // böylece transition 100%'den 0%'e doğru animasyon yapar, anında atlamaz
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            bar.style.transition = `width ${seconds}s linear`;
+            bar.style.width = '0%';
+        });
+    });
 }
     
 </script>
