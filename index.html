@@ -1116,40 +1116,55 @@ document.addEventListener('keydown', function(e) {
     loadingScreen.style.display = 'flex';
 
     try {
-        // 2. Firebase'deki 'nis_bilgiler' klasörüne git
+        // 1. Önce veriyi çekiyoruz
         const snapshot = await get(ref(db, 'nis_bilgiler'));
 
         if (snapshot.exists()) {
             const data = snapshot.val();
-            const keys = Object.keys(data);
-            const randomKey = keys[Math.floor(Math.random() * keys.length)];
-            const randomFact = data[randomKey];
+            
+            // Firebase'den gelen veriyi liste (Array) haline getiriyoruz
+            const dataArray = Object.values(data); 
+            // Listeden rastgele bir tane seçiyoruz
+            const randomFact = dataArray[Math.floor(Math.random() * dataArray.length)];
 
-            // 3. Bilgiyi Ekrana Yaz ve Parlat
-            factTitle.innerText = `[ ${randomFact.title.toUpperCase()} ]`;
-            factText.innerText = `"${randomFact.description}"`;
+            // 2. Ekranda ilgili yerleri bulup dolduruyoruz
+            const factTitle = document.getElementById('loading-fact-title');
+            const factText = document.getElementById('loading-fact-text');
+            const factContainer = document.getElementById('loading-fact-container');
 
-            // Yavaşça görünür yap (Fade-in)
-            setTimeout(() => { factContainer.style.opacity = '1'; }, 500);
+            if (randomFact && factText && factTitle) {
+                // Veri içinde title veya description yoksa bile hata vermemesi için:
+                const displayTitle = randomFact.title || "ANADOLU";
+                const displayText = randomFact.description || "İçerik yüklenemedi.";
 
-            // 4. 4 Saniye Sonra Sınava Geç
-            setTimeout(() => {
-                factContainer.style.opacity = '0';
+                factTitle.innerText = `[ ${displayTitle.toUpperCase()} ]`;
+                factText.innerText = `"${displayText}"`;
+
+                // Yazıyı yavaşça göster
+                setTimeout(() => { 
+                    factContainer.style.opacity = '1'; 
+                }, 500);
+
+                // 3. 5 Saniye sonra ekranı kapat (Sınav Modülü Uyarısı Ver)
                 setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                    alert("Sınav Modülü Hazırlanıyor... (Tasarım Aşamasındayız)");
-                }, 1000);
-            }, 5000);
+                    factContainer.style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('quiz-loading-screen').style.display = 'none';
+                        alert("Sınav Modülü Hazırlanıyor...");
+                    }, 1000);
+                }, 5000);
 
+            }
         } else {
-            loadingScreen.style.display = 'none';
-            alert("[SİSTEM]: NİŞ BİLGİ PAKETİ HAZIR DEĞİL.");
+            // Eğer Firebase'de 'nis_bilgiler' hiç yoksa burası çalışır
+            document.getElementById('quiz-loading-screen').style.display = 'none';
+            alert("[SİSTEM]: VERİTABANINDA NİŞ BİLGİ BULUNAMADI.");
         }
+
     } catch (error) {
-        console.error("Veri çekilemedi:", error);
-        loadingScreen.style.display = 'none';
+        console.error("Hata oluştu:", error);
+        document.getElementById('quiz-loading-screen').style.display = 'none';
     }
-}
 
 window.closeAdmin = function() {
     document.getElementById('admin-terminal').style.display = 'none';
