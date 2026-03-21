@@ -933,6 +933,18 @@ window.veriyiBulutaFirlat = function() {
       i++;
     });
   }
+
+    document.addEventListener('keydown', function(e) {
+    if (e.key.toLowerCase() === 'l') { // Klavyeden L'ye basınca
+        const terminal = document.getElementById('admin-terminal');
+        if (terminal.style.display === 'none' || terminal.style.display === '') {
+            terminal.style.display = 'block';
+        } else {
+            terminal.style.display = 'none';
+        }
+    }
+});
+    
 </script>
 
 <div id="admin-terminal" style="background: #000; border: 2px solid gold; padding: 20px; margin: 50px auto; max-width: 600px; font-family: 'Courier New', Courier, monospace;">
