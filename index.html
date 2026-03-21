@@ -748,27 +748,22 @@
     <div class="glass-card">
         <h2 style="color: var(--gold); font-size: 2.2rem; margin-bottom: 30px;">Sınav Merkezi</h2>
         <div style="display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 450px; margin: 0 auto;">
-            <div class="master-slot" onclick="openHub()"> 
-    <div class="slot-header">
-        <span class="status-dot"></span>
-        <span class="slot-title">DERS_NOTLARI_ACCESS</span>
-    </div>
-    <div class="sub-slot-placeholder" style="font-size: 0.7rem; opacity: 0.5;">Veri tabanını seçmek için tıklayın...</div>
-</div>
-
+            <div class="master-slot" onclick="openHub()">
+                <div class="slot-header">
+                    <span class="status-dot"></span>
+                    <span class="slot-title">DERS_NOTLARI_ACCESS</span>
+                </div>
+                <div class="sub-slot-placeholder" style="font-size: 0.7rem; opacity: 0.5;">Veri tabanını seçmek için tıklayın...</div>
                 <div class="sub-slot-container">
                     <div class="sub-slot-placeholder" style="font-size: 0.7rem; opacity: 0.5;">Dizini açmak için tıklayın...</div>
-
                 </div>
-
             </div>
 
-            <<div class="master-slot simulation-slot" onclick="sinavMerkeziniBaslat()">
-    <div class="slot-header">
-        <span class="status-dot standby" style="background: gold; box-shadow: 0 0 10px gold;"></span>
-        <span class="slot-title">ANADOLU_REHBER_TEST_V.01</span>
-    </div>
-</div>
+            <div class="master-slot simulation-slot" onclick="sinavMerkeziniBaslat()">
+                <div class="slot-header">
+                    <span class="status-dot standby" style="background: gold; box-shadow: 0 0 10px gold;"></span>
+                    <span class="slot-title">ANADOLU_REHBER_TEST_V.01</span>
+                </div>
                 <div style="font-family: 'Courier New', monospace; margin-top: 10px;">
                     <p style="font-size: 0.7rem; opacity: 0.7; margin: 2px 0;">> DURUM: HAZIR</p>
                     <p style="font-size: 0.7rem; opacity: 0.7; margin: 2px 0;">> ANALİZ: %0 TAMAMLANDI</p>
@@ -777,9 +772,7 @@
                     </div>
                 </div>
             </div>
-
-
-        </div> 
+        </div>
     </div>
 
 </section>
@@ -957,23 +950,6 @@
     }
 }
 
-// HUB FONKSİYONLARI (Bunlar eksik kalmış olabilir)
-window.openHub = function() {
-    const hub = document.getElementById('hub-selection-overlay');
-    if(hub) {
-        hub.style.display = 'flex';
-        setTimeout(() => hub.classList.add('active'), 10);
-    }
-}
-
-window.closeHub = function() {
-    const hub = document.getElementById('hub-selection-overlay');
-    if(hub) {
-        hub.classList.remove('active');
-        setTimeout(() => hub.style.display = 'none', 500);
-    }
-}
-    
    function openHub() {
     const hub = document.getElementById('selection-hub');
     if(hub) {
@@ -1008,7 +984,6 @@ function closeHub() {
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    // ... senin mevcut firebaseConfig ve initializeApp kodların burada duruyor ...
   import { getDatabase, ref, set, push, onValue, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     // Admin Paneli Fonksiyonu
@@ -1092,11 +1067,9 @@ window.veriyiBulutaFirlat = function() {
     document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.shiftKey && e.code === 'KeyA') {
         e.preventDefault();
-        const admin = document.getElementById('admin-terminal');
-        if (admin) {
-            const isHidden = admin.style.display === 'none' || admin.style.display === '';
-            admin.style.display = isHidden ? 'flex' : 'none';
-            console.log("[SİSTEM]: Admin Modu " + (isHidden ? "Açıldı" : "Kapatıldı"));
+        const loginOverlay = document.getElementById('admin-login-overlay');
+        if (loginOverlay) {
+            loginOverlay.style.display = loginOverlay.style.display === 'flex' ? 'none' : 'flex';
         }
     }
 });
@@ -1111,7 +1084,7 @@ document.getElementById('admin-pass-input').addEventListener('keypress', functio
         // Şifreni buraya yaz (Örn: anadolu2026)
         if (input === 'Maymuncuk31') {
             loginOverlay.style.display = 'none';
-            terminal.style.display = 'block';
+            terminal.style.display = 'flex';
             e.target.value = ''; // Giriş yapıldıktan sonra kutuyu temizle
         } else {
             alert("[HATA]: YETKİSİZ ERİŞİM! SİSTEM KİLİTLENDİ.");
@@ -1133,22 +1106,7 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-    window.sinavMerkeziniBaslat = async function() { 
-    // ... az önce verdiğim kodun içeriği tamamen aynı kalacak ...
-    const loadingScreen = document.getElementById('quiz-loading-screen');
-    // ... devam ediyor ...
-}
-
-    // Fonksiyonun en sonundaki setTimeout içinde:
-setTimeout(() => {
-    loadingScreen.style.display = 'none';
-    alert("[SİSTEM]: NİŞ BİLGİ PAKETİ BAŞARIYLA OKUNDU. SORU MODÜLÜ TASARIM AŞAMASINDA...");
-}, 5000);
-
-    // Firebase'den 'get' ve 'ref' fonksiyonlarını import ettiğinden emin ol
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-async function sinavMerkeziniBaslat() {
+    window.sinavMerkeziniBaslat = async function() {
     const loadingScreen = document.getElementById('quiz-loading-screen');
     const factContainer = document.getElementById('loading-fact-container');
     const factText = document.getElementById('loading-fact-text');
@@ -1156,54 +1114,42 @@ async function sinavMerkeziniBaslat() {
 
     // 1. Ekranı Karart ve Loading'i Aç
     loadingScreen.style.display = 'flex';
-    
+
     try {
         // 2. Firebase'deki 'nis_bilgiler' klasörüne git
-        const db = getDatabase();
         const snapshot = await get(ref(db, 'nis_bilgiler'));
-        
+
         if (snapshot.exists()) {
             const data = snapshot.val();
-            const keys = Object.keys(data); // O garip kodları (ID) liste olarak al
-            const randomKey = keys[Math.floor(Math.random() * keys.length)]; // Rastgele birini seç
+            const keys = Object.keys(data);
+            const randomKey = keys[Math.floor(Math.random() * keys.length)];
             const randomFact = data[randomKey];
 
             // 3. Bilgiyi Ekrana Yaz ve Parlat
             factTitle.innerText = `[ ${randomFact.title.toUpperCase()} ]`;
             factText.innerText = `"${randomFact.description}"`;
-            
+
             // Yavaşça görünür yap (Fade-in)
             setTimeout(() => { factContainer.style.opacity = '1'; }, 500);
 
-            // 4. 4 Saniye Sonra Sınava Geç (Şimdilik sadece loading'i kapatıyoruz)
+            // 4. 4 Saniye Sonra Sınava Geç
             setTimeout(() => {
-                factContainer.style.opacity = '0'; // Önce yazıyı sil
+                factContainer.style.opacity = '0';
                 setTimeout(() => {
                     loadingScreen.style.display = 'none';
                     alert("Sınav Modülü Hazırlanıyor... (Tasarım Aşamasındayız)");
                 }, 1000);
             }, 5000);
 
+        } else {
+            loadingScreen.style.display = 'none';
+            alert("[SİSTEM]: NİŞ BİLGİ PAKETİ HAZIR DEĞİL.");
         }
     } catch (error) {
         console.error("Veri çekilemedi:", error);
         loadingScreen.style.display = 'none';
     }
 }
-
-// HTML'deki "SINAV MERKEZİ" butonuna bu fonksiyonu bağlamayı unutma:
-// <button onclick="sinavMerkeziniBaslat()">SINAV MERKEZİ</button>
-
-    document.addEventListener('keydown', (e) => {
-    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') {
-        const admin = document.getElementById('admin-terminal');
-        if (admin.style.display === 'none' || admin.style.display === '') {
-            admin.style.display = 'flex';
-        } else {
-            admin.style.display = 'none';
-        }
-    }
-});
 
 window.closeAdmin = function() {
     document.getElementById('admin-terminal').style.display = 'none';
