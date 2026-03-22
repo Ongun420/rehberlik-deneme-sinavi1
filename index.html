@@ -35,7 +35,7 @@
         z-index: -1 !important;
         overflow: hidden;
         pointer-events: none;
-        background: var(--bg-dark);
+        background: transparent;
         transition: 1s ease;
     }
 
@@ -754,11 +754,6 @@
     box-shadow: 0 0 15px #00ff41;
 }
 
-@keyframes eye-flicker {
-    0%, 95%, 100% { opacity: 1; }
-    97% { opacity: 0; }
-}
-
 .quiz-option.selected {
     background: rgba(234, 179, 8, 0.2);
     border-color: #EAB308;
@@ -902,50 +897,6 @@
     padding-bottom: 50px;
 }
 
-/* Athena Mührü - Siber-Antik Line Art Profili */
-.athena-seal {
-    position: absolute;
-    top: 10px;
-    right: 40px;
-    width: 90px;
-    height: 110px;
-    opacity: 1;
-    z-index: 10003;
-}
-
-.helmet-crest {
-    width: 52px;
-    height: 62px;
-    border-top: 2px solid #EAB308;
-    border-right: 1px solid #EAB308;
-    border-radius: 0 100% 0 0;
-    margin-left: 8px;
-    box-shadow: 0 0 14px rgba(234, 179, 8, 0.5), 0 0 30px rgba(234, 179, 8, 0.2);
-}
-
-.helmet-base {
-    width: 64px;
-    height: 40px;
-    border-left: 2px solid #EAB308;
-    border-bottom: 1px solid #EAB308;
-    border-right: 1px solid rgba(234, 179, 8, 0.35);
-    transform: skewX(-18deg);
-    margin-top: -8px;
-    border-radius: 0 0 6px 0;
-    box-shadow: 0 0 14px rgba(234, 179, 8, 0.5), 0 0 30px rgba(234, 179, 8, 0.2);
-}
-
-.athena-eye {
-    position: absolute;
-    top: 68px;
-    left: 16px;
-    width: 20px;
-    height: 2px;
-    background: #EAB308;
-    border-radius: 1px;
-    box-shadow: 0 0 10px #EAB308, 0 0 22px rgba(234, 179, 8, 0.5);
-    animation: eye-flicker 4s infinite;
-}
 
 /* Quiz tam ekran kart */
 .question-box {
@@ -965,7 +916,7 @@
     position: fixed;
     top: 0; left: 0;
     width: 100vw; height: 100vh;
-    background: rgba(2, 6, 23, 0.98);
+    background: rgba(2, 6, 23, 0.85);
     z-index: 10004;
     flex-direction: column;
     align-items: center;
@@ -1214,12 +1165,6 @@
 </script>
 
 <div id="quiz-main-container">
-
-    <div class="athena-seal">
-        <div class="helmet-crest"></div>
-        <div class="helmet-base"></div>
-        <div class="athena-eye"></div>
-    </div>
 
     <div style="width: 80%; margin-top: 50px;">
         <div id="question-counter" style="font-family: 'Courier New', monospace; color: #FFD700; letter-spacing: 2px;">SORU: 1 / 100</div>
