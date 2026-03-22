@@ -32,7 +32,7 @@
         position: fixed;
         top: 0; left: 0;
         width: 100vw; height: 100vh;
-        z-index: 0;
+        z-index: -1;
         overflow: hidden;
         pointer-events: none;
         background: var(--bg-dark);
@@ -590,6 +590,7 @@
     width: 80%; /* Ekran genişliğinin %80'i */
     max-width: 900px; /* Çok devasa olmasın diye sınır */
     min-height: 500px; /* Yükseklik kazandırdık */
+    max-height: 90vh; /* Ekranı taşmasın */
     
     /* 2. Matrix Yeşili Teması */
     background: rgba(0, 5, 0, 0.98); /* Çok koyu, hafif yeşilimsi siyah */
@@ -798,12 +799,15 @@
     border-radius: 6px;
     width: 520px;
     max-width: 92vw;
+    min-height: 80vh;
     padding: 50px 35px 35px;
     box-shadow:
         0 0 60px rgba(234, 179, 8, 0.2),
         inset 0 0 60px rgba(0, 0, 0, 0.6),
         0 0 120px rgba(234, 179, 8, 0.08);
     transition: transform 0.15s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Üst ve alt rulo kıvrımları */
@@ -839,9 +843,11 @@
     padding: 0;
     margin: 0;
     overflow-y: auto;
-    max-height: 55vh;
+    flex: 1;
+    max-height: 65vh;
     scrollbar-width: thin;
     scrollbar-color: rgba(234, 179, 8, 0.3) transparent;
+    scroll-behavior: smooth;
 }
 
 .parsomen-list::-webkit-scrollbar { width: 4px; }
@@ -898,9 +904,9 @@
 
 /* Athena Mührü - Belirgin ve Kalın */
 .athena-seal {
-    position: fixed;
+    position: absolute;
     top: 25px;
-    right: 40px;
+    right: 50px;
     width: 90px;
     height: 110px;
     opacity: 1;
@@ -949,6 +955,46 @@
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 60px rgba(234, 179, 8, 0.05);
 }
 
+/* --- SINAV SONUÇ EKRANI --- */
+#quiz-result-screen {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(2, 6, 23, 0.98);
+    z-index: 10004;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.result-box {
+    text-align: center;
+    max-width: 620px;
+    width: 100%;
+    background: rgba(10, 25, 47, 0.95);
+    border: 1px solid #EAB308;
+    border-radius: 20px;
+    padding: 50px 40px;
+    box-shadow: 0 0 60px rgba(234, 179, 8, 0.15), 0 0 120px rgba(234, 179, 8, 0.05);
+}
+
+.result-stat {
+    font-family: 'Courier New', monospace;
+    font-size: 1.4rem;
+    margin: 12px 0;
+    letter-spacing: 2px;
+}
+
+.result-percentage {
+    font-family: 'Courier New', monospace;
+    font-size: 4rem;
+    color: #EAB308;
+    text-shadow: 0 0 30px rgba(234, 179, 8, 0.6);
+    margin: 20px 0 5px;
+}
 </style>
 
 </head>
@@ -1188,6 +1234,7 @@
     <div class="quiz-footer" style="display: flex; gap: 20px; margin-top: 20px;">
         <button id="prev-btn" onclick="changeQuestion(-1)" style="background: none; border: 1px solid #FFD700; color: #FFD700; padding: 10px 20px; cursor: pointer;"> &lt; GERİ </button>
         <button id="next-btn" onclick="changeQuestion(1)" style="background: none; border: 1px solid #FFD700; color: #FFD700; padding: 10px 20px; cursor: pointer;"> İLERİ &gt; </button>
+        <button id="end-btn" onclick="endQuiz()" style="background: rgba(234,179,8,0.1); border: 1px solid #EAB308; color: #EAB308; padding: 10px 25px; cursor: pointer; font-family: 'Ubuntu', sans-serif; letter-spacing: 1px; transition: 0.3s;" onmouseover="this.style.background='rgba(234,179,8,0.25)'" onmouseout="this.style.background='rgba(234,179,8,0.1)'"> SINAVI BİTİR </button>
     </div>
 
 </div>
@@ -1613,6 +1660,40 @@ function startMatrixTimer(seconds) {
         });
     });
 }
+
+// SINAVI BİTİR VE SONUÇ GÖSTER
+window.endQuiz = function() {
+    let correct = 0, wrong = 0, unanswered = 0;
+    currentQuestions.forEach((q, i) => {
+        if (userAnswers[i] == null) {
+            unanswered++;
+        } else if (userAnswers[i] === q.correct) {
+            correct++;
+        } else {
+            wrong++;
+        }
+    });
+
+    const total = currentQuestions.length;
+    const percentage = total > 0 ? Math.round((correct / total) * 100) : 0;
+
+    document.getElementById('result-stats').innerHTML = `
+        <p class="result-stat" style="color: #22c55e;">✓ &nbsp; DOĞRU: ${correct}</p>
+        <p class="result-stat" style="color: #ef4444;">✗ &nbsp; YANLIŞ: ${wrong}</p>
+        <p class="result-stat" style="color: rgba(255,255,255,0.4);">— &nbsp; BOŞ: ${unanswered}</p>
+        <div class="result-percentage">${percentage}<span style="font-size:2rem;">%</span></div>
+        <p style="color: rgba(255,255,255,0.35); font-family:'Courier New',monospace; font-size:0.75rem; letter-spacing:3px;">BAŞARI ORANI</p>
+    `;
+
+    document.getElementById('quiz-main-container').style.display = 'none';
+    document.getElementById('quiz-result-screen').style.display = 'flex';
+};
+
+// SONUÇ EKRANINDAN ÇIKIŞ
+window.closeQuiz = function() {
+    document.getElementById('quiz-result-screen').style.display = 'none';
+    document.getElementById('quiz-main-container').style.display = 'none';
+};
     
 </script>
 
@@ -1724,6 +1805,15 @@ function startMatrixTimer(seconds) {
             <li style="color:rgba(234,179,8,0.5);font-family:'Ubuntu',sans-serif;text-align:center;padding:15px;letter-spacing:2px;">YÜKLENİYOR...</li>
         </ul>
         <div class="parsomen-close" onclick="closeParsomen()">✕ &nbsp; GERİ DÖN</div>
+    </div>
+</div>
+
+<!-- SINAV SONUÇ EKRANI -->
+<div id="quiz-result-screen">
+    <div class="result-box">
+        <h2 style="color: #EAB308; letter-spacing: 5px; font-family: 'Courier New', monospace; margin-bottom: 30px; text-shadow: 0 0 15px rgba(234,179,8,0.5);">[ SINAV SONUCU ]</h2>
+        <div id="result-stats"></div>
+        <button onclick="closeQuiz()" style="margin-top: 35px; background: none; border: 1px solid #EAB308; color: #EAB308; padding: 12px 35px; cursor: pointer; font-family: 'Courier New', monospace; letter-spacing: 3px; font-size: 0.85rem; transition: 0.3s;" onmouseover="this.style.background='rgba(234,179,8,0.1)'" onmouseout="this.style.background='none'">ANA SAYFAYA DÖN</button>
     </div>
 </div>
 
