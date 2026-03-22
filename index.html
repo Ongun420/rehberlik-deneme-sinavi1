@@ -642,7 +642,7 @@
 }
 
 /* Gönder Butonu - En Alt Orta */
-#admin-submit-btn {
+#admin-submit-btn, #admin-submit-btn-kb {
     margin-top: 30px; /* Üstteki kutuyla arasına nefes alacak boşluk */
     width: 300px; /* Butonun genişliği sabit olsun */
     padding: 15px;
@@ -655,7 +655,7 @@
     transition: 0.3s;
 }
 
-#admin-submit-btn:hover {
+#admin-submit-btn:hover, #admin-submit-btn-kb:hover {
     background: #053305;
     color: #00ff00;
     box-shadow: 0 0 25px #00ff00;
@@ -714,71 +714,6 @@
     box-shadow: 0 0 20px #00ff00; /* Parlama artsın */
 }
 
-    /* 2. SINAV ANA KONTEYNERİ */
-#quiz-main-container {
-    display: none; /* JS ile flex yapılacak */
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(2, 6, 23, 0.7); /* Arkadaki Hangul gözüksün diye şeffaf */
-    z-index: 10002; /* Her şeyin en üstünde */
-    flex-direction: column;
-    align-items: center;
-    overflow-y: auto;
-    padding-bottom: 50px;
-}
-
-/* 3. ABSTRAKT ATHENA (SAĞ ÜST) */
-.athena-seal {
-    position: absolute;
-    top: 30px;
-    right: 50px;
-    width: 80px;
-    height: 100px;
-    opacity: 0.9;
-}
-
-.helmet-crest {
-    width: 45px;
-    height: 65px;
-    border-top: 3px solid #EAB308;
-    border-right: 2px solid #EAB308;
-    border-radius: 0 100% 0 0;
-    box-shadow: 0 0 15px rgba(234, 179, 8, 0.4);
-}
-
-.helmet-base {
-    width: 55px;
-    height: 35px;
-    border-left: 3px solid #EAB308;
-    border-bottom: 2px solid #EAB308;
-    transform: skewX(-20deg);
-    margin-top: -10px;
-}
-
-.athena-eye {
-    position: absolute;
-    top: 70px;
-    left: 12px;
-    width: 18px;
-    height: 2px;
-    background: #FFD700;
-    box-shadow: 0 0 12px #FFD700;
-    animation: eye-flicker 4s infinite;
-}
-
-/* 4. SORU KUTUSU (LACİVERT) */
-.question-box {
-    background: rgba(10, 25, 47, 0.95);
-    border: 1px solid #EAB308;
-    padding: 40px;
-    border-radius: 20px;
-    width: 85%;
-    max-width: 800px;
-    margin-top: 120px;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
-}
-
 .quiz-option {
     display: block;
     width: 100%;
@@ -828,7 +763,192 @@
     border-color: #EAB308;
     box-shadow: 0 0 15px rgba(234, 179, 8, 0.3);
 }
-    
+
+/* --- ANTİK PARŞÖMEN SEÇİM EKRANI --- */
+#parsomen-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(2, 6, 23, 0.88);
+    z-index: 20000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#parsomen-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.parsomen-container {
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(180deg,
+        #1a0e05 0%,
+        #2c1a08 10%,
+        #3a2210 40%,
+        #3a2210 60%,
+        #2c1a08 90%,
+        #1a0e05 100%
+    );
+    border: 2px solid #8B6914;
+    border-radius: 6px;
+    width: 520px;
+    max-width: 92vw;
+    padding: 50px 35px 35px;
+    box-shadow:
+        0 0 60px rgba(234, 179, 8, 0.2),
+        inset 0 0 60px rgba(0, 0, 0, 0.6),
+        0 0 120px rgba(234, 179, 8, 0.08);
+    transition: transform 0.15s ease;
+}
+
+/* Üst ve alt rulo kıvrımları */
+.parsomen-container::before,
+.parsomen-container::after {
+    content: '';
+    position: absolute;
+    left: -8px; right: -8px;
+    height: 22px;
+    background: linear-gradient(90deg, #5a3a08, #8B6914, #b8860b, #8B6914, #5a3a08);
+    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(234, 179, 8, 0.35);
+}
+.parsomen-container::before { top: -11px; }
+.parsomen-container::after  { bottom: -11px; }
+
+.parsomen-title {
+    text-align: center;
+    color: #EAB308;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    text-shadow: 0 0 18px #EAB308, 0 0 30px rgba(234, 179, 8, 0.4);
+    border-bottom: 1px solid rgba(139, 105, 20, 0.4);
+    padding-bottom: 20px;
+}
+
+.parsomen-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    max-height: 55vh;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(234, 179, 8, 0.3) transparent;
+}
+
+.parsomen-list::-webkit-scrollbar { width: 4px; }
+.parsomen-list::-webkit-scrollbar-thumb { background: rgba(234, 179, 8, 0.3); border-radius: 2px; }
+.parsomen-list::-webkit-scrollbar-track { background: transparent; }
+
+.parsomen-item {
+    padding: 14px 18px;
+    color: #EAB308;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    border-bottom: 1px solid rgba(139, 105, 20, 0.2);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-shadow: 0 0 10px rgba(234, 179, 8, 0.4);
+}
+
+.parsomen-item:hover {
+    background: rgba(234, 179, 8, 0.08);
+    padding-left: 32px;
+    text-shadow: 0 0 20px #EAB308, 0 0 35px rgba(234, 179, 8, 0.5);
+    border-bottom-color: rgba(234, 179, 8, 0.35);
+}
+
+.parsomen-close {
+    text-align: center;
+    margin-top: 25px;
+    color: rgba(234, 179, 8, 0.35);
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+.parsomen-close:hover { color: #EAB308; text-shadow: 0 0 10px #EAB308; }
+
+/* --- QUIZ TAM EKRAN (DERS NOTLARI GİBİ) --- */
+#quiz-main-container {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(2, 6, 23, 0.97);
+    z-index: 10002;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    padding-bottom: 50px;
+}
+
+/* Athena Mührü - Belirgin ve Kalın */
+.athena-seal {
+    position: fixed;
+    top: 25px;
+    right: 40px;
+    width: 90px;
+    height: 110px;
+    opacity: 1;
+    z-index: 10003;
+}
+
+.helmet-crest {
+    width: 50px;
+    height: 70px;
+    border-top: 5px solid #EAB308;
+    border-right: 4px solid #EAB308;
+    border-radius: 0 100% 0 0;
+    box-shadow: 0 0 20px rgba(234, 179, 8, 0.7), 0 0 40px rgba(234, 179, 8, 0.3);
+}
+
+.helmet-base {
+    width: 62px;
+    height: 38px;
+    border-left: 5px solid #EAB308;
+    border-bottom: 4px solid #EAB308;
+    transform: skewX(-20deg);
+    margin-top: -10px;
+    box-shadow: 0 0 20px rgba(234, 179, 8, 0.7), 0 0 40px rgba(234, 179, 8, 0.3);
+}
+
+.athena-eye {
+    position: absolute;
+    top: 72px;
+    left: 14px;
+    width: 22px;
+    height: 3px;
+    background: #FFD700;
+    box-shadow: 0 0 18px #FFD700, 0 0 30px rgba(255, 215, 0, 0.5);
+    animation: eye-flicker 4s infinite;
+}
+
+/* Quiz tam ekran kart */
+.question-box {
+    background: rgba(10, 25, 47, 0.97);
+    border: 1px solid #EAB308;
+    padding: 40px;
+    border-radius: 20px;
+    width: 85%;
+    max-width: 800px;
+    margin-top: 110px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 60px rgba(234, 179, 8, 0.05);
+}
+
 </style>
 
 </head>
@@ -891,7 +1011,7 @@
                 </div>
             </div>
 
-            <div class="master-slot simulation-slot" onclick="sinavMerkeziniBaslat()">
+            <div class="master-slot simulation-slot" onclick="openParsomen()">
                 <div class="slot-header">
                     <span class="status-dot standby" style="background: gold; box-shadow: 0 0 10px gold;"></span>
                     <span class="slot-title">ANADOLU_REHBER_TEST_V.01</span>
@@ -1266,7 +1386,61 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-    window.sinavMerkeziniBaslat = async function() {
+    // Parşömen: deneme gruplarını Firebase'den çek ve göster
+    window.openParsomen = async function() {
+        const overlay = document.getElementById('parsomen-overlay');
+        const list = document.getElementById('parsomen-list');
+        const rain = document.getElementById('hangul-container');
+
+        overlay.style.display = 'flex';
+        // Kısa gecikme ile opacity geçişi tetiklenir (display:flex sonrası)
+        setTimeout(() => overlay.classList.add('active'), 10);
+        if (rain) { rain.classList.remove('rain-default', 'rain-korea', 'rain-gold'); rain.classList.add('rain-gold'); }
+
+        list.innerHTML = '<li style="color:rgba(234,179,8,0.5);font-family:Ubuntu,sans-serif;text-align:center;padding:15px;letter-spacing:2px;">YÜKLENİYOR...</li>';
+
+        try {
+            const snapshot = await get(ref(db, 'archive/denemeler'));
+            list.innerHTML = '';
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                const groups = data ? Object.keys(data) : [];
+                groups.forEach((groupName, i) => {
+                    const li = document.createElement('li');
+                    li.className = 'parsomen-item';
+                    li.innerHTML = `<span style="opacity:0.45;font-size:0.8rem;">[${String(i + 1).padStart(2, '0')}]</span> ${groupName.toUpperCase()}`;
+                    li.onclick = () => { closeParsomen(); sinavMerkeziniBaslat(groupName); };
+                    list.appendChild(li);
+                });
+            } else {
+                list.innerHTML = '<li style="color:rgba(234,179,8,0.35);font-family:Ubuntu,sans-serif;text-align:center;padding:20px;letter-spacing:2px;">[KAYIT YOK] Henüz deneme eklenmemiş.</li>';
+            }
+        } catch (err) {
+            list.innerHTML = '<li style="color:rgba(255,60,60,0.7);font-family:Ubuntu,sans-serif;text-align:center;padding:20px;">[HATA]: Bağlantı kurulamadı.</li>';
+            console.error(err);
+        }
+    };
+
+    window.closeParsomen = function() {
+        const overlay = document.getElementById('parsomen-overlay');
+        overlay.classList.remove('active');
+        setTimeout(() => { overlay.style.display = 'none'; }, 500);
+    };
+
+    // Parşömen fare paralaks efekti
+    document.addEventListener('mousemove', (e) => {
+        const overlay = document.getElementById('parsomen-overlay');
+        if (overlay && overlay.classList.contains('active')) {
+            const box = document.getElementById('parsomen-box');
+            if (box) {
+                const x = (window.innerWidth / 2 - e.clientX) / 45;
+                const y = (window.innerHeight / 2 - e.clientY) / 45;
+                box.style.transform = `translate(${x}px, ${y}px)`;
+            }
+        }
+    });
+
+    window.sinavMerkeziniBaslat = async function(groupName) {
     const loadingScreen = document.getElementById('quiz-loading-screen');
     const factContainer = document.getElementById('loading-fact-container');
     const factText = document.getElementById('loading-fact-text');
@@ -1276,11 +1450,15 @@ document.addEventListener('keydown', function(e) {
     factContainer.style.opacity = '0';
     loadingScreen.style.display = 'flex';
 
-    // 2. Niş bilgi ve soruları paralel çek
+    // 2. Niş bilgi ve seçilen denemenin sorularını paralel çek
+    const questionsPath = groupName
+        ? 'archive/denemeler/' + groupName
+        : 'archive/questions';
+
     try {
         const [nisSnapshot, questionsSnapshot] = await Promise.all([
             get(ref(db, 'archive/nis_bilgiler')),
-            get(ref(db, 'archive/questions'))
+            get(ref(db, questionsPath))
         ]);
 
         // Niş bilgiyi ekrana yaz
@@ -1299,6 +1477,9 @@ document.addEventListener('keydown', function(e) {
             currentQuestions = Object.values(questionsSnapshot.val());
             currentIndex = 0;
             userAnswers = new Array(currentQuestions.length).fill(null);
+        } else {
+            currentQuestions = [];
+            console.warn('[SİSTEM]: Seçilen deneme grubunda soru bulunamadı: ' + groupName);
         }
 
     } catch (error) {
@@ -1316,14 +1497,55 @@ document.addEventListener('keydown', function(e) {
         setTimeout(() => {
             loadingScreen.style.display = 'none';
             const quizContainer = document.getElementById('quiz-main-container');
-            quizContainer.style.display = 'flex';
-            if (currentQuestions.length > 0) {
-                showQuestion(0);
-                startMatrixTimer(120);
+            if (currentQuestions.length === 0) {
+                loadingScreen.style.display = 'none';
+                alert('[SİSTEM]: Bu deneme grubunda henüz soru bulunmuyor.');
+                return;
             }
+            quizContainer.style.display = 'flex';
+            showQuestion(0);
+            startMatrixTimer(120);
         }, 500);
     }, 4000);
 }
+
+    // Soru kaydetme (archive/denemeler/[grup]/[id])
+    window.soruKaydet = function() {
+        const group = document.getElementById('admin-deneme-grubu').value.trim();
+        const question = document.getElementById('admin-soru').value.trim();
+        const optA = document.getElementById('admin-opt-a').value.trim();
+        const optB = document.getElementById('admin-opt-b').value.trim();
+        const optC = document.getElementById('admin-opt-c').value.trim();
+        const optD = document.getElementById('admin-opt-d').value.trim();
+        const optE = document.getElementById('admin-opt-e').value.trim();
+        const correct = parseInt(document.getElementById('admin-correct').value);
+        const statusSoru = document.getElementById('status-soru-msg');
+
+        if (!group || !question || !optA || !optB || !optC || !optD || !optE) {
+            alert("[HATA]: Tüm alanları doldur!");
+            return;
+        }
+        if (isNaN(correct) || correct < 0 || correct > 4) {
+            alert("[HATA]: Geçerli bir doğru şık seçin (A-E).");
+            return;
+        }
+
+        const soruRef = ref(db, 'archive/denemeler/' + group);
+        const newSoruRef = push(soruRef);
+
+        set(newSoruRef, {
+            question: question,
+            options: [optA, optB, optC, optD, optE],
+            correct: correct
+        }).then(() => {
+            ['admin-deneme-grubu','admin-soru','admin-opt-a','admin-opt-b','admin-opt-c','admin-opt-d','admin-opt-e'].forEach(id => {
+                document.getElementById(id).value = '';
+            });
+            document.getElementById('admin-correct').value = '0';
+            statusSoru.style.display = 'block';
+            setTimeout(() => { statusSoru.style.display = 'none'; }, 3000);
+        }).catch(err => alert("[HATA]: " + err.message));
+    };
 
 window.closeAdmin = function() {
     document.getElementById('admin-terminal').style.display = 'none';
@@ -1403,7 +1625,58 @@ function startMatrixTimer(seconds) {
 <div id="admin-terminal">
     <button onclick="terminaliKapat()" id="admin-close-btn">[ X ] KAPAT</button>
 
-    <h3>[ ADMIN VERI GIRIS TERMINALI ]</h3>
+    <h3>[ ADMIN VERİ GİRİŞ TERMİNALİ ]</h3>
+
+    <!-- BÖLÜM 1: DENEME SORUSU EKLEME -->
+    <h3 style="margin-top: 20px; border-top: 1px dashed #00ff00; padding-top: 15px;">[ DENEME SORUSU EKLE ]</h3>
+
+    <div class="admin-row">
+        <label>DENEME GRUBU (Örn: mks_02, antik_01):</label>
+        <input type="text" id="admin-deneme-grubu" placeholder="Örn: mks_02">
+    </div>
+
+    <div class="admin-row">
+        <label>SORU METNİ:</label>
+        <textarea id="admin-soru" rows="4" placeholder="Soruyu buraya yaz..."></textarea>
+    </div>
+
+    <div class="admin-row">
+        <label>ŞIK A:</label>
+        <input type="text" id="admin-opt-a" placeholder="A şıkkı">
+    </div>
+    <div class="admin-row">
+        <label>ŞIK B:</label>
+        <input type="text" id="admin-opt-b" placeholder="B şıkkı">
+    </div>
+    <div class="admin-row">
+        <label>ŞIK C:</label>
+        <input type="text" id="admin-opt-c" placeholder="C şıkkı">
+    </div>
+    <div class="admin-row">
+        <label>ŞIK D:</label>
+        <input type="text" id="admin-opt-d" placeholder="D şıkkı">
+    </div>
+    <div class="admin-row">
+        <label>ŞIK E:</label>
+        <input type="text" id="admin-opt-e" placeholder="E şıkkı">
+    </div>
+
+    <div class="admin-row">
+        <label>DOĞRU ŞIK:</label>
+        <select id="admin-correct">
+            <option value="0">A</option>
+            <option value="1">B</option>
+            <option value="2">C</option>
+            <option value="3">D</option>
+            <option value="4">E</option>
+        </select>
+    </div>
+
+    <button id="admin-submit-btn" onclick="soruKaydet()" style="margin-top: 10px;">SORUYU KAYDET (archive/denemeler/[GRUP])</button>
+    <p id="status-soru-msg" style="display:none; color:#00ff00;">[SİSTEM]: SORU ARŞİVE İŞLENDİ.</p>
+
+    <!-- BÖLÜM 2: BİLGİ BANKASI (DERS NOTU) EKLEME -->
+    <h3 style="margin-top: 30px; border-top: 1px dashed #00ff00; padding-top: 15px;">[ BİLGİ BANKASI EKLEME ]</h3>
     
     <div class="admin-row">
         <label>KATEGORİ SEÇ:</label>
@@ -1411,8 +1684,7 @@ function startMatrixTimer(seconds) {
             <option value="mitoloji">ANADOLU MİTOLOJİSİ</option>
             <option value="arkeoloji">ARKEOLOJİ TERİMLERİ</option>
             <option value="medeniyet">ANADOLU MEDENİYETLERİ</option>
-
-            <option value="nis_bilgiler">NİŞ BİLGİ & FİLOZOF SÖZÜ</option>
+            <option value="nis_bilgiler">NİŞ BİLGİ &amp; FİLOZOF SÖZÜ</option>
         </select>
     </div>
 
@@ -1423,12 +1695,12 @@ function startMatrixTimer(seconds) {
 
     <div class="admin-row">
         <label>AÇIKLAMA (DESCRIPTION):</label>
-        <textarea id="admin-desc" rows="12" placeholder="Veri içeriğini, paragrafları buraya uzunca girebilirsin..."></textarea>
+        <textarea id="admin-desc" rows="8" placeholder="Veri içeriğini, paragrafları buraya uzunca girebilirsin..."></textarea>
     </div>
 
-    <button id="admin-submit-btn" onclick="veriyiBulutaFirlat()">VERİYİ ARŞİVE İŞLE</button>
+    <button id="admin-submit-btn-kb" onclick="veriyiBulutaFirlat()">VERİYİ ARŞİVE İŞLE</button>
     
-    <p id="status-msg">[SİSTEM]: VERİ ARŞİVE İŞLENDİ.</p>
+    <p id="status-msg" style="display:none; color:#00ff00;">[SİSTEM]: VERİ ARŞİVE İŞLENDİ.</p>
 </div>
 
 <div id="quiz-loading-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 30000; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px;">
@@ -1444,6 +1716,17 @@ function startMatrixTimer(seconds) {
     </div>
 </div>
     
+<!-- ANTİK PARŞÖMEN SEÇİM EKRANI -->
+<div id="parsomen-overlay">
+    <div class="parsomen-container" id="parsomen-box">
+        <div class="parsomen-title">✦ &nbsp; DENEME ARŞİVİ &nbsp; ✦</div>
+        <ul class="parsomen-list" id="parsomen-list">
+            <li style="color:rgba(234,179,8,0.5);font-family:'Ubuntu',sans-serif;text-align:center;padding:15px;letter-spacing:2px;">YÜKLENİYOR...</li>
+        </ul>
+        <div class="parsomen-close" onclick="closeParsomen()">✕ &nbsp; GERİ DÖN</div>
+    </div>
+</div>
+
 </body>
 
 </html>
