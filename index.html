@@ -37,6 +37,8 @@
         pointer-events: none;
         background: transparent;
         transition: 1s ease;
+        filter: blur(0.5px);
+        opacity: 0.4;
     }
 
     #hangul-canvas {
@@ -1127,20 +1129,29 @@
 
         const ctx = canvas.getContext('2d');
         const fontSize = 18;
-        const colWidth = 22;
+        const colWidth = 26;
         const cols = Math.floor(canvas.width / colWidth);
         const drops = [];
         for (let i = 0; i < cols; i++) {
             drops[i] = Math.random() * -(canvas.height / fontSize);
         }
 
-        function draw() {
-            ctx.fillStyle = 'rgba(2, 6, 23, 0.05)';
+        let lastDrawTime = 0;
+        const drawInterval = 80;
+
+        function draw(timestamp) {
+            if (timestamp - lastDrawTime < drawInterval) {
+                _hangulAnimId = requestAnimationFrame(draw);
+                return;
+            }
+            lastDrawTime = timestamp;
+
+            ctx.fillStyle = 'rgba(2, 6, 23, 0.15)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            let color = '#00f2ff';
-            if (container.classList.contains('rain-korea')) color = '#E9D5FF';
-            else if (container.classList.contains('rain-gold')) color = '#EAB308';
+            let color = 'rgba(0, 180, 200, 0.5)';
+            if (container.classList.contains('rain-korea')) color = 'rgba(176, 38, 255, 0.3)';
+            else if (container.classList.contains('rain-gold')) color = 'rgba(200, 150, 0, 0.4)';
 
             ctx.fillStyle = color;
             ctx.font = fontSize + 'px "Courier New", monospace';
@@ -1157,7 +1168,7 @@
             _hangulAnimId = requestAnimationFrame(draw);
         }
 
-        draw();
+        draw(0);
     }
 
     window.addEventListener('resize', initHangul);
