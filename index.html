@@ -79,12 +79,19 @@
     /* --- HEADER --- */
 
     header {
-        position: fixed; top: 0; width: 100%; height: 50px; padding: 0 30px;
-        display: flex; justify-content: space-between; align-items: center;
-        background: rgba(2, 6, 23, 0.9); backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(255,255,255,0.1); box-sizing: border-box;
-        z-index: 10;
-    }
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 70px;
+    background: rgba(2, 6, 23, 0.95); /* Header hafif opak kalsın ki arkası görünmesin */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    box-sizing: border-box;
+    z-index: 99999 !important; /* HER ŞEYİN ÜSTÜNDE OLMALI */
+    border-bottom: 1px solid rgba(234, 179, 8, 0.3);
+}
 
     .header-brand img { height: 30px; cursor: pointer; }
 
@@ -769,7 +776,7 @@
     position: fixed;
     top: 0; left: 0;
     width: 100vw; height: 100vh;
-    background: rgba(2, 6, 23, 0.4) !important;
+    background: transparent !important; /* BURAYI DEĞİŞTİR: Eskiden rgba(...) idi */
     backdrop-filter: blur(3px); /* Kristal/Cam efekti ekledik */
     z-index: 20000;
     display: none;
@@ -800,6 +807,7 @@
     width: 520px;
     max-width: 92vw;
     min-height: 80vh;
+    margin-top: 100px !important; /* Bu sayede header'ın altına girmez, aşağıdan başlar */
     padding: 50px 35px 35px;
     box-shadow:
         0 0 60px rgba(234, 179, 8, 0.2),
@@ -895,7 +903,7 @@
     top: 0; left: 0;
     width: 100vw; height: 100vh;
     /* Arka planı iyice şeffaflaştırdık */
-    background: rgba(2, 6, 23, 0.3) !important;
+    background: transparent !important; /* BURAYI DEĞİŞTİR: Eskiden rgba(...) idi */
     backdrop-filter: blur(2px);
     z-index: 100; /* Yağmurun üstüne çıkması için artırdık */
     flex-direction: column;
@@ -913,7 +921,7 @@
     border-radius: 20px;
     width: 85%;
     max-width: 800px;
-    margin-top: 110px;
+    margin-top: 100px !important; /* Bu sayede header'ın altına girmez, aşağıdan başlar */
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 60px rgba(234, 179, 8, 0.05);
 }
 
@@ -1149,20 +1157,20 @@ html {
             }
             lastDrawTime = timestamp;
 
-            // Arka planı tamamen siyah yapmak yerine koyu lacivert iz bırakıyoruz
-            ctx.fillStyle = 'rgba(2, 6, 23, 0.15)'; 
+            // --- BURASI DEĞİŞTİ: Arka planı lacivert yapar (Perdeyi kaldırır) ---
+            ctx.fillStyle = 'rgba(2, 6, 23, 0.2)'; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Renk ve Parlama Ayarları
-            let color = '#00ffcc'; // Turkuaz/Yeşil neon
-            if (container.classList.contains('rain-korea')) color = 'rgba(176, 38, 255, 0.8)';
-            else if (container.classList.contains('rain-gold')) color = 'rgba(234, 179, 8, 0.8)';
+            // --- RENK AYARI ---
+            let color = '#00ffcc'; 
+            if (container.classList.contains('rain-korea')) color = '#b026ff';
+            else if (container.classList.contains('rain-gold')) color = '#EAB308';
 
-            // --- NEON PARLAMA EFEKTİ ---
-            ctx.shadowBlur = 15; // Parlama miktarını buradan artırabilirsin
+            // --- BURASI EKLENDİ: İşte o "Neon" parlaklık ---
+            ctx.shadowBlur = 15; 
             ctx.shadowColor = color;
             ctx.fillStyle = color;
-            ctx.font = fontSize + 'px monospace';
+            ctx.font = 'bold ' + fontSize + 'px monospace';
 
             for (let i = 0; i < drops.length; i++) {
                 const char = characters.charAt(Math.floor(Math.random() * characters.length));
